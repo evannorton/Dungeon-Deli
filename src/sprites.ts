@@ -3,7 +3,6 @@ import { createSprite } from "pixel-pigeon";
 export const playerSpriteID: string = createSprite({
   animations: [
     {
-      id: "default",
       frames: [
         {
           height: 24,
@@ -11,10 +10,11 @@ export const playerSpriteID: string = createSprite({
           sourceWidth: 24,
           sourceX: 0,
           sourceY: 0,
-          width: 24
+          width: 24,
         },
       ],
-    }
+      id: "default",
+    },
   ],
-  imagePath: "player"
-})
+  imagePath: "player",
+});
