@@ -1,19 +1,22 @@
-import { createSpriteInstance, playAudioSource } from "pixel-pigeon";
-import { musicVolumeChannelID } from "./volumeChannels";
-import { pigeonSpriteID } from "./sprites";
+import { createSpriteInstance, goToLevel, spawnEntity } from "pixel-pigeon";
+import { playerSpriteID } from "./sprites";
 
 export const run = (): void => {
-  console.log("run");
-  playAudioSource("song", {
-    volumeChannelID: musicVolumeChannelID,
+  goToLevel("test");
+  const playerSpriteInstanceID = createSpriteInstance({
+    getAnimationID: (): string => "default", 
+    spriteID: playerSpriteID
   });
-  const pigeonSpriteInstanceID: string = createSpriteInstance({
-    coordinates: {
-      x: 32,
-      y: 32,
+  const playerEntityID: string = spawnEntity({
+    height: 24,
+    layerID: "player",
+    position: {
+      x: 48,
+      y: 48
     },
-    getAnimationID: (): string => "idle-down",
-    spriteID: pigeonSpriteID,
-  });
-  console.log(`created pigeon sprite: ${pigeonSpriteInstanceID}`);
+    spriteInstanceID: playerSpriteInstanceID,
+    width: 24,
+    zIndex: 1,
+  })
+  console.log(playerEntityID);
 };
