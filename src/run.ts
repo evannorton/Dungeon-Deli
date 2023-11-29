@@ -8,7 +8,7 @@ import { playerSpriteID } from "./sprites";
 import { state } from "./state";
 
 export const run = (): void => {
-  goToLevel("test");
+  goToLevel("test_1");
   const playerSpriteInstanceID: string = createSpriteInstance({
     getAnimationID: (): string => "default",
     spriteID: playerSpriteID,
@@ -22,7 +22,7 @@ export const run = (): void => {
     },
     spriteInstanceID: playerSpriteInstanceID,
     width: 24,
-    zIndex: 1,
+    zIndex: 0,
   });
   state.setValues({
     playerEntityID,

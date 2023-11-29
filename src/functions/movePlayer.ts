@@ -1,7 +1,10 @@
 import {
   CollisionData,
   EntityPosition,
+  getEntityFieldValue,
   getEntityPosition,
+  goToLevel,
+  setEntityLevel,
   setEntityPosition,
 } from "pixel-pigeon";
 import { getRectangleCollisionData } from "pixel-pigeon/api/functions/getRectangleCollisionData";
@@ -18,13 +21,42 @@ export const movePlayer = (xOffset: number, yOffset: number): void => {
     x: playerPosition.x + xOffset * 24,
     y: playerPosition.y + yOffset * 24,
   };
-  const collisionData: CollisionData = getRectangleCollisionData({
+  const mapCollisionData: CollisionData = getRectangleCollisionData({
     height: 24,
     width: 24,
     x: newPlayerPosition.x,
     y: newPlayerPosition.y,
   });
-  if (collisionData.map === false) {
-    setEntityPosition(state.values.playerEntityID, newPlayerPosition);
+  const transportCollisionData: CollisionData = getRectangleCollisionData({
+    height: 24,
+    width: 24,
+    x: newPlayerPosition.x,
+    y: newPlayerPosition.y,
+  }, ["transport"]);
+  const transportEntityID: string = transportCollisionData.entityCollidables[0]?.entityID ?? null;
+  if (mapCollisionData.map === false) {
+    if (transportEntityID !== null) {
+      const targetLevelID: unknown = getEntityFieldValue(transportEntityID, "target_level_id");
+      const targetX: unknown = getEntityFieldValue(transportEntityID, "target_x");
+      const targetY: unknown = getEntityFieldValue(transportEntityID, "target_y");
+      if (typeof targetLevelID !== "string") {
+        throw new Error(`Entity "${transportEntityID}" has an invalid "target_level_id" value.`);
+      }
+      if (typeof targetX !== "number") {
+        throw new Error(`Entity "${transportEntityID}" has an invalid "target_x" value.`);
+      }
+      if (typeof targetY !== "number") {
+        throw new Error(`Entity "${transportEntityID}" has an invalid "target_y" value.`);
+      }
+      setEntityPosition(state.values.playerEntityID, {
+        x: targetX * 24,
+        y: targetY * 24,
+      });
+      setEntityLevel(state.values.playerEntityID, targetLevelID);
+      goToLevel(targetLevelID);
+    }
+    else {
+      setEntityPosition(state.values.playerEntityID, newPlayerPosition);
+    }
   }
 };
