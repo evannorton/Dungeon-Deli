@@ -1,4 +1,5 @@
 import {
+  createLabel,
   createSpriteInstance,
   goToLevel,
   lockCameraToEntity,
@@ -24,7 +25,16 @@ export const run = (): void => {
     width: 24,
     zIndex: 0,
   });
+  const modeLabelID: string = createLabel({
+    color: "#ffffff",
+    coordinates: {
+      x: 8,
+      y: 8,
+    },
+    getText: (): string => "Current mode: lorem ipsum"
+  })
   state.setValues({
+    modeLabelID,
     playerEntityID,
     playerSpriteInstanceID,
   });
