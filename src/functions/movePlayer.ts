@@ -27,26 +27,47 @@ export const movePlayer = (xOffset: number, yOffset: number): void => {
     x: newPlayerPosition.x,
     y: newPlayerPosition.y,
   });
-  const transportCollisionData: CollisionData = getRectangleCollisionData({
-    height: 24,
-    width: 24,
-    x: newPlayerPosition.x,
-    y: newPlayerPosition.y,
-  }, ["transport"]);
-  const transportEntityID: string = transportCollisionData.entityCollidables[0]?.entityID ?? null;
+  const transportCollisionData: CollisionData = getRectangleCollisionData(
+    {
+      height: 24,
+      width: 24,
+      x: newPlayerPosition.x,
+      y: newPlayerPosition.y,
+    },
+    ["transport"],
+  );
   if (mapCollisionData.map === false) {
+    const transportEntityID: string | null =
+      transportCollisionData.entityCollidables.length > 0
+        ? transportCollisionData.entityCollidables[0].entityID
+        : null;
     if (transportEntityID !== null) {
-      const targetLevelID: unknown = getEntityFieldValue(transportEntityID, "target_level_id");
-      const targetX: unknown = getEntityFieldValue(transportEntityID, "target_x");
-      const targetY: unknown = getEntityFieldValue(transportEntityID, "target_y");
+      const targetLevelID: unknown = getEntityFieldValue(
+        transportEntityID,
+        "target_level_id",
+      );
+      const targetX: unknown = getEntityFieldValue(
+        transportEntityID,
+        "target_x",
+      );
+      const targetY: unknown = getEntityFieldValue(
+        transportEntityID,
+        "target_y",
+      );
       if (typeof targetLevelID !== "string") {
-        throw new Error(`Entity "${transportEntityID}" has an invalid "target_level_id" value.`);
+        throw new Error(
+          `Entity "${transportEntityID}" has an invalid "target_level_id" value.`,
+        );
       }
       if (typeof targetX !== "number") {
-        throw new Error(`Entity "${transportEntityID}" has an invalid "target_x" value.`);
+        throw new Error(
+          `Entity "${transportEntityID}" has an invalid "target_x" value.`,
+        );
       }
       if (typeof targetY !== "number") {
-        throw new Error(`Entity "${transportEntityID}" has an invalid "target_y" value.`);
+        throw new Error(
+          `Entity "${transportEntityID}" has an invalid "target_y" value.`,
+        );
       }
       setEntityPosition(state.values.playerEntityID, {
         x: targetX * 24,
@@ -54,8 +75,7 @@ export const movePlayer = (xOffset: number, yOffset: number): void => {
       });
       setEntityLevel(state.values.playerEntityID, targetLevelID);
       goToLevel(targetLevelID);
-    }
-    else {
+    } else {
       setEntityPosition(state.values.playerEntityID, newPlayerPosition);
     }
   }

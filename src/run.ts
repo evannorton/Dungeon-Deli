@@ -31,8 +31,8 @@ export const run = (): void => {
       x: 8,
       y: 8,
     },
-    getText: (): string => "Current mode: lorem ipsum"
-  })
+    getText: (): string => "Current mode: lorem ipsum",
+  });
   state.setValues({
     modeLabelID,
     playerEntityID,
