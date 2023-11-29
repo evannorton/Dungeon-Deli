@@ -9,6 +9,8 @@ import {
 } from "pixel-pigeon";
 import { getRectangleCollisionData } from "pixel-pigeon/api/functions/getRectangleCollisionData";
 import { state } from "../state";
+import { turnsPerMode } from "../constants/turnsPerMode";
+import { getUniqueRandomModeIndex } from "./getUniqueRandomModeIndex";
 
 export const movePlayer = (xOffset: number, yOffset: number): void => {
   if (state.values.playerEntityID === null) {
@@ -77,6 +79,17 @@ export const movePlayer = (xOffset: number, yOffset: number): void => {
       goToLevel(targetLevelID);
     } else {
       setEntityPosition(state.values.playerEntityID, newPlayerPosition);
+    }
+    state.setValues({
+      turnsUntilNextMode: state.values.turnsUntilNextMode - 1,
+    });
+    if (state.values.turnsUntilNextMode === 0) {
+      const modeIndex: number = state.values.nextModeIndex;
+      state.setValues({
+        modeIndex,
+        nextModeIndex: getUniqueRandomModeIndex(modeIndex),
+        turnsUntilNextMode: turnsPerMode,
+      });
     }
   }
 };

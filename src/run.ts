@@ -8,6 +8,7 @@ import {
 } from "pixel-pigeon";
 import { playerSpriteID } from "./sprites";
 import { state } from "./state";
+import { modes } from "./modes";
 
 export const run = (): void => {
   goToLevel("test_1");
@@ -30,24 +31,74 @@ export const run = (): void => {
     color: "#000000",
     coordinates: {
       x: 2,
-      y: 163,
+      y: 145,
     },
-    height: 15,
+    height: 33,
     opacity: 0.5,
-    width: 156,
+    width: 146,
   });
   createLabel({
     color: "#ffffff",
     coordinates: {
-      x: 6,
-      y: 167,
+      x: 5,
+      y: 148,
     },
-    getText: (): string => "Current mode: lorem ipsum",
+    getText: (): string => "Current mode:",
     horizontalAlignment: "left",
     verticalAlignment: "top",
   });
+  createLabel({
+    color: "#ffffff",
+    coordinates: {
+      x: 145,
+      y: 148,
+    },
+    getText: (): string => modes[state.values.modeIndex].name,
+    horizontalAlignment: "right",
+    verticalAlignment: "top",
+  });
+  createLabel({
+    color: "#ffffff",
+    coordinates: {
+      x: 5,
+      y: 158,
+    },
+    getText: (): string => "Next mode:",
+    horizontalAlignment: "left",
+    verticalAlignment: "top",
+  });
+  createLabel({
+    color: "#ffffff",
+    coordinates: {
+      x: 145,
+      y: 158,
+    },
+    getText: (): string => modes[state.values.nextModeIndex].name,
+    horizontalAlignment: "right",
+    verticalAlignment: "top",
+  });
+  createLabel({
+    color: "#ffffff",
+    coordinates: {
+      x: 5,
+      y: 168,
+    },
+    getText: (): string => "Until next:",
+    horizontalAlignment: "left",
+    verticalAlignment: "top",
+  });
+  createLabel({
+    color: "#ffffff",
+    coordinates: {
+      x: 145,
+      y: 168,
+    },
+    getText: (): string => String(state.values.turnsUntilNextMode),
+    horizontalAlignment: "right",
+    verticalAlignment: "top",
+  });
   state.setValues({
-    playerEntityID,
+    playerEntityID
   });
   lockCameraToEntity(playerEntityID);
 };

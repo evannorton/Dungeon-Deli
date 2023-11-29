@@ -1,4 +1,4 @@
-import { createInputPressHandler } from "pixel-pigeon";
+import { createInputPressHandler, takeScreenshot } from "pixel-pigeon";
 import { movePlayer } from "./functions/movePlayer";
 
 createInputPressHandler({
@@ -55,5 +55,11 @@ createInputPressHandler({
   ],
   onInput: (): void => {
     movePlayer(0, 1);
+  },
+});
+createInputPressHandler({
+  keyboardButtons: [{ value: "KeyP" }],
+  onInput: (): void => {
+    takeScreenshot();
   },
 });
