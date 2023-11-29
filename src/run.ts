@@ -1,5 +1,6 @@
 import {
   createLabel,
+  createQuadrilateral,
   createSpriteInstance,
   goToLevel,
   lockCameraToEntity,
@@ -25,18 +26,28 @@ export const run = (): void => {
     width: 24,
     zIndex: 0,
   });
-  const modeLabelID: string = createLabel({
+  createQuadrilateral({
+    color: "#000000",
+    coordinates: {
+      x: 2,
+      y: 163,
+    },
+    height: 15,
+    opacity: 0.5,
+    width: 156,
+  });
+  createLabel({
     color: "#ffffff",
     coordinates: {
-      x: 8,
-      y: 8,
+      x: 6,
+      y: 167,
     },
     getText: (): string => "Current mode: lorem ipsum",
+    horizontalAlignment: "left",
+    verticalAlignment: "top",
   });
   state.setValues({
-    modeLabelID,
     playerEntityID,
-    playerSpriteInstanceID,
   });
   lockCameraToEntity(playerEntityID);
 };
