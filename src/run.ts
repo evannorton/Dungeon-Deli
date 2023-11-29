@@ -35,7 +35,7 @@ export const run = (): void => {
     },
     height: 33,
     opacity: 0.5,
-    width: 146,
+    width: 138,
   });
   createLabel({
     color: "#ffffff",
@@ -43,14 +43,14 @@ export const run = (): void => {
       x: 5,
       y: 148,
     },
-    getText: (): string => "Current mode:",
+    getText: (): string => "Mode:",
     horizontalAlignment: "left",
     verticalAlignment: "top",
   });
   createLabel({
     color: "#ffffff",
     coordinates: {
-      x: 145,
+      x: 137,
       y: 148,
     },
     getText: (): string => modes[state.values.modeIndex].name,
@@ -70,7 +70,7 @@ export const run = (): void => {
   createLabel({
     color: "#ffffff",
     coordinates: {
-      x: 145,
+      x: 137,
       y: 158,
     },
     getText: (): string => modes[state.values.nextModeIndex].name,
@@ -90,7 +90,7 @@ export const run = (): void => {
   createLabel({
     color: "#ffffff",
     coordinates: {
-      x: 145,
+      x: 137,
       y: 168,
     },
     getText: (): string => String(state.values.turnsUntilNextMode),
