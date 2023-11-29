@@ -8,4 +8,4 @@ import { tick } from "./tick";
 onRun(run);
 onTick(tick);
 initialize();
-setPauseMenuCondition(() => true);
+setPauseMenuCondition((): boolean => true);

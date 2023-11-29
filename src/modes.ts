@@ -1,25 +1,19 @@
 export interface Mode {
   name: string;
 }
-
 export const modes: Mode[] = [];
-
 modes.push({
-  name: "A Mode"
+  name: "A Mode",
 });
-
 modes.push({
-  name: "B Mode"
+  name: "B Mode",
 });
-
 modes.push({
-  name: "C Mode"
+  name: "C Mode",
 });
-
 modes.push({
-  name: "D Mode"
+  name: "D Mode",
 });
-
 modes.push({
-  name: "E Mode"
+  name: "E Mode",
 });

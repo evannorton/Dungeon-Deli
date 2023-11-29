@@ -8,9 +8,9 @@ import {
   setEntityPosition,
 } from "pixel-pigeon";
 import { getRectangleCollisionData } from "pixel-pigeon/api/functions/getRectangleCollisionData";
+import { getUniqueRandomModeIndex } from "./getUniqueRandomModeIndex";
 import { state } from "../state";
 import { turnsPerMode } from "../constants/turnsPerMode";
-import { getUniqueRandomModeIndex } from "./getUniqueRandomModeIndex";
 
 export const movePlayer = (xOffset: number, yOffset: number): void => {
   if (state.values.playerEntityID === null) {

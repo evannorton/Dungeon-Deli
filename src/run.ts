@@ -6,9 +6,9 @@ import {
   lockCameraToEntity,
   spawnEntity,
 } from "pixel-pigeon";
+import { modes } from "./modes";
 import { playerSpriteID } from "./sprites";
 import { state } from "./state";
-import { modes } from "./modes";
 
 export const run = (): void => {
   goToLevel("test_1");
@@ -98,7 +98,7 @@ export const run = (): void => {
     verticalAlignment: "top",
   });
   state.setValues({
-    playerEntityID
+    playerEntityID,
   });
   lockCameraToEntity(playerEntityID);
 };
