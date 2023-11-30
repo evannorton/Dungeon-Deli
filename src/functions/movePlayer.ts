@@ -90,8 +90,7 @@ export const movePlayer = (xOffset: number, yOffset: number): void => {
       });
       goToLevel(targetLevelID);
       spendTurn();
-    } else if (monsterEntityID !== null) {
-    } else {
+    } else if (monsterEntityID === null) {
       setEntityPosition(state.values.playerEntityID, newPlayerPosition);
       spendTurn();
     }
