@@ -1,3 +1,5 @@
+import { Mode } from "./modes";
+import { Monster } from "./monsters";
 import {
   createLabel,
   createQuadrilateral,
@@ -9,8 +11,6 @@ import {
   setEntitySpriteInstance,
   spawnEntity,
 } from "pixel-pigeon";
-import { Mode } from "./modes";
-import { Monster } from "./monsters";
 import { getDefinable } from "./definables";
 import { playerSpriteID } from "./sprites";
 import { state } from "./state";

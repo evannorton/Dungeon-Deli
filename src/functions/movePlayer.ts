@@ -8,8 +8,8 @@ import {
   setEntityPosition,
 } from "pixel-pigeon";
 import { getRectangleCollisionData } from "pixel-pigeon/api/functions/getRectangleCollisionData";
-import { state } from "../state";
 import { spendTurn } from "./spendTurn";
+import { state } from "../state";
 
 export const movePlayer = (xOffset: number, yOffset: number): void => {
   if (state.values.playerEntityID === null) {
@@ -91,7 +91,6 @@ export const movePlayer = (xOffset: number, yOffset: number): void => {
       goToLevel(targetLevelID);
       spendTurn();
     } else if (monsterEntityID !== null) {
-      
     } else {
       setEntityPosition(state.values.playerEntityID, newPlayerPosition);
       spendTurn();

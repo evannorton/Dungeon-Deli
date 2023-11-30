@@ -1,6 +1,6 @@
-import { turnsPerMode } from "../constants/turnsPerMode";
-import { state } from "../state";
 import { getUniqueRandomModeID } from "./getUniqueRandomModeID";
+import { state } from "../state";
+import { turnsPerMode } from "../constants/turnsPerMode";
 
 export const spendTurn = (): void => {
   state.setValues({
@@ -14,4 +14,4 @@ export const spendTurn = (): void => {
       turnsUntilNextMode: turnsPerMode,
     });
   }
-}
+};
