@@ -748,7 +748,46 @@
 					"seed": 3438799,
 					"overrideTilesetUid": null,
 					"gridTiles": [],
-					"entityInstances": []
+					"entityInstances": [
+						{
+							"__identifier": "monster",
+							"__grid": [2,2],
+							"__pivot": [0,0],
+							"__tags": [],
+							"__tile": null,
+							"__smartColor": "#BE4A2F",
+							"__worldX": 310,
+							"__worldY": 44,
+							"iid": "97b62150-8990-11ee-9fc1-0d75203287b2",
+							"width": 24,
+							"height": 24,
+							"defUid": 15,
+							"px": [48,48],
+							"fieldInstances": [{ "__identifier": "monster_id", "__type": "String", "__value": "rat", "__tile": null, "defUid": 16, "realEditorValues": [{
+								"id": "V_String",
+								"params": ["rat"]
+							}] }]
+						},
+						{
+							"__identifier": "monster",
+							"__grid": [3,8],
+							"__pivot": [0,0],
+							"__tags": [],
+							"__tile": null,
+							"__smartColor": "#BE4A2F",
+							"__worldX": 334,
+							"__worldY": 188,
+							"iid": "996223a0-8990-11ee-9fc1-737309b470a2",
+							"width": 24,
+							"height": 24,
+							"defUid": 15,
+							"px": [72,192],
+							"fieldInstances": [{ "__identifier": "monster_id", "__type": "String", "__value": "rat", "__tile": null, "defUid": 16, "realEditorValues": [{
+								"id": "V_String",
+								"params": ["rat"]
+							}] }]
+						}
+					]
 				},
 				{
 					"__identifier": "transports",

@@ -5,7 +5,7 @@ import {
   createQuadrilateral,
   createSpriteInstance,
   getEntityFieldValue,
-  getLayerEntityIDs,
+  getEntityIDs,
   goToLevel,
   lockCameraToEntity,
   setEntitySpriteInstance,
@@ -106,7 +106,7 @@ export const run = (): void => {
     playerEntityID,
   });
   lockCameraToEntity(playerEntityID);
-  for (const entityID of getLayerEntityIDs("monsters")) {
+  for (const entityID of getEntityIDs({ layerID: "monsters" })) {
     const monsterID: unknown = getEntityFieldValue(entityID, "monster_id");
     if (typeof monsterID !== "string") {
       throw new Error(
