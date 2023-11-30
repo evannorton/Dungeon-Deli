@@ -8,9 +8,8 @@ import {
   setEntityPosition,
 } from "pixel-pigeon";
 import { getRectangleCollisionData } from "pixel-pigeon/api/functions/getRectangleCollisionData";
-import { getUniqueRandomModeIndex } from "./getUniqueRandomModeIndex";
 import { state } from "../state";
-import { turnsPerMode } from "../constants/turnsPerMode";
+import { spendTurn } from "./spendTurn";
 
 export const movePlayer = (xOffset: number, yOffset: number): void => {
   if (state.values.playerEntityID === null) {
@@ -29,19 +28,32 @@ export const movePlayer = (xOffset: number, yOffset: number): void => {
     x: newPlayerPosition.x,
     y: newPlayerPosition.y,
   });
-  const transportCollisionData: CollisionData = getRectangleCollisionData(
-    {
-      height: 24,
-      width: 24,
-      x: newPlayerPosition.x,
-      y: newPlayerPosition.y,
-    },
-    ["transport"],
-  );
   if (mapCollisionData.map === false) {
+    const transportCollisionData: CollisionData = getRectangleCollisionData(
+      {
+        height: 24,
+        width: 24,
+        x: newPlayerPosition.x,
+        y: newPlayerPosition.y,
+      },
+      ["transports"],
+    );
     const transportEntityID: string | null =
       transportCollisionData.entityCollidables.length > 0
         ? transportCollisionData.entityCollidables[0].entityID
+        : null;
+    const monsterCollisionData: CollisionData = getRectangleCollisionData(
+      {
+        height: 24,
+        width: 24,
+        x: newPlayerPosition.x,
+        y: newPlayerPosition.y,
+      },
+      ["monsters"],
+    );
+    const monsterEntityID: string | null =
+      monsterCollisionData.entityCollidables.length > 0
+        ? monsterCollisionData.entityCollidables[0].entityID
         : null;
     if (transportEntityID !== null) {
       const targetLevelID: unknown = getEntityFieldValue(
@@ -71,25 +83,18 @@ export const movePlayer = (xOffset: number, yOffset: number): void => {
           `Entity "${transportEntityID}" has an invalid "target_y" value.`,
         );
       }
+      setEntityLevel(state.values.playerEntityID, targetLevelID);
       setEntityPosition(state.values.playerEntityID, {
         x: targetX * 24,
         y: targetY * 24,
       });
-      setEntityLevel(state.values.playerEntityID, targetLevelID);
       goToLevel(targetLevelID);
+      spendTurn();
+    } else if (monsterEntityID !== null) {
+      
     } else {
       setEntityPosition(state.values.playerEntityID, newPlayerPosition);
-    }
-    state.setValues({
-      turnsUntilNextMode: state.values.turnsUntilNextMode - 1,
-    });
-    if (state.values.turnsUntilNextMode === 0) {
-      const modeIndex: number = state.values.nextModeIndex;
-      state.setValues({
-        modeIndex,
-        nextModeIndex: getUniqueRandomModeIndex(modeIndex),
-        turnsUntilNextMode: turnsPerMode,
-      });
+      spendTurn();
     }
   }
 };

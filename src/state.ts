@@ -1,20 +1,20 @@
 import { State } from "pixel-pigeon";
-import { getRandomModeIndex } from "./functions/getRandomModeIndex";
-import { getUniqueRandomModeIndex } from "./functions/getUniqueRandomModeIndex";
+import { getRandomModeID } from "./functions/getRandomModeID";
+import { getUniqueRandomModeID } from "./functions/getUniqueRandomModeID";
 import { turnsPerMode } from "./constants/turnsPerMode";
 
 interface StateSchema {
   playerEntityID: string | null;
-  modeIndex: number;
-  nextModeIndex: number;
+  modeID: string;
+  nextModeID: string;
   turnsUntilNextMode: number;
 }
-const modeIndex: number = getRandomModeIndex();
-const nextModeIndex: number = getUniqueRandomModeIndex(modeIndex);
+const modeID: string = getRandomModeID();
+const nextModeID: string = getUniqueRandomModeID(modeID);
 
 export const state: State<StateSchema> = new State({
-  modeIndex,
-  nextModeIndex,
+  modeID,
+  nextModeID,
   playerEntityID: null,
   turnsUntilNextMode: turnsPerMode,
 });

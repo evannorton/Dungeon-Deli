@@ -1,19 +1,22 @@
-export interface Mode {
+import { Definable } from "./definables";
+
+interface ModeOptions {
   name: string;
 }
-export const modes: Mode[] = [];
-modes.push({
-  name: "A Mode",
-});
-modes.push({
-  name: "B Mode",
-});
-modes.push({
-  name: "C Mode",
-});
-modes.push({
-  name: "D Mode",
-});
-modes.push({
-  name: "E Mode",
-});
+
+export class Mode extends Definable {
+  private readonly _options: ModeOptions;
+  public constructor(id: string, options: ModeOptions) {
+    super(id);
+    this._options = options;
+  }
+
+  public get name(): string {
+    return this._options.name;
+  }
+}
+new Mode("a", { name: "A Mode" });
+new Mode("b", { name: "B Mode" });
+new Mode("c", { name: "C Mode" });
+new Mode("d", { name: "D Mode" });
+new Mode("e", { name: "E Mode" });

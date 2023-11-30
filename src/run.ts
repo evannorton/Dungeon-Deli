@@ -2,11 +2,16 @@ import {
   createLabel,
   createQuadrilateral,
   createSpriteInstance,
+  getEntityFieldValue,
+  getLayerEntityIDs,
   goToLevel,
   lockCameraToEntity,
+  setEntitySpriteInstance,
   spawnEntity,
 } from "pixel-pigeon";
-import { modes } from "./modes";
+import { Mode } from "./modes";
+import { Monster } from "./monsters";
+import { getDefinable } from "./definables";
 import { playerSpriteID } from "./sprites";
 import { state } from "./state";
 
@@ -53,7 +58,7 @@ export const run = (): void => {
       x: 137,
       y: 148,
     },
-    getText: (): string => modes[state.values.modeIndex].name,
+    getText: (): string => getDefinable(Mode, state.values.modeID).name,
     horizontalAlignment: "right",
     verticalAlignment: "top",
   });
@@ -73,7 +78,7 @@ export const run = (): void => {
       x: 137,
       y: 158,
     },
-    getText: (): string => modes[state.values.nextModeIndex].name,
+    getText: (): string => getDefinable(Mode, state.values.nextModeID).name,
     horizontalAlignment: "right",
     verticalAlignment: "top",
   });
@@ -101,4 +106,18 @@ export const run = (): void => {
     playerEntityID,
   });
   lockCameraToEntity(playerEntityID);
+  for (const entityID of getLayerEntityIDs("monsters")) {
+    const monsterID: unknown = getEntityFieldValue(entityID, "monster_id");
+    if (typeof monsterID !== "string") {
+      throw new Error(
+        `Entity "${entityID}" has an invalid "monster_id" value.`,
+      );
+    }
+    const monster: Monster = getDefinable(Monster, monsterID);
+    const spriteInstanceID: string = createSpriteInstance({
+      getAnimationID: (): string => "default",
+      spriteID: monster.spriteID,
+    });
+    setEntitySpriteInstance(entityID, spriteInstanceID);
+  }
 };

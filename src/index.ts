@@ -1,5 +1,6 @@
 import "./inputHandlers";
-import "./sprites";
+import "./modes";
+import "./monsters";
 import "./volumeChannels";
 import { initialize, onRun, onTick, setPauseMenuCondition } from "pixel-pigeon";
 import { run } from "./run";
