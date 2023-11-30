@@ -1,9 +1,16 @@
+import {
+  EntityPosition,
+  getActiveLevelID,
+  getEntityCalculatedPath,
+  getEntityIDs,
+  getEntityPosition,
+  setEntityPosition,
+} from "pixel-pigeon";
 import { getUniqueRandomModeID } from "./getUniqueRandomModeID";
 import { state } from "../state";
 import { turnsPerMode } from "../constants/turnsPerMode";
-import { EntityPosition, getActiveLevelID, getEntityCalculatedPath, getEntityIDs, getEntityPosition, setEntityPosition } from "pixel-pigeon";
 
-export const doTurn = (): void =>  {
+export const doTurn = (): void => {
   if (state.values.playerEntityID === null) {
     throw new Error("Attempted to do turn with no player entity.");
   }
@@ -11,12 +18,17 @@ export const doTurn = (): void =>  {
   if (levelID === null) {
     throw new Error("Attempted to do turn with no active level.");
   }
-  for (const entityID of getEntityIDs({ levelID, layerID: "monsters" })) {
-    const path: EntityPosition[] = getEntityCalculatedPath(entityID, getEntityPosition(state.values.playerEntityID));
+  for (const entityID of getEntityIDs({
+    layerID: "monsters",
+    levelID,
+  })) {
+    const path: EntityPosition[] = getEntityCalculatedPath(
+      entityID,
+      getEntityPosition(state.values.playerEntityID),
+    );
     if (path.length > 2) {
-      setEntityPosition(entityID, path[1])
-    }
-    else {
+      setEntityPosition(entityID, path[1]);
+    } else {
       // TODO: Attack player
     }
   }
