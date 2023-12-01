@@ -1,7 +1,7 @@
 import { Definable } from "./definables";
 
 interface ModeOptions {
-  name: string;
+  readonly name: string;
 }
 
 export class Mode extends Definable {

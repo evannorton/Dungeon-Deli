@@ -1,8 +1,12 @@
 import { Definable } from "./definables";
-import { createSprite } from "pixel-pigeon";
+import {
+  createSprite,
+  createSpriteInstance,
+  setEntitySpriteInstance,
+} from "pixel-pigeon";
 
 interface MonsterOptions {
-  imagePath: string;
+  readonly imagePath: string;
 }
 
 export class Monster extends Definable {
@@ -31,8 +35,12 @@ export class Monster extends Definable {
     });
   }
 
-  public get spriteID(): string {
-    return this._spriteID;
+  public createSpriteInstance(entityID: string): void {
+    const spriteInstanceID: string = createSpriteInstance({
+      getAnimationID: (): string => "default",
+      spriteID: this._spriteID,
+    });
+    setEntitySpriteInstance(entityID, spriteInstanceID);
   }
 }
 new Monster("rat", { imagePath: "monsters/rat" });
