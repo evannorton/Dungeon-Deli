@@ -22,15 +22,14 @@ export const doTurn = (): void => {
     layerID: "monsters",
     levelID,
   })) {
-    const position: EntityPosition = getEntityPosition(state.values.playerEntityID);
-    const path: EntityPosition[] = getEntityCalculatedPath(
-      entityID,
-      {
-        collisionLayers: ["monsters", "transports"],
-        x: position.x,
-        y: position.y,
-      },
+    const position: EntityPosition = getEntityPosition(
+      state.values.playerEntityID,
     );
+    const path: EntityPosition[] = getEntityCalculatedPath(entityID, {
+      collisionLayers: ["monsters", "transports"],
+      x: position.x,
+      y: position.y,
+    });
     if (path.length > 2) {
       setEntityPosition(entityID, path[1]);
     } else {
