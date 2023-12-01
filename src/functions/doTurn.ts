@@ -23,6 +23,10 @@ export const doTurn = (): void => {
   if (levelID === null) {
     throw new Error("Attempted to do turn with no active level.");
   }
+  state.setValues({
+    turn: state.values.turn + 1,
+  });
+  getDefinable(Stage, state.values.stageID).doTurn();
   for (const entityID of getEntityIDs({
     layerID: "monsters",
     levelID,
@@ -41,10 +45,6 @@ export const doTurn = (): void => {
       // TODO: Attack player
     }
   }
-  state.setValues({
-    turn: state.values.turn + 1,
-  });
-  getDefinable(Stage, state.values.stageID).doTurn();
   if (state.values.turn % turnsPerMode === 0) {
     const modeID: string = state.values.nextModeID;
     state.setValues({
