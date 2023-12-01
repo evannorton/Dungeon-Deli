@@ -37,14 +37,13 @@ export const doTurn = (): void => {
     }
   }
   state.setValues({
-    turnsUntilNextMode: state.values.turnsUntilNextMode - 1,
+    turn: state.values.turn + 1,
   });
-  if (state.values.turnsUntilNextMode === 0) {
+  if (state.values.turn % turnsPerMode === 0) {
     const modeID: string = state.values.nextModeID;
     state.setValues({
       modeID,
       nextModeID: getUniqueRandomModeID(modeID),
-      turnsUntilNextMode: turnsPerMode,
     });
   }
 };

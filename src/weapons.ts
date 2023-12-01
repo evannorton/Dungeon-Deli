@@ -8,6 +8,7 @@ interface WeaponOptionsProjectile {
   readonly moves: WeaponOptionsProjectileMove[];
 }
 interface WeaponOptions {
+  readonly name: string;
   readonly projectile?: WeaponOptionsProjectile;
   readonly stepsPerAttack: number;
 }
@@ -19,20 +20,40 @@ export class Weapon extends Definable {
     this._options = options;
     console.log(this._options);
   }
+
+  public get name(): string {
+    return this._options.name;
+  }
+
+  public get stepsPerAttack(): number {
+    return this._options.stepsPerAttack;
+  }
 }
 new Weapon("left", {
-  projectile: { moves: [{ x: -1 }] },
-  stepsPerAttack: 3,
+  name: "Shoot left",
+  projectile: {
+    moves: [{ x: -1 }],
+  },
+  stepsPerAttack: 5,
 });
 new Weapon("right", {
-  projectile: { moves: [{ x: 1 }] },
+  name: "Shoot right",
+  projectile: {
+    moves: [{ x: 1 }],
+  },
   stepsPerAttack: 3,
 });
 new Weapon("down", {
-  projectile: { moves: [{ y: -1 }] },
-  stepsPerAttack: 3,
+  name: "Shoot down",
+  projectile: {
+    moves: [{ y: -1 }],
+  },
+  stepsPerAttack: 7,
 });
 new Weapon("up", {
-  projectile: { moves: [{ y: 1 }] },
-  stepsPerAttack: 3,
+  name: "Shoot up",
+  projectile: {
+    moves: [{ y: 1 }],
+  },
+  stepsPerAttack: 9,
 });
