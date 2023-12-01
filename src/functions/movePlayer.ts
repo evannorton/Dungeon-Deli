@@ -29,19 +29,6 @@ export const movePlayer = (xOffset: number, yOffset: number): void => {
     y: newPlayerPosition.y,
   });
   if (mapCollisionData.map === false) {
-    const transportCollisionData: CollisionData = getRectangleCollisionData(
-      {
-        height: 24,
-        width: 24,
-        x: newPlayerPosition.x,
-        y: newPlayerPosition.y,
-      },
-      ["transports"],
-    );
-    const transportEntityID: string | null =
-      transportCollisionData.entityCollidables.length > 0
-        ? transportCollisionData.entityCollidables[0].entityID
-        : null;
     const monsterCollisionData: CollisionData = getRectangleCollisionData(
       {
         height: 24,
@@ -55,44 +42,59 @@ export const movePlayer = (xOffset: number, yOffset: number): void => {
       monsterCollisionData.entityCollidables.length > 0
         ? monsterCollisionData.entityCollidables[0].entityID
         : null;
-    if (transportEntityID !== null) {
-      const targetLevelID: unknown = getEntityFieldValue(
-        transportEntityID,
-        "target_level_id",
+    if (monsterEntityID === null) {
+      const transportCollisionData: CollisionData = getRectangleCollisionData(
+        {
+          height: 24,
+          width: 24,
+          x: newPlayerPosition.x,
+          y: newPlayerPosition.y,
+        },
+        ["transports"],
       );
-      const targetX: unknown = getEntityFieldValue(
-        transportEntityID,
-        "target_x",
-      );
-      const targetY: unknown = getEntityFieldValue(
-        transportEntityID,
-        "target_y",
-      );
-      if (typeof targetLevelID !== "string") {
-        throw new Error(
-          `Entity "${transportEntityID}" has an invalid "target_level_id" value.`,
+      const transportEntityID: string | null =
+        transportCollisionData.entityCollidables.length > 0
+          ? transportCollisionData.entityCollidables[0].entityID
+          : null;
+      if (transportEntityID !== null) {
+        const targetLevelID: unknown = getEntityFieldValue(
+          transportEntityID,
+          "target_level_id",
         );
-      }
-      if (typeof targetX !== "number") {
-        throw new Error(
-          `Entity "${transportEntityID}" has an invalid "target_x" value.`,
+        const targetX: unknown = getEntityFieldValue(
+          transportEntityID,
+          "target_x",
         );
-      }
-      if (typeof targetY !== "number") {
-        throw new Error(
-          `Entity "${transportEntityID}" has an invalid "target_y" value.`,
+        const targetY: unknown = getEntityFieldValue(
+          transportEntityID,
+          "target_y",
         );
+        if (typeof targetLevelID !== "string") {
+          throw new Error(
+            `Entity "${transportEntityID}" has an invalid "target_level_id" value.`,
+          );
+        }
+        if (typeof targetX !== "number") {
+          throw new Error(
+            `Entity "${transportEntityID}" has an invalid "target_x" value.`,
+          );
+        }
+        if (typeof targetY !== "number") {
+          throw new Error(
+            `Entity "${transportEntityID}" has an invalid "target_y" value.`,
+          );
+        }
+        setEntityLevel(state.values.playerEntityID, targetLevelID);
+        setEntityPosition(state.values.playerEntityID, {
+          x: targetX * 24,
+          y: targetY * 24,
+        });
+        goToLevel(targetLevelID);
+        doTurn();
+      } else {
+        setEntityPosition(state.values.playerEntityID, newPlayerPosition);
+        doTurn();
       }
-      setEntityLevel(state.values.playerEntityID, targetLevelID);
-      setEntityPosition(state.values.playerEntityID, {
-        x: targetX * 24,
-        y: targetY * 24,
-      });
-      goToLevel(targetLevelID);
-      doTurn();
-    } else if (monsterEntityID === null) {
-      setEntityPosition(state.values.playerEntityID, newPlayerPosition);
-      doTurn();
     }
   }
 };
