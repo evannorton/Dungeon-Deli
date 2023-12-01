@@ -1,9 +1,9 @@
 export const definables: Map<string, Map<string, Definable>> = new Map();
 (
   window as unknown as {
-    definables: Map<string, Map<string, Definable>>;
+    gameDefinables: Map<string, Map<string, Definable>>;
   }
-).definables = definables;
+).gameDefinables = definables;
 const validIDCharacters: string[] = [
   "a",
   "b",

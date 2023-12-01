@@ -57,6 +57,13 @@ export class Stage extends Definable {
     this.createHUD();
   }
 
+  public doTurn(): void {
+    for (const weaponID of this._options.weaponIDs) {
+      const weapon: Weapon = getDefinable(Weapon, weaponID);
+      weapon.doTurn();
+    }
+  }
+
   private createHUD(): void {
     // Bottom left
     createQuadrilateral({
