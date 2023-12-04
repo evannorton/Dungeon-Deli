@@ -1,5 +1,5 @@
+import { attemptPlayerMove } from "./functions/attemptPlayerMove";
 import { createInputPressHandler, takeScreenshot } from "pixel-pigeon";
-import { movePlayer } from "./functions/movePlayer";
 
 createInputPressHandler({
   gamepadButtons: [14],
@@ -12,7 +12,7 @@ createInputPressHandler({
     },
   ],
   onInput: (): void => {
-    movePlayer(-1, 0);
+    attemptPlayerMove(-1, 0);
   },
 });
 createInputPressHandler({
@@ -26,7 +26,7 @@ createInputPressHandler({
     },
   ],
   onInput: (): void => {
-    movePlayer(1, 0);
+    attemptPlayerMove(1, 0);
   },
 });
 createInputPressHandler({
@@ -40,7 +40,7 @@ createInputPressHandler({
     },
   ],
   onInput: (): void => {
-    movePlayer(0, -1);
+    attemptPlayerMove(0, -1);
   },
 });
 createInputPressHandler({
@@ -54,7 +54,7 @@ createInputPressHandler({
     },
   ],
   onInput: (): void => {
-    movePlayer(0, 1);
+    attemptPlayerMove(0, 1);
   },
 });
 createInputPressHandler({

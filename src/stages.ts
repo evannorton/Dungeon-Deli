@@ -11,6 +11,7 @@ import {
 } from "pixel-pigeon";
 import { Mode } from "./modes";
 import { Weapon } from "./weapons";
+import { getPlayerAnimationID } from "./functions/getPlayerAnimationID";
 import { playerSpriteID } from "./sprites";
 import { state } from "./state";
 import { turnsPerMode } from "./constants/turnsPerMode";
@@ -33,7 +34,7 @@ export class Stage extends Definable {
     goToLevel(this._options.levelID);
     if (state.values.playerEntityID === null) {
       const playerSpriteInstanceID: string = createSpriteInstance({
-        getAnimationID: (): string => "default",
+        getAnimationID: getPlayerAnimationID,
         spriteID: playerSpriteID,
       });
       const playerEntityID: string = spawnEntity({
