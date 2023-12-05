@@ -3,6 +3,7 @@ import {
   EntityPosition,
   getActiveLevelID,
   getEntityFieldValue,
+  getEntityIDs,
   getEntityPosition,
   goToLevel,
   setEntityLevel,
@@ -10,7 +11,7 @@ import {
 } from "pixel-pigeon";
 import { MonsterInstance } from "../monsterInstances";
 import { Stage } from "../stages";
-import { getDefinable, getDefinables } from "../definables";
+import { getDefinable } from "../definables";
 import { getRectangleCollisionData } from "pixel-pigeon/api/functions/getRectangleCollisionData";
 import { getUniqueRandomModeID } from "./getUniqueRandomModeID";
 import { state } from "../state";
@@ -76,7 +77,14 @@ export const doTurn = (): void => {
     goToLevel(targetLevelID);
   }
   getDefinable(Stage, state.values.stageID).doTurn();
-  for (const monsterInstance of getDefinables(MonsterInstance).values()) {
+  for (const entityID of getEntityIDs({
+    layerID: "monsters",
+    levelID,
+  })) {
+    const monsterInstance: MonsterInstance = getDefinable(
+      MonsterInstance,
+      entityID,
+    );
     monsterInstance.doTurn();
   }
   if (state.values.turn % turnsPerMode === 0) {
