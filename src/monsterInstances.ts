@@ -44,6 +44,7 @@ export class MonsterInstance extends Definable {
       this._options.entityID,
       {
         collisionLayers: ["monsters", "transports"],
+        excludedPositions: [position],
         x: position.x,
         y: position.y,
       },

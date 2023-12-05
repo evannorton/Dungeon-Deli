@@ -24,10 +24,6 @@ export const doTurn = (): void => {
   if (state.values.stageID === null) {
     throw new Error("Attempted to do turn with no active stage.");
   }
-  const levelID: string | null = getActiveLevelID();
-  if (levelID === null) {
-    throw new Error("Attempted to do turn with no active level.");
-  }
   state.setValues({
     turn: state.values.turn + 1,
   });
@@ -77,10 +73,16 @@ export const doTurn = (): void => {
     goToLevel(targetLevelID);
   }
   getDefinable(Stage, state.values.stageID).doTurn();
+  const levelID: string | null = getActiveLevelID();
+  if (levelID === null) {
+    throw new Error("Attempted to do turn with no active level.");
+  }
+  console.log(levelID);
   for (const entityID of getEntityIDs({
     layerID: "monsters",
     levelID,
   })) {
+    console.log("move monster");
     const monsterInstance: MonsterInstance = getDefinable(
       MonsterInstance,
       entityID,
