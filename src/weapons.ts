@@ -27,7 +27,6 @@ export class Weapon extends Definable {
   public constructor(id: string, options: WeaponOptions) {
     super(id);
     this._options = options;
-    console.log(this._options);
   }
 
   public get name(): string {
