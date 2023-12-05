@@ -411,7 +411,7 @@
 		{
 			"__cWid": 17,
 			"__cHei": 13,
-			"identifier": "tiles2",
+			"identifier": "tiles",
 			"uid": 1,
 			"relPath": "images/tiles.png",
 			"embedAtlas": null,
@@ -444,6 +444,7 @@
 				{ "tileId": 38, "data": "{\n  \"ppCollision\": true\n}" },
 				{ "tileId": 39, "data": "{\n  \"ppCollision\": true\n}" },
 				{ "tileId": 41, "data": "{\n  \"ppCollision\": true\n}" },
+				{ "tileId": 52, "data": "{\n  \"ppCollision\": true\n}" },
 				{ "tileId": 53, "data": "{\n  \"ppCollision\": true\n}" },
 				{ "tileId": 119, "data": "{\n  \"ppCollision\": true\n}" },
 				{ "tileId": 120, "data": "{\n  \"ppCollision\": true\n}" },
