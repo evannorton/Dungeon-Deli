@@ -46,6 +46,15 @@ const validIDCharacters: string[] = [
   "/",
 ];
 
+export const getToken = (): string => {
+  const pieces: string[] = [];
+  for (let i: number = 0; i < 20; i++) {
+    pieces.push(
+      validIDCharacters[Math.floor(Math.random() * validIDCharacters.length)],
+    );
+  }
+  return pieces.join("");
+};
 export abstract class Definable {
   protected readonly _id: string;
 

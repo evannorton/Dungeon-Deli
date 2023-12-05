@@ -1,8 +1,7 @@
-import { Monster } from "../monsters";
-import { getDefinable } from "../definables";
+import { MonsterInstance } from "../monsterInstances";
 import { getEntityFieldValue, getEntityIDs } from "pixel-pigeon";
 
-export const createMonsterSpriteInstances = (): void => {
+export const createMonsterInstances = (): void => {
   for (const entityID of getEntityIDs({ layerID: "monsters" })) {
     const monsterID: unknown = getEntityFieldValue(entityID, "monster_id");
     if (typeof monsterID !== "string") {
@@ -10,7 +9,9 @@ export const createMonsterSpriteInstances = (): void => {
         `Entity "${entityID}" has an invalid "monster_id" value.`,
       );
     }
-    const monster: Monster = getDefinable(Monster, monsterID);
-    monster.createSpriteInstance(entityID);
+    new MonsterInstance({
+      entityID,
+      monsterID,
+    });
   }
 };

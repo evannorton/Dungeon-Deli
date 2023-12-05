@@ -5,7 +5,8 @@ import {
   despawnEntity,
   getEntityPosition,
 } from "pixel-pigeon";
-import { Definable } from "./definables";
+import { Definable, getDefinable } from "./definables";
+import { MonsterInstance } from "./monsterInstances";
 import { getRectangleCollisionData } from "pixel-pigeon/api/functions/getRectangleCollisionData";
 import { state } from "./state";
 
@@ -74,6 +75,7 @@ export class Weapon extends Definable {
         }
         if (entityID !== null) {
           despawnEntity(entityID);
+          getDefinable(MonsterInstance, entityID).remove();
         }
       }
     }

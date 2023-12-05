@@ -2,16 +2,15 @@ import {
   CollisionData,
   EntityPosition,
   getActiveLevelID,
-  getEntityCalculatedPath,
   getEntityFieldValue,
-  getEntityIDs,
   getEntityPosition,
   goToLevel,
   setEntityLevel,
   setEntityPosition,
 } from "pixel-pigeon";
+import { MonsterInstance } from "../monsterInstances";
 import { Stage } from "../stages";
-import { getDefinable } from "../definables";
+import { getDefinable, getDefinables } from "../definables";
 import { getRectangleCollisionData } from "pixel-pigeon/api/functions/getRectangleCollisionData";
 import { getUniqueRandomModeID } from "./getUniqueRandomModeID";
 import { state } from "../state";
@@ -77,23 +76,8 @@ export const doTurn = (): void => {
     goToLevel(targetLevelID);
   }
   getDefinable(Stage, state.values.stageID).doTurn();
-  for (const entityID of getEntityIDs({
-    layerID: "monsters",
-    levelID,
-  })) {
-    const position: EntityPosition = getEntityPosition(
-      state.values.playerEntityID,
-    );
-    const path: EntityPosition[] = getEntityCalculatedPath(entityID, {
-      collisionLayers: ["monsters", "transports"],
-      x: position.x,
-      y: position.y,
-    });
-    if (path.length > 2) {
-      setEntityPosition(entityID, path[1]);
-    } else {
-      // TODO: Attack player
-    }
+  for (const monsterInstance of getDefinables(MonsterInstance).values()) {
+    monsterInstance.doTurn();
   }
   if (state.values.turn % turnsPerMode === 0) {
     const modeID: string = state.values.nextModeID;

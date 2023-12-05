@@ -1,5 +1,5 @@
 import { Stage } from "./stages";
-import { createMonsterSpriteInstances } from "./functions/createMonsterSpriteInstances";
+import { createMonsterInstances } from "./functions/createMonsterInstances";
 import { getDefinable } from "./definables";
 import { musicVolumeChannelID } from "./volumeChannels";
 import { playAudioSource } from "pixel-pigeon";
@@ -9,7 +9,7 @@ export const run = (): void => {
   if (stageIDs.length === 0) {
     throw new Error("Attempted to run with no stages.");
   }
-  createMonsterSpriteInstances();
+  createMonsterInstances();
   getDefinable(Stage, stageIDs[0]).start();
   playAudioSource("cavern-theme-base", {
     loopPoint: 12800,
