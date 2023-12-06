@@ -1,10 +1,5 @@
 import { Character } from "./characters";
-import {
-  CollisionData,
-  EntityCollidable,
-  EntityPosition,
-  despawnEntity,
-} from "pixel-pigeon";
+import { CollisionData, EntityCollidable, EntityPosition } from "pixel-pigeon";
 import { Definable, getDefinable } from "./definables";
 import { MonsterInstance } from "./monsterInstances";
 import { getRectangleCollisionData } from "pixel-pigeon/api/functions/getRectangleCollisionData";
@@ -18,6 +13,7 @@ interface WeaponOptionsProjectile {
   readonly moves: WeaponOptionsProjectileMove[];
 }
 interface WeaponOptions {
+  readonly damage: number;
   readonly name: string;
   readonly projectile?: WeaponOptionsProjectile;
   readonly stepsPerAttack: number;
@@ -76,14 +72,18 @@ export class Weapon extends Definable {
           }
         }
         if (entityID !== null) {
-          despawnEntity(entityID);
-          getDefinable(MonsterInstance, entityID).remove();
+          const monsterInstance: MonsterInstance = getDefinable(
+            MonsterInstance,
+            entityID,
+          );
+          monsterInstance.takeDamage(this._options.damage);
         }
       }
     }
   }
 }
 new Weapon("left", {
+  damage: 25,
   name: "Shoot left",
   projectile: {
     moves: [{ x: -1 }],
@@ -91,6 +91,7 @@ new Weapon("left", {
   stepsPerAttack: 5,
 });
 new Weapon("right", {
+  damage: 25,
   name: "Shoot right",
   projectile: {
     moves: [{ x: 1 }],
@@ -98,6 +99,7 @@ new Weapon("right", {
   stepsPerAttack: 3,
 });
 new Weapon("down", {
+  damage: 25,
   name: "Shoot down",
   projectile: {
     moves: [{ y: 1 }],
@@ -105,6 +107,7 @@ new Weapon("down", {
   stepsPerAttack: 7,
 });
 new Weapon("up", {
+  damage: 25,
   name: "Shoot up",
   projectile: {
     moves: [{ y: -1 }],

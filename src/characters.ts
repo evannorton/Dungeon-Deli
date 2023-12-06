@@ -2,8 +2,11 @@ import { Definable, getToken } from "./definables";
 import { Direction } from "./types/Direction";
 import {
   EntityPosition,
+  addEntityQuadrilateral,
+  createQuadrilateral,
   createSprite,
   createSpriteInstance,
+  despawnEntity,
   getCurrentTime,
   getEntityPosition,
   lockCameraToEntity,
@@ -18,17 +21,20 @@ import { walkDuration } from "./constants/walkDuration";
 interface CharacterOptions {
   readonly entityID: string;
   readonly imagePath: string;
+  readonly maxHP: number;
 }
 
 export class Character extends Definable {
   private readonly _options: CharacterOptions;
   private readonly _spriteInstanceID: string;
   private _direction: Direction = Direction.Down;
+  private _hp: number;
   private _move: Move | null = null;
   private _step: Step = Step.Left;
   public constructor(options: CharacterOptions) {
     super(getToken());
     this._options = options;
+    this._hp = options.maxHP;
     const walkFrameDuration: number = Math.round(walkDuration / 2);
     const spriteID: string = createSprite({
       animations: [
@@ -264,7 +270,7 @@ export class Character extends Definable {
       imagePath: this._options.imagePath,
     });
     this._spriteInstanceID = createSpriteInstance({
-      getAnimationID: (): string => {
+      animationID: (): string => {
         const step: string = this._step;
         const direction: string = this._direction;
         if (this._move !== null) {
@@ -301,6 +307,26 @@ export class Character extends Definable {
       spriteID,
     });
     setEntitySpriteInstance(this._options.entityID, this._spriteInstanceID);
+    const hpBackQuadrilateralID: string = createQuadrilateral({
+      color: "#000000",
+      height: 2,
+      width: 16,
+    });
+    addEntityQuadrilateral(this._options.entityID, {
+      quadrilateralID: hpBackQuadrilateralID,
+      x: 4,
+      y: -3,
+    });
+    const hpFrontQuadrilateralID: string = createQuadrilateral({
+      color: "#e03c28",
+      height: 2,
+      width: (): number => Math.ceil(16 * (this._hp / this._options.maxHP)),
+    });
+    addEntityQuadrilateral(this._options.entityID, {
+      quadrilateralID: hpFrontQuadrilateralID,
+      x: 4,
+      y: -3,
+    });
   }
 
   public get direction(): Direction {
@@ -357,6 +383,13 @@ export class Character extends Definable {
       startPosition,
       time: getCurrentTime(),
     };
+  }
+
+  public takeDamage(damage: number): void {
+    this._hp = Math.max(this._hp - damage, 0);
+    if (this._hp === 0) {
+      despawnEntity(this._options.entityID);
+    }
   }
 
   public updateMovement(onEnd?: () => void): void {

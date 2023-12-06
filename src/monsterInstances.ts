@@ -18,6 +18,7 @@ export class MonsterInstance extends Definable {
     const character: Character = new Character({
       entityID: options.entityID,
       imagePath: this.monster.imagePath,
+      maxHP: this.monster.maxHP,
     });
     this._characterID = character.id;
   }
@@ -55,6 +56,10 @@ export class MonsterInstance extends Definable {
     } else {
       // TODO: Attack player
     }
+  }
+
+  public takeDamage(damage: number): void {
+    this.character.takeDamage(damage);
   }
 
   public updateMovement(): void {

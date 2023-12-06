@@ -9,6 +9,7 @@ import {
 } from "pixel-pigeon";
 import { Mode } from "./modes";
 import { Weapon } from "./weapons";
+import { playerMaxHP } from "./constants/playerMaxHP";
 import { state } from "./state";
 import { turnsPerMode } from "./constants/turnsPerMode";
 
@@ -39,6 +40,7 @@ export class Stage extends Definable {
       const character: Character = new Character({
         entityID: playerEntityID,
         imagePath: "player",
+        maxHP: playerMaxHP,
       });
       character.lockCameraToEntity();
       state.setValues({
