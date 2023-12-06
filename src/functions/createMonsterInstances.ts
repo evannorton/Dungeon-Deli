@@ -2,8 +2,11 @@ import { MonsterInstance } from "../monsterInstances";
 import { getEntityFieldValue, getEntityIDs } from "pixel-pigeon";
 
 export const createMonsterInstances = (): void => {
-  for (const entityID of getEntityIDs({ layerIDs: ["characters"], types: ["monster"] })) {
-    console.log(entityID)
+  for (const entityID of getEntityIDs({
+    layerIDs: ["characters"],
+    types: ["monster"],
+  })) {
+    console.log(entityID);
     const monsterID: unknown = getEntityFieldValue(entityID, "monster_id");
     if (typeof monsterID !== "string") {
       throw new Error(

@@ -1,7 +1,13 @@
 import { Character } from "./characters";
+import {
+  EntityPosition,
+  getActiveLevelID,
+  getEntityIDs,
+  getEntityPosition,
+  setEntityZIndex,
+} from "pixel-pigeon";
 import { MonsterInstance } from "./monsterInstances";
 import { doTurn } from "./functions/doTurn";
-import { EntityPosition, getActiveLevelID, getEntityIDs, getEntityPosition, setEntityZIndex } from "pixel-pigeon";
 import { getDefinable } from "./definables";
 import { state } from "./state";
 
@@ -20,7 +26,7 @@ export const tick = (): void => {
     for (const entityID of getEntityIDs({
       layerIDs: ["characters"],
       levelIDs: [levelID],
-      types: ["monster"]
+      types: ["monster"],
     })) {
       const monsterInstance: MonsterInstance = getDefinable(
         MonsterInstance,
@@ -31,17 +37,20 @@ export const tick = (): void => {
     getEntityIDs({
       layerIDs: ["characters"],
       levelIDs: [levelID],
-    }).sort((a: string, b: string): number => {
-      const aPosition: EntityPosition = getEntityPosition(a);
-      const bPosition: EntityPosition = getEntityPosition(b);
-      if (aPosition.y < bPosition.y) {
-        return -1;
-      } else if (aPosition.y > bPosition.y) {
-        return 1;
-      }
-      return 0;
-    }).forEach((entityID: string, entityIndex: number): void => {
-      setEntityZIndex(entityID, entityIndex);
-    });
+    })
+      .sort((a: string, b: string): number => {
+        const aPosition: EntityPosition = getEntityPosition(a);
+        const bPosition: EntityPosition = getEntityPosition(b);
+        if (aPosition.y < bPosition.y) {
+          return -1;
+        }
+        if (aPosition.y > bPosition.y) {
+          return 1;
+        }
+        return 0;
+      })
+      .forEach((entityID: string, entityIndex: number): void => {
+        setEntityZIndex(entityID, entityIndex);
+      });
   }
 };

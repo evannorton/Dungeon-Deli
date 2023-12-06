@@ -1,5 +1,6 @@
 import { Character } from "./characters";
 import { Definable, getDefinable } from "./definables";
+import { Direction } from "./types/Direction";
 import { EntityPosition, getEntityCalculatedPath } from "pixel-pigeon";
 import { Monster } from "./monsters";
 import { state } from "./state";
@@ -48,8 +49,8 @@ export class MonsterInstance extends Definable {
       {
         exclusions: [
           {
-            type: "transport",
             entityPosition: playerEntityPosition,
+            type: "transport",
           },
         ],
         types: ["monster", "transport"],
@@ -60,7 +61,16 @@ export class MonsterInstance extends Definable {
     if (path.length > 2) {
       this.character.startMovement(path[1]);
     } else {
-      // TODO: Attack player
+      const entityPosition: EntityPosition = this.character.getEntityPosition();
+      if (entityPosition.y > playerEntityPosition.y) {
+        this.character.direction = Direction.Up;
+      } else if (entityPosition.y < playerEntityPosition.y) {
+        this.character.direction = Direction.Down;
+      } else if (entityPosition.x > playerEntityPosition.x) {
+        this.character.direction = Direction.Left;
+      } else if (entityPosition.x < playerEntityPosition.x) {
+        this.character.direction = Direction.Right;
+      }
     }
   }
 

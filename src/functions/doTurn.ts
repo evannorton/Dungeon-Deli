@@ -80,7 +80,7 @@ export const doTurn = (): void => {
   for (const entityID of getEntityIDs({
     layerIDs: ["characters"],
     levelIDs: [levelID],
-    types: ["monster"]
+    types: ["monster"],
   })) {
     const monsterInstance: MonsterInstance = getDefinable(
       MonsterInstance,
