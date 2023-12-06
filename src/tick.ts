@@ -1,52 +1,19 @@
+import { Character } from "./characters";
 import { MonsterInstance } from "./monsterInstances";
 import { doTurn } from "./functions/doTurn";
-import {
-  getActiveLevelID,
-  getCurrentTime,
-  getEntityIDs,
-  setEntityPosition,
-} from "pixel-pigeon";
+import { getActiveLevelID, getEntityIDs } from "pixel-pigeon";
 import { getDefinable } from "./definables";
 import { state } from "./state";
-import { walkDuration } from "./constants/walkDuration";
 
 export const tick = (): void => {
-  const currentTime: number = getCurrentTime();
-  if (
-    state.values.playerEntityID !== null &&
-    state.values.playerMove !== null
-  ) {
-    const { endPosition, startPosition, time } = state.values.playerMove;
-    if (currentTime <= time + walkDuration) {
-      const divisor: number = currentTime - time;
-      const percent: number = Math.min(divisor / walkDuration, 1);
-      const offset: number = Math.floor(24 * percent);
-      if (endPosition.x > startPosition.x) {
-        setEntityPosition(state.values.playerEntityID, {
-          x: startPosition.x + offset,
-          y: startPosition.y,
-        });
-      } else if (endPosition.x < startPosition.x) {
-        setEntityPosition(state.values.playerEntityID, {
-          x: startPosition.x - offset,
-          y: startPosition.y,
-        });
-      } else if (endPosition.y > startPosition.y) {
-        setEntityPosition(state.values.playerEntityID, {
-          x: startPosition.x,
-          y: startPosition.y + offset,
-        });
-      } else if (endPosition.y < startPosition.y) {
-        setEntityPosition(state.values.playerEntityID, {
-          x: startPosition.x,
-          y: startPosition.y - offset,
-        });
-      }
-    } else {
-      setEntityPosition(state.values.playerEntityID, endPosition);
-      state.setValues({ playerMove: null });
+  if (state.values.playerCharacterID !== null) {
+    const playerCharacter: Character = getDefinable(
+      Character,
+      state.values.playerCharacterID,
+    );
+    playerCharacter.updateMovement((): void => {
       doTurn();
-    }
+    });
   }
   const levelID: string | null = getActiveLevelID();
   if (levelID !== null) {

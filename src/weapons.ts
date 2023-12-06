@@ -1,9 +1,9 @@
+import { Character } from "./characters";
 import {
   CollisionData,
   EntityCollidable,
   EntityPosition,
   despawnEntity,
-  getEntityPosition,
 } from "pixel-pigeon";
 import { Definable, getDefinable } from "./definables";
 import { MonsterInstance } from "./monsterInstances";
@@ -39,16 +39,18 @@ export class Weapon extends Definable {
   }
 
   public doTurn(): void {
-    if (state.values.playerEntityID === null) {
+    if (state.values.playerCharacterID === null) {
       throw new Error(
-        `Weapon "${this._id}" attemped to do turn with no player entity.`,
+        `Weapon "${this._id}" attemped to do turn with no player character.`,
       );
     }
+    const character: Character = getDefinable(
+      Character,
+      state.values.playerCharacterID,
+    );
     if (state.values.turn % this._options.stepsPerAttack === 0) {
       if (typeof this._options.projectile !== "undefined") {
-        const position: EntityPosition = getEntityPosition(
-          state.values.playerEntityID,
-        );
+        const position: EntityPosition = character.getEntityPosition();
         let entityID: string | null = null;
         outerLoop: while (entityID === null) {
           for (const move of this._options.projectile.moves) {

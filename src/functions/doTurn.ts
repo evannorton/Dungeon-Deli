@@ -1,13 +1,11 @@
+import { Character } from "../characters";
 import {
   CollisionData,
   EntityPosition,
   getActiveLevelID,
   getEntityFieldValue,
   getEntityIDs,
-  getEntityPosition,
   goToLevel,
-  setEntityLevel,
-  setEntityPosition,
 } from "pixel-pigeon";
 import { MonsterInstance } from "../monsterInstances";
 import { Stage } from "../stages";
@@ -18,18 +16,20 @@ import { state } from "../state";
 import { turnsPerMode } from "../constants/turnsPerMode";
 
 export const doTurn = (): void => {
-  if (state.values.playerEntityID === null) {
+  if (state.values.playerCharacterID === null) {
     throw new Error("Attempted to do turn with no player entity.");
   }
+  const character: Character = getDefinable(
+    Character,
+    state.values.playerCharacterID,
+  );
   if (state.values.stageID === null) {
     throw new Error("Attempted to do turn with no active stage.");
   }
   state.setValues({
     turn: state.values.turn + 1,
   });
-  const entityPosition: EntityPosition = getEntityPosition(
-    state.values.playerEntityID,
-  );
+  const entityPosition: EntityPosition = character.getEntityPosition();
   const transportCollisionData: CollisionData = getRectangleCollisionData(
     {
       height: 24,
@@ -65,8 +65,8 @@ export const doTurn = (): void => {
         `Entity "${transportEntityID}" has an invalid "target_y" value.`,
       );
     }
-    setEntityLevel(state.values.playerEntityID, targetLevelID);
-    setEntityPosition(state.values.playerEntityID, {
+    character.setEntityLevel(targetLevelID);
+    character.setEntityPosition({
       x: targetX * 24,
       y: targetY * 24,
     });

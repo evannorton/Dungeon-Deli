@@ -1,18 +1,14 @@
+import { Character } from "./characters";
 import { Definable, getDefinable } from "./definables";
 import {
   EntityPosition,
   createLabel,
   createQuadrilateral,
-  createSpriteInstance,
   goToLevel,
-  lockCameraToEntity,
-  setEntityPosition,
   spawnEntity,
 } from "pixel-pigeon";
 import { Mode } from "./modes";
 import { Weapon } from "./weapons";
-import { getPlayerAnimationID } from "./functions/getPlayerAnimationID";
-import { playerSpriteID } from "./sprites";
 import { state } from "./state";
 import { turnsPerMode } from "./constants/turnsPerMode";
 
@@ -32,28 +28,28 @@ export class Stage extends Definable {
   public start(): void {
     state.setValues({ stageID: this._id });
     goToLevel(this._options.levelID);
-    if (state.values.playerEntityID === null) {
-      const playerSpriteInstanceID: string = createSpriteInstance({
-        getAnimationID: getPlayerAnimationID,
-        spriteID: playerSpriteID,
-      });
+    if (state.values.playerCharacterID === null) {
       const playerEntityID: string = spawnEntity({
         height: 24,
         layerID: "player",
         position: this._options.playerStartPosition,
-        spriteInstanceID: playerSpriteInstanceID,
         width: 24,
         zIndex: 0,
       });
-      lockCameraToEntity(playerEntityID);
+      const character: Character = new Character({
+        entityID: playerEntityID,
+        imagePath: "player",
+      });
+      character.lockCameraToEntity();
       state.setValues({
-        playerEntityID,
+        playerCharacterID: character.id,
       });
     } else {
-      setEntityPosition(
-        state.values.playerEntityID,
-        this._options.playerStartPosition,
+      const character: Character = getDefinable(
+        Character,
+        state.values.playerCharacterID,
       );
+      character.setEntityPosition(this._options.playerStartPosition);
     }
     this.createHUD();
   }
