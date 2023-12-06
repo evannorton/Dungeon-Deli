@@ -1,6 +1,7 @@
 import { Definable } from "./definables";
 
 interface MonsterOptions {
+  readonly damage: number;
   readonly imagePath: string;
   readonly maxHP: number;
 }
@@ -12,6 +13,10 @@ export class Monster extends Definable {
     this._options = options;
   }
 
+  public get damage(): number {
+    return this._options.damage;
+  }
+
   public get imagePath(): string {
     return this._options.imagePath;
   }
@@ -21,6 +26,7 @@ export class Monster extends Definable {
   }
 }
 new Monster("rat", {
+  damage: 20,
   imagePath: "monsters/rat",
   maxHP: 50,
 });

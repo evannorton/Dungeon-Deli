@@ -71,6 +71,7 @@ export class MonsterInstance extends Definable {
       } else if (entityPosition.x < playerEntityPosition.x) {
         this.character.direction = Direction.Right;
       }
+      playerCharacter.takeDamage(this.monster.damage);
     }
   }
 
