@@ -33,8 +33,9 @@ export const attemptPlayerMove = (xOffset: number, yOffset: number): void => {
   if (
     character.isMoving() === false &&
     getEntityIDs({
-      layerID: "monster",
-      levelID,
+      layerIDs: ["characters"],
+      levelIDs: [levelID],
+      types: ["monster"],
     }).every((entityID: string): boolean => {
       const monsterInstance: MonsterInstance = getDefinable(
         MonsterInstance,
@@ -56,7 +57,7 @@ export const attemptPlayerMove = (xOffset: number, yOffset: number): void => {
         x: endPosition.x,
         y: endPosition.y,
       },
-      ["monsters"],
+      ["monster"],
     );
     if (
       mapCollisionData.map === false &&

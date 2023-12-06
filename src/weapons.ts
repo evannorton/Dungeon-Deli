@@ -59,7 +59,7 @@ export class Weapon extends Definable {
                 x: position.x,
                 y: position.y,
               },
-              ["monsters"],
+              ["monster"],
             );
             if (collisionData.map === true) {
               break outerLoop;

@@ -32,7 +32,7 @@ export class Stage extends Definable {
     if (state.values.playerCharacterID === null) {
       const playerEntityID: string = spawnEntity({
         height: 24,
-        layerID: "player",
+        layerID: "characters",
         position: this._options.playerStartPosition,
         width: 24,
         zIndex: 0,

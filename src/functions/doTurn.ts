@@ -37,7 +37,7 @@ export const doTurn = (): void => {
       x: entityPosition.x,
       y: entityPosition.y,
     },
-    ["transports"],
+    ["transport"],
   );
   const transportEntityID: string | null =
     transportCollisionData.entityCollidables.length > 0
@@ -78,8 +78,9 @@ export const doTurn = (): void => {
     throw new Error("Attempted to do turn with no active level.");
   }
   for (const entityID of getEntityIDs({
-    layerID: "monsters",
-    levelID,
+    layerIDs: ["characters"],
+    levelIDs: [levelID],
+    types: ["monster"]
   })) {
     const monsterInstance: MonsterInstance = getDefinable(
       MonsterInstance,

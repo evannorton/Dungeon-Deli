@@ -46,13 +46,13 @@ export class MonsterInstance extends Definable {
     const path: EntityPosition[] = getEntityCalculatedPath(
       this._options.entityID,
       {
-        collisionLayers: ["monsters", "transports"],
         exclusions: [
           {
-            collisionLayer: "transports",
+            type: "transport",
             entityPosition: playerEntityPosition,
           },
         ],
+        types: ["monster", "transport"],
         x: playerEntityPosition.x,
         y: playerEntityPosition.y,
       },
