@@ -77,12 +77,10 @@ export const doTurn = (): void => {
   if (levelID === null) {
     throw new Error("Attempted to do turn with no active level.");
   }
-  console.log(levelID);
   for (const entityID of getEntityIDs({
     layerID: "monsters",
     levelID,
   })) {
-    console.log("move monster");
     const monsterInstance: MonsterInstance = getDefinable(
       MonsterInstance,
       entityID,
