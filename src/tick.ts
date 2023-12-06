@@ -1,15 +1,22 @@
+import { MonsterInstance } from "./monsterInstances";
 import { doTurn } from "./functions/doTurn";
-import { getCurrentTime, setEntityPosition } from "pixel-pigeon";
+import {
+  getActiveLevelID,
+  getCurrentTime,
+  getEntityIDs,
+  setEntityPosition,
+} from "pixel-pigeon";
+import { getDefinable } from "./definables";
 import { state } from "./state";
 import { walkDuration } from "./constants/walkDuration";
 
 export const tick = (): void => {
+  const currentTime: number = getCurrentTime();
   if (
     state.values.playerEntityID !== null &&
     state.values.playerMove !== null
   ) {
     const { endPosition, startPosition, time } = state.values.playerMove;
-    const currentTime: number = getCurrentTime();
     if (currentTime <= time + walkDuration) {
       const divisor: number = currentTime - time;
       const percent: number = Math.min(divisor / walkDuration, 1);
@@ -39,6 +46,19 @@ export const tick = (): void => {
       setEntityPosition(state.values.playerEntityID, endPosition);
       state.setValues({ playerMove: null });
       doTurn();
+    }
+  }
+  const levelID: string | null = getActiveLevelID();
+  if (levelID !== null) {
+    for (const entityID of getEntityIDs({
+      layerID: "monsters",
+      levelID,
+    })) {
+      const monsterInstance: MonsterInstance = getDefinable(
+        MonsterInstance,
+        entityID,
+      );
+      monsterInstance.updateMovement();
     }
   }
 };

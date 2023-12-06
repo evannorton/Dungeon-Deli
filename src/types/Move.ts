@@ -1,6 +1,6 @@
 import { EntityPosition } from "pixel-pigeon";
 
-export interface PlayerMove {
+export interface Move {
   endPosition: EntityPosition;
   startPosition: EntityPosition;
   time: number;

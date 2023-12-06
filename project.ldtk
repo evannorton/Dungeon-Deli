@@ -447,9 +447,13 @@
 				{ "tileId": 97, "data": "{\n  \"ppCollision\": true\n}" },
 				{ "tileId": 98, "data": "{\n  \"ppCollision\": true\n}" },
 				{ "tileId": 224, "data": "{\n  \"ppCollision\": true\n}" },
-				{ "tileId": 225, "data": "{\n  \"ppCollision\": true\n}" },
 				{ "tileId": 226, "data": "{\n  \"ppCollision\": true\n}" },
-				{ "tileId": 227, "data": "{\n  \"ppCollision\": true\n}" }
+				{ "tileId": 227, "data": "{\n  \"ppCollision\": true\n}" },
+				{ "tileId": 256, "data": "{\n  \"ppCollision\": true\n}" },
+				{ "tileId": 288, "data": "{\n  \"ppCollision\": true\n}" },
+				{ "tileId": 291, "data": "{\n  \"ppCollision\": true\n}" },
+				{ "tileId": 323, "data": "{\n  \"ppCollision\": true\n}" },
+				{ "tileId": 324, "data": "{\n  \"ppCollision\": true\n}" }
 			],
 			"savedSelections": [],
 			"cachedPixelData": {

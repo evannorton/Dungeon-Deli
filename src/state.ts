@@ -1,5 +1,5 @@
 import { Direction } from "./types/Direction";
-import { PlayerMove } from "./types/PlayerMove";
+import { Move } from "./types/Move";
 import { State } from "pixel-pigeon";
 import { Step } from "./types/Step";
 import { getRandomModeID } from "./functions/getRandomModeID";
@@ -10,7 +10,7 @@ interface StateSchema {
   modeID: string;
   nextModeID: string;
   playerEntityID: string | null;
-  playerMove: PlayerMove | null;
+  playerMove: Move | null;
   stageID: string | null;
   step: Step;
   turn: number;
