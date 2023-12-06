@@ -37,18 +37,21 @@ export class MonsterInstance extends Definable {
         `Attempted to do MonsterInstance "${this._id}" turn with no player character.`,
       );
     }
-    const character: Character = getDefinable(
+    const playerCharacter: Character = getDefinable(
       Character,
       state.values.playerCharacterID,
     );
-    const position: EntityPosition = character.getEntityPosition();
+    const playerEntityPosition: EntityPosition = playerCharacter.getEntityPosition();
     const path: EntityPosition[] = getEntityCalculatedPath(
       this._options.entityID,
       {
         collisionLayers: ["monsters", "transports"],
-        excludedPositions: [position],
-        x: position.x,
-        y: position.y,
+        exclusions: [{
+          collisionLayer: "transports",
+          entityPosition: playerEntityPosition
+        }],
+        x: playerEntityPosition.x,
+        y: playerEntityPosition.y,
       },
     );
     if (path.length > 2) {

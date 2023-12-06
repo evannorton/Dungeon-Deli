@@ -10,6 +10,7 @@ import {
   getCurrentTime,
   getEntityPosition,
   lockCameraToEntity,
+  setEntityBlockingPosition,
   setEntityLevel,
   setEntityPosition,
   setEntitySpriteInstance,
@@ -383,6 +384,7 @@ export class Character extends Definable {
       startPosition,
       time: getCurrentTime(),
     };
+    setEntityBlockingPosition(this._options.entityID, endPosition);
   }
 
   public takeDamage(damage: number): void {
