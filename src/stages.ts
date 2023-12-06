@@ -71,7 +71,7 @@ export class Stage extends Definable {
       color: "#000000",
       coordinates: {
         x: 2,
-        y: 145,
+        y: 270 - 35,
       },
       height: 33,
       opacity: 0.5,
@@ -81,7 +81,7 @@ export class Stage extends Definable {
       color: "#ffffff",
       coordinates: {
         x: 5,
-        y: 148,
+        y: 270 - 32,
       },
       getText: (): string => "Mode:",
       horizontalAlignment: "left",
@@ -91,7 +91,7 @@ export class Stage extends Definable {
       color: "#ffffff",
       coordinates: {
         x: 117,
-        y: 148,
+        y: 270 - 32,
       },
       getText: (): string => getDefinable(Mode, state.values.modeID).name,
       horizontalAlignment: "right",
@@ -101,7 +101,7 @@ export class Stage extends Definable {
       color: "#ffffff",
       coordinates: {
         x: 5,
-        y: 158,
+        y: 270 - 22,
       },
       getText: (): string => "Next mode:",
       horizontalAlignment: "left",
@@ -111,7 +111,7 @@ export class Stage extends Definable {
       color: "#ffffff",
       coordinates: {
         x: 117,
-        y: 158,
+        y: 270 - 22,
       },
       getText: (): string => getDefinable(Mode, state.values.nextModeID).name,
       horizontalAlignment: "right",
@@ -121,7 +121,7 @@ export class Stage extends Definable {
       color: "#ffffff",
       coordinates: {
         x: 5,
-        y: 168,
+        y: 270 - 12,
       },
       getText: (): string => "Until next:",
       horizontalAlignment: "left",
@@ -131,7 +131,7 @@ export class Stage extends Definable {
       color: "#ffffff",
       coordinates: {
         x: 117,
-        y: 168,
+        y: 270 - 12,
       },
       getText: (): string =>
         String(turnsPerMode - (state.values.turn % turnsPerMode)),
@@ -142,7 +142,7 @@ export class Stage extends Definable {
     createQuadrilateral({
       color: "#000000",
       coordinates: {
-        x: 228,
+        x: 480 - 92,
         y: 2,
       },
       height: 3 + this._options.weaponIDs.length * 10,
@@ -155,7 +155,7 @@ export class Stage extends Definable {
         createLabel({
           color: "#ffffff",
           coordinates: {
-            x: 231,
+            x: 480 - 89,
             y: 5 + weaponIndex * 10,
           },
           getText: (): string => `${weapon.name}:`,
@@ -165,7 +165,7 @@ export class Stage extends Definable {
         createLabel({
           color: "#ffffff",
           coordinates: {
-            x: 315,
+            x: 480 - 5,
             y: 5 + weaponIndex * 10,
           },
           getText: (): string =>
