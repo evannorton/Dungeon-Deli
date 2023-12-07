@@ -9,20 +9,39 @@ import {
 import { MonsterInstance } from "./monsterInstances";
 import { doTurn } from "./functions/doTurn";
 import { getDefinable } from "./definables";
+import { playerIsBlocked } from "./functions/playerIsBlocked";
 import { state } from "./state";
 
 export const tick = (): void => {
-  if (state.values.playerCharacterID !== null) {
-    const playerCharacter: Character = getDefinable(
-      Character,
-      state.values.playerCharacterID,
-    );
-    playerCharacter.updateMovement((): void => {
-      doTurn();
-    });
-  }
   const levelID: string | null = getActiveLevelID();
   if (levelID !== null) {
+    if (state.values.playerCharacterID !== null) {
+      const playerCharacter: Character = getDefinable(
+        Character,
+        state.values.playerCharacterID,
+      );
+      playerCharacter.updateMovement((): void => {
+        doTurn();
+      });
+      if (
+        playerCharacter.isMoving() === false &&
+        getEntityIDs({
+          layerIDs: ["characters"],
+          levelIDs: [levelID],
+          types: ["monster"],
+        }).every((entityID: string): boolean => {
+          const monsterInstance: MonsterInstance = getDefinable(
+            MonsterInstance,
+            entityID,
+          );
+          return monsterInstance.isMoving() === false;
+        })
+      ) {
+        if (playerCharacter.isAlive() && playerIsBlocked()) {
+          doTurn();
+        }
+      }
+    }
     for (const entityID of getEntityIDs({
       layerIDs: ["characters"],
       levelIDs: [levelID],
