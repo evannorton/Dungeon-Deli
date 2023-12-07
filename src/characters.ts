@@ -5,7 +5,6 @@ import {
   addEntityQuadrilateral,
   createQuadrilateral,
   createSprite,
-  createSpriteInstance,
   despawnEntity,
   getCurrentTime,
   getEntityPosition,
@@ -13,7 +12,7 @@ import {
   setEntityBlockingPosition,
   setEntityLevel,
   setEntityPosition,
-  setEntitySpriteInstance,
+  setEntitySprite,
 } from "pixel-pigeon";
 import { Move } from "./types/Move";
 import { Step } from "./types/Step";
@@ -27,7 +26,7 @@ interface CharacterOptions {
 
 export class Character extends Definable {
   private readonly _options: CharacterOptions;
-  private readonly _spriteInstanceID: string;
+  private readonly _spriteID: string;
   private _direction: Direction = Direction.Down;
   private _hp: number;
   private _move: Move | null = null;
@@ -37,7 +36,7 @@ export class Character extends Definable {
     this._options = options;
     this._hp = options.maxHP;
     const walkFrameDuration: number = Math.round(walkDuration / 2);
-    const spriteID: string = createSprite({
+    this._spriteID = createSprite({
       animations: [
         {
           frames: [
@@ -269,8 +268,6 @@ export class Character extends Definable {
         },
       ],
       imagePath: this._options.imagePath,
-    });
-    this._spriteInstanceID = createSpriteInstance({
       animationID: (): string => {
         const step: string = this._step;
         const direction: string = this._direction;
@@ -305,9 +302,8 @@ export class Character extends Definable {
         }
         return `idle-${direction}`;
       },
-      spriteID,
     });
-    setEntitySpriteInstance(this._options.entityID, this._spriteInstanceID);
+    setEntitySprite(this._options.entityID, this._spriteID);
     const hpBackQuadrilateralID: string = createQuadrilateral({
       color: "#000000",
       height: 2,
