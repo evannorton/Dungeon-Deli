@@ -346,6 +346,10 @@ export class Character extends Definable {
     return getEntityPosition(this._options.entityID);
   }
 
+  public isAlive(): boolean {
+    return this._hp > 0;
+  }
+
   public lockCameraToEntity(): void {
     lockCameraToEntity(this._options.entityID);
   }

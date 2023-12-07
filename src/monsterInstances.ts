@@ -42,36 +42,39 @@ export class MonsterInstance extends Definable {
       Character,
       state.values.playerCharacterID,
     );
-    const playerEntityPosition: EntityPosition =
-      playerCharacter.getEntityPosition();
-    const path: EntityPosition[] = getEntityCalculatedPath(
-      this._options.entityID,
-      {
-        exclusions: [
-          {
-            entityPosition: playerEntityPosition,
-            type: "transport",
-          },
-        ],
-        types: ["monster", "transport"],
-        x: playerEntityPosition.x,
-        y: playerEntityPosition.y,
-      },
-    );
-    if (path.length > 2) {
-      this.character.startMovement(path[1]);
-    } else {
-      const entityPosition: EntityPosition = this.character.getEntityPosition();
-      if (entityPosition.y > playerEntityPosition.y) {
-        this.character.direction = Direction.Up;
-      } else if (entityPosition.y < playerEntityPosition.y) {
-        this.character.direction = Direction.Down;
-      } else if (entityPosition.x > playerEntityPosition.x) {
-        this.character.direction = Direction.Left;
-      } else if (entityPosition.x < playerEntityPosition.x) {
-        this.character.direction = Direction.Right;
+    if (playerCharacter.isAlive()) {
+      const playerEntityPosition: EntityPosition =
+        playerCharacter.getEntityPosition();
+      const path: EntityPosition[] = getEntityCalculatedPath(
+        this._options.entityID,
+        {
+          exclusions: [
+            {
+              entityPosition: playerEntityPosition,
+              type: "transport",
+            },
+          ],
+          types: ["monster", "transport"],
+          x: playerEntityPosition.x,
+          y: playerEntityPosition.y,
+        },
+      );
+      if (path.length > 2) {
+        this.character.startMovement(path[1]);
+      } else {
+        const entityPosition: EntityPosition =
+          this.character.getEntityPosition();
+        if (entityPosition.y > playerEntityPosition.y) {
+          this.character.direction = Direction.Up;
+        } else if (entityPosition.y < playerEntityPosition.y) {
+          this.character.direction = Direction.Down;
+        } else if (entityPosition.x > playerEntityPosition.x) {
+          this.character.direction = Direction.Left;
+        } else if (entityPosition.x < playerEntityPosition.x) {
+          this.character.direction = Direction.Right;
+        }
+        playerCharacter.takeDamage(this.monster.damage);
       }
-      playerCharacter.takeDamage(this.monster.damage);
     }
   }
 
