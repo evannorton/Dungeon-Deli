@@ -3,6 +3,7 @@ import { Direction } from "./types/Direction";
 import {
   EntityPosition,
   addEntityQuadrilateral,
+  addEntitySprite,
   createQuadrilateral,
   createSprite,
   despawnEntity,
@@ -12,7 +13,6 @@ import {
   setEntityBlockingPosition,
   setEntityLevel,
   setEntityPosition,
-  setEntitySprite,
 } from "pixel-pigeon";
 import { Move } from "./types/Move";
 import { Step } from "./types/Step";
@@ -303,7 +303,9 @@ export class Character extends Definable {
         return `idle-${direction}`;
       },
     });
-    setEntitySprite(this._options.entityID, this._spriteID);
+    addEntitySprite(this._options.entityID, {
+      spriteID: this._spriteID
+    });
     const hpBackQuadrilateralID: string = createQuadrilateral({
       color: "#000000",
       height: 2,
