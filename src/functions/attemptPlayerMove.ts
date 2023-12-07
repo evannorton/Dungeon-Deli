@@ -15,7 +15,7 @@ export const attemptPlayerMove = (xOffset: number, yOffset: number): void => {
   if (state.values.playerCharacterID === null) {
     throw new Error("Attempted to move player with no player character ID.");
   }
-  const character: Character = getDefinable(
+  const playerCharacter: Character = getDefinable(
     Character,
     state.values.playerCharacterID,
   );
@@ -25,48 +25,51 @@ export const attemptPlayerMove = (xOffset: number, yOffset: number): void => {
       "Attempted to attempt player move with no active level ID.",
     );
   }
-  const startPosition: EntityPosition = character.getEntityPosition();
-  const endPosition: EntityPosition = {
-    x: startPosition.x + xOffset * 24,
-    y: startPosition.y + yOffset * 24,
-  };
-  if (
-    character.isMoving() === false &&
-    getEntityIDs({
-      layerIDs: ["characters"],
-      levelIDs: [levelID],
-      types: ["monster"],
-    }).every((entityID: string): boolean => {
-      const monsterInstance: MonsterInstance = getDefinable(
-        MonsterInstance,
-        entityID,
-      );
-      return monsterInstance.isMoving() === false;
-    })
-  ) {
-    const collisionData: CollisionData = getRectangleCollisionData(
-      {
-        height: 24,
-        width: 24,
-        x: endPosition.x,
-        y: endPosition.y,
-      },
-      ["monster"],
-    );
+  if (playerCharacter.isAlive()) {
+    const startPosition: EntityPosition = playerCharacter.getEntityPosition();
+    const endPosition: EntityPosition = {
+      x: startPosition.x + xOffset * 24,
+      y: startPosition.y + yOffset * 24,
+    };
     if (
-      collisionData.map === false &&
-      collisionData.entityCollidables.length === 0
+      state.values.attackingMonsterInstancesIDs.length === 0 &&
+      playerCharacter.isMoving() === false &&
+      getEntityIDs({
+        layerIDs: ["characters"],
+        levelIDs: [levelID],
+        types: ["monster"],
+      }).every((entityID: string): boolean => {
+        const monsterInstance: MonsterInstance = getDefinable(
+          MonsterInstance,
+          entityID,
+        );
+        return monsterInstance.isMoving() === false;
+      })
     ) {
-      character.startMovement(endPosition);
-    } else {
-      if (xOffset > 0) {
-        character.direction = Direction.Right;
-      } else if (xOffset < 0) {
-        character.direction = Direction.Left;
-      } else if (yOffset > 0) {
-        character.direction = Direction.Down;
-      } else if (yOffset < 0) {
-        character.direction = Direction.Up;
+      const collisionData: CollisionData = getRectangleCollisionData(
+        {
+          height: 24,
+          width: 24,
+          x: endPosition.x,
+          y: endPosition.y,
+        },
+        ["monster"],
+      );
+      if (
+        collisionData.map === false &&
+        collisionData.entityCollidables.length === 0
+      ) {
+        playerCharacter.startMovement(endPosition);
+      } else {
+        if (xOffset > 0) {
+          playerCharacter.direction = Direction.Right;
+        } else if (xOffset < 0) {
+          playerCharacter.direction = Direction.Left;
+        } else if (yOffset > 0) {
+          playerCharacter.direction = Direction.Down;
+        } else if (yOffset < 0) {
+          playerCharacter.direction = Direction.Up;
+        }
       }
     }
   }

@@ -10,6 +10,7 @@ import {
   getCurrentTime,
   getEntityPosition,
   lockCameraToEntity,
+  removeEntitySprite,
   setEntityBlockingPosition,
   setEntityLevel,
   setEntityPosition,
@@ -37,6 +38,40 @@ export class Character extends Definable {
     this._hp = options.maxHP;
     const walkFrameDuration: number = Math.round(walkDuration / 2);
     this._spriteID = createSprite({
+      animationID: (): string => {
+        const step: string = this._step;
+        const direction: string = this._direction;
+        if (this._move !== null) {
+          const { endPosition, startPosition, time } = this._move;
+          if (getCurrentTime() <= time + walkDuration) {
+            if (endPosition.x > startPosition.x) {
+              return `walk-${direction}-step-${step}`;
+            }
+            if (endPosition.x < startPosition.x) {
+              return `walk-${direction}-step-${step}`;
+            }
+            if (endPosition.y > startPosition.y) {
+              return `walk-${direction}-step-${step}`;
+            }
+            if (endPosition.y < startPosition.y) {
+              return `walk-${direction}-step-${step}`;
+            }
+          }
+          if (endPosition.x > startPosition.x) {
+            return `idle-${direction}`;
+          }
+          if (endPosition.x < startPosition.x) {
+            return `idle-${direction}`;
+          }
+          if (endPosition.y > startPosition.y) {
+            return `idle-${direction}`;
+          }
+          if (endPosition.y < startPosition.y) {
+            return `idle-${direction}`;
+          }
+        }
+        return `idle-${direction}`;
+      },
       animations: [
         {
           frames: [
@@ -268,43 +303,9 @@ export class Character extends Definable {
         },
       ],
       imagePath: this._options.imagePath,
-      animationID: (): string => {
-        const step: string = this._step;
-        const direction: string = this._direction;
-        if (this._move !== null) {
-          const { endPosition, startPosition, time } = this._move;
-          if (getCurrentTime() <= time + walkDuration) {
-            if (endPosition.x > startPosition.x) {
-              return `walk-${direction}-step-${step}`;
-            }
-            if (endPosition.x < startPosition.x) {
-              return `walk-${direction}-step-${step}`;
-            }
-            if (endPosition.y > startPosition.y) {
-              return `walk-${direction}-step-${step}`;
-            }
-            if (endPosition.y < startPosition.y) {
-              return `walk-${direction}-step-${step}`;
-            }
-          }
-          if (endPosition.x > startPosition.x) {
-            return `idle-${direction}`;
-          }
-          if (endPosition.x < startPosition.x) {
-            return `idle-${direction}`;
-          }
-          if (endPosition.y > startPosition.y) {
-            return `idle-${direction}`;
-          }
-          if (endPosition.y < startPosition.y) {
-            return `idle-${direction}`;
-          }
-        }
-        return `idle-${direction}`;
-      },
     });
     addEntitySprite(this._options.entityID, {
-      spriteID: this._spriteID
+      spriteID: this._spriteID,
     });
     const hpBackQuadrilateralID: string = createQuadrilateral({
       color: "#000000",
@@ -332,12 +333,32 @@ export class Character extends Definable {
     return this._direction;
   }
 
+  public get hp(): number {
+    return this._hp;
+  }
+
   public get step(): Step {
     return this._step;
   }
 
   public set direction(direction: Direction) {
     this._direction = direction;
+  }
+
+  public addEntitySprite(spriteID: string): void {
+    addEntitySprite(this._options.entityID, {
+      spriteID,
+    });
+  }
+
+  public despawnEntity(): void {
+    despawnEntity(this._options.entityID);
+  }
+
+  public removeEntitySprite(spriteID: string): void {
+    removeEntitySprite(this._options.entityID, {
+      spriteID,
+    });
   }
 
   public getEntityPosition(): EntityPosition {
@@ -391,9 +412,6 @@ export class Character extends Definable {
 
   public takeDamage(damage: number): void {
     this._hp = Math.max(this._hp - damage, 0);
-    if (this._hp === 0) {
-      despawnEntity(this._options.entityID);
-    }
   }
 
   public updateMovement(onEnd?: () => void): void {

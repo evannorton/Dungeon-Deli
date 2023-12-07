@@ -77,6 +77,9 @@ export class Weapon extends Definable {
             entityID,
           );
           monsterInstance.takeDamage(this._options.damage);
+          if (monsterInstance.hp === 0) {
+            monsterInstance.despawnEntity();
+          }
         }
       }
     }

@@ -53,6 +53,17 @@ export const tick = (): void => {
       );
       monsterInstance.updateMovement();
     }
+    if (state.values.attackingMonsterInstancesIDs.length > 0) {
+      const attackingMonsterInstance: MonsterInstance = getDefinable(
+        MonsterInstance,
+        state.values.attackingMonsterInstancesIDs[0],
+      );
+      if (attackingMonsterInstance.isAttacking()) {
+        attackingMonsterInstance.updateAttack();
+      } else {
+        attackingMonsterInstance.attack();
+      }
+    }
     getEntityIDs({
       layerIDs: ["characters"],
       levelIDs: [levelID],

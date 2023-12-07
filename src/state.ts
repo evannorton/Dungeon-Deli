@@ -3,6 +3,7 @@ import { getRandomModeID } from "./functions/getRandomModeID";
 import { getUniqueRandomModeID } from "./functions/getUniqueRandomModeID";
 
 interface StateSchema {
+  attackingMonsterInstancesIDs: string[];
   modeID: string;
   nextModeID: string;
   playerCharacterID: string | null;
@@ -13,6 +14,7 @@ const modeID: string = getRandomModeID();
 const nextModeID: string = getUniqueRandomModeID(modeID);
 
 export const state: State<StateSchema> = new State({
+  attackingMonsterInstancesIDs: [],
   modeID,
   nextModeID,
   playerCharacterID: null,
