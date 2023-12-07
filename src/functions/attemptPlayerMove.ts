@@ -44,13 +44,7 @@ export const attemptPlayerMove = (xOffset: number, yOffset: number): void => {
       return monsterInstance.isMoving() === false;
     })
   ) {
-    const mapCollisionData: CollisionData = getRectangleCollisionData({
-      height: 24,
-      width: 24,
-      x: endPosition.x,
-      y: endPosition.y,
-    });
-    const monsterCollisionData: CollisionData = getRectangleCollisionData(
+    const collisionData: CollisionData = getRectangleCollisionData(
       {
         height: 24,
         width: 24,
@@ -60,8 +54,8 @@ export const attemptPlayerMove = (xOffset: number, yOffset: number): void => {
       ["monster"],
     );
     if (
-      mapCollisionData.map === false &&
-      monsterCollisionData.entityCollidables.length === 0
+      collisionData.map === false &&
+      collisionData.entityCollidables.length === 0
     ) {
       character.startMovement(endPosition);
     } else {
