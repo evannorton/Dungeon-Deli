@@ -29,3 +29,8 @@ export const state: State<StateSchema> = new State({
   turn: 0,
   turnPart: null,
 });
+(
+  window as unknown as {
+    state: unknown;
+  }
+).state = state;

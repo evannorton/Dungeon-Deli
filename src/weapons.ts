@@ -1,20 +1,26 @@
 import { Character } from "./characters";
-import { Definable, getDefinable } from "./definables";
 import {
+  CollisionData,
   EntityPosition,
   createEntity,
   createSprite,
   getCurrentTime,
   removeEntity,
+  setEntityPosition,
 } from "pixel-pigeon";
+import { Definable, getDefinable } from "./definables";
+import { EntityCollidable } from "pixel-pigeon/api/types/World";
+import { MonsterInstance } from "./monsterInstances";
 import { TurnPart } from "./types/TurnPart";
+import { getRectangleCollisionData } from "pixel-pigeon/api/functions/getRectangleCollisionData";
 import { projectileDuration } from "./constants/projectileDuration";
 import { startMonsterInstancesMovement } from "./functions/startMonsterInstancesMovement";
 import { state } from "./state";
 
 export interface WeaponAttack {
-  readonly entityID: string;
+  readonly monsterEntityID: string | null;
   readonly positions: EntityPosition[];
+  readonly projectileEntityID: string;
   readonly time: number;
 }
 interface WeaponOptionsProjectileMove {
@@ -89,11 +95,41 @@ export class Weapon extends Definable {
       ],
       width: 24,
     });
-    this._attack = {
-      entityID: projectileEntityID,
-      positions: [playerEntityPosition],
-      time: getCurrentTime(),
-    };
+    if (typeof this._options.projectile !== "undefined") {
+      const positions: EntityPosition[] = [playerEntityPosition];
+      let entityID: string | null = null;
+      outerLoop: while (entityID === null) {
+        for (const move of this._options.projectile.moves) {
+          positions.push({
+            x: positions[positions.length - 1].x + (move.x ?? 0) * 24,
+            y: positions[positions.length - 1].y + (move.y ?? 0) * 24,
+          });
+          const collisionData: CollisionData = getRectangleCollisionData(
+            {
+              height: 24,
+              width: 24,
+              x: positions[positions.length - 1].x,
+              y: positions[positions.length - 1].y,
+            },
+            ["monster"],
+          );
+          if (collisionData.map === true) {
+            break outerLoop;
+          }
+          if (collisionData.entityCollidables.length > 0) {
+            const entityCollidable: EntityCollidable =
+              collisionData.entityCollidables[0];
+            entityID = entityCollidable.entityID;
+          }
+        }
+      }
+      this._attack = {
+        monsterEntityID: entityID,
+        positions,
+        projectileEntityID,
+        time: getCurrentTime(),
+      };
+    }
   }
 
   public isAttacking(): boolean {
@@ -109,13 +145,54 @@ export class Weapon extends Definable {
     if (this._attack !== null) {
       const { time } = this._attack;
       const currentTime: number = getCurrentTime();
-      if (currentTime > time + projectileDuration) {
+      const positionsIndex: number = Math.min(
+        Math.floor((currentTime - time) / projectileDuration),
+        this._attack.positions.length - 1,
+      );
+      const percentage: number =
+        ((currentTime - time) / projectileDuration) % 1;
+      const position: EntityPosition = this._attack.positions[positionsIndex];
+      const nextPosition: EntityPosition =
+        this._attack.positions[positionsIndex + 1];
+      if (
+        typeof position !== "undefined" &&
+        typeof nextPosition !== "undefined"
+      ) {
+        const projectilePosition: EntityPosition = {
+          ...position,
+        };
+        let xOffset: number = 0;
+        let yOffset: number = 0;
+        if (nextPosition.x > position.x) {
+          xOffset += 24 * percentage;
+        } else if (nextPosition.x < position.x) {
+          xOffset -= 24 * percentage;
+        }
+        if (nextPosition.y > position.y) {
+          yOffset += 24 * percentage;
+        } else if (nextPosition.y < position.y) {
+          yOffset -= 24 * percentage;
+        }
+        projectilePosition.x += xOffset;
+        projectilePosition.y += yOffset;
+        setEntityPosition(this._attack.projectileEntityID, projectilePosition);
+      } else {
+        if (this._attack.monsterEntityID !== null) {
+          const monsterInstance: MonsterInstance = getDefinable(
+            MonsterInstance,
+            this._attack.monsterEntityID,
+          );
+          monsterInstance.character.takeDamage(this._options.damage);
+          if (monsterInstance.character.isAlive() === false) {
+            removeEntity(this._attack.monsterEntityID);
+          }
+        }
         state.setValues({
           attackingWeaponsIDs: state.values.attackingWeaponsIDs.filter(
             (weaponID: string): boolean => weaponID !== this._id,
           ),
         });
-        removeEntity(this._attack.entityID);
+        removeEntity(this._attack.projectileEntityID);
         this._attack = null;
         if (state.values.attackingWeaponsIDs.length === 0) {
           startMonsterInstancesMovement();

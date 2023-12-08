@@ -8,7 +8,9 @@ import {
   getEntityCalculatedPath,
 } from "pixel-pigeon";
 import { Monster } from "./monsters";
+import { beginTurn } from "./functions/beginTurn";
 import { monsterAttackDuration } from "./constants/monsterAttackDuration";
+import { playerIsBlocked } from "./functions/playerIsBlocked";
 import { state } from "./state";
 
 export interface MonsterInstanceAttack {
@@ -208,7 +210,11 @@ export class MonsterInstance extends Definable {
             ),
         });
         if (state.values.attackingMonsterInstancesIDs.length === 0) {
-          state.setValues({ turnPart: null });
+          if (playerIsBlocked() === false) {
+            state.setValues({ turnPart: null });
+          } else {
+            beginTurn();
+          }
         }
       }
     }
