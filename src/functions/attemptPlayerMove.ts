@@ -1,5 +1,10 @@
 import { Character } from "../characters";
-import { CollisionData, EntityPosition, getActiveLevelID } from "pixel-pigeon";
+import {
+  CollisionData,
+  EntityPosition,
+  getActiveLevelID,
+  getEntityPosition,
+} from "pixel-pigeon";
 import { Direction } from "../types/Direction";
 import { TurnPart } from "../types/TurnPart";
 import { getDefinable } from "../definables";
@@ -22,7 +27,9 @@ export const attemptPlayerMove = (xOffset: number, yOffset: number): void => {
       );
     }
     if (playerCharacter.isAlive()) {
-      const startPosition: EntityPosition = playerCharacter.getEntityPosition();
+      const startPosition: EntityPosition = getEntityPosition(
+        playerCharacter.entityID,
+      );
       const endPosition: EntityPosition = {
         x: startPosition.x + xOffset * 24,
         y: startPosition.y + yOffset * 24,

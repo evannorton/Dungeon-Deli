@@ -1,5 +1,5 @@
 import { Character } from "../characters";
-import { CollisionData, EntityPosition } from "pixel-pigeon";
+import { CollisionData, EntityPosition, getEntityPosition } from "pixel-pigeon";
 import { getDefinable } from "../definables";
 import { getRectangleCollisionData } from "pixel-pigeon/api/functions/getRectangleCollisionData";
 import { state } from "../state";
@@ -14,7 +14,9 @@ export const playerIsBlocked = (): boolean => {
     Character,
     state.values.playerCharacterID,
   );
-  const playerPosition: EntityPosition = playerCharacter.getEntityPosition();
+  const playerPosition: EntityPosition = getEntityPosition(
+    playerCharacter.entityID,
+  );
   const possiblePositions: EntityPosition[] = [
     {
       x: playerPosition.x + 24,

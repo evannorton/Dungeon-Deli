@@ -5,6 +5,7 @@ import {
   createEntity,
   createSprite,
   getCurrentTime,
+  getEntityPosition,
   removeEntity,
   setEntityPosition,
 } from "pixel-pigeon";
@@ -63,8 +64,9 @@ export class Weapon extends Definable {
       Character,
       state.values.playerCharacterID,
     );
-    const playerEntityPosition: EntityPosition =
-      playerCharacter.getEntityPosition();
+    const playerEntityPosition: EntityPosition = getEntityPosition(
+      playerCharacter.entityID,
+    );
     const projectileSpriteID: string = createSprite({
       animationID: "default",
       animations: [

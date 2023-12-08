@@ -17,14 +17,13 @@ interface StateSchema {
 const modeID: string = getRandomModeID();
 const nextModeID: string = getUniqueRandomModeID(modeID);
 
-export const state: State<StateSchema> = new State({
+export const state: State<StateSchema> = new State<StateSchema>({
   attackingMonsterInstancesIDs: [],
   attackingWeaponsIDs: [],
   modeID,
   movingMonsterInstancesIDs: [],
   nextModeID,
   playerCharacterID: null,
-  playerMove: null,
   stageID: null,
   turn: 0,
   turnPart: null,

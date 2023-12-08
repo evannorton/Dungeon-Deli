@@ -3,9 +3,12 @@ import { Definable, getDefinable } from "./definables";
 import { Direction } from "./types/Direction";
 import {
   EntityPosition,
+  addEntitySprite,
   createSprite,
   getCurrentTime,
   getEntityCalculatedPath,
+  getEntityPosition,
+  removeEntitySprite,
 } from "pixel-pigeon";
 import { Monster } from "./monsters";
 import { beginTurn } from "./functions/beginTurn";
@@ -58,10 +61,13 @@ export class MonsterInstance extends Definable {
       Character,
       state.values.playerCharacterID,
     );
-    const playerEntityPosition: EntityPosition =
-      playerCharacter.getEntityPosition();
+    const playerEntityPosition: EntityPosition = getEntityPosition(
+      playerCharacter.entityID,
+    );
     if (playerCharacter.isAlive()) {
-      const entityPosition: EntityPosition = this.character.getEntityPosition();
+      const entityPosition: EntityPosition = getEntityPosition(
+        this.character.entityID,
+      );
       if (entityPosition.y > playerEntityPosition.y) {
         this.character.direction = Direction.Up;
       } else if (entityPosition.y < playerEntityPosition.y) {
@@ -131,7 +137,9 @@ export class MonsterInstance extends Definable {
         spriteID: attackSpriteID,
         time: getCurrentTime(),
       };
-      playerCharacter.addEntitySprite(attackSpriteID);
+      addEntitySprite(playerCharacter.entityID, {
+        spriteID: attackSpriteID,
+      });
     }
   }
 
@@ -145,8 +153,9 @@ export class MonsterInstance extends Definable {
       Character,
       state.values.playerCharacterID,
     );
-    const playerEntityPosition: EntityPosition =
-      playerCharacter.getEntityPosition();
+    const playerEntityPosition: EntityPosition = getEntityPosition(
+      playerCharacter.entityID,
+    );
     const path: EntityPosition[] = getEntityCalculatedPath(
       this._options.entityID,
       {
@@ -201,7 +210,7 @@ export class MonsterInstance extends Definable {
           state.values.playerCharacterID,
         );
         playerCharacter.takeDamage(this.monster.damage);
-        playerCharacter.removeEntitySprite(this._attack.spriteID);
+        removeEntitySprite(playerCharacter.entityID, this._attack.spriteID);
         this._attack = null;
         state.setValues({
           attackingMonsterInstancesIDs:

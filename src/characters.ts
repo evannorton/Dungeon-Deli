@@ -8,11 +8,7 @@ import {
   createSprite,
   getCurrentTime,
   getEntityPosition,
-  lockCameraToEntity,
-  removeEntity,
-  removeEntitySprite,
   setEntityBlockingPosition,
-  setEntityLevel,
   setEntityPosition,
 } from "pixel-pigeon";
 import { Move } from "./types/Move";
@@ -333,6 +329,10 @@ export class Character extends Definable {
     return this._direction;
   }
 
+  public get entityID(): string {
+    return this._options.entityID;
+  }
+
   public get hp(): number {
     return this._hp;
   }
@@ -345,40 +345,12 @@ export class Character extends Definable {
     this._direction = direction;
   }
 
-  public addEntitySprite(spriteID: string): void {
-    addEntitySprite(this._options.entityID, {
-      spriteID,
-    });
-  }
-
-  public removeEntity(): void {
-    removeEntity(this._options.entityID);
-  }
-
-  public removeEntitySprite(spriteID: string): void {
-    removeEntitySprite(this._options.entityID, {
-      spriteID,
-    });
-  }
-
-  public getEntityPosition(): EntityPosition {
-    return getEntityPosition(this._options.entityID);
-  }
-
   public isAlive(): boolean {
     return this._hp > 0;
   }
 
-  public lockCameraToEntity(): void {
-    lockCameraToEntity(this._options.entityID);
-  }
-
-  public setEntityLevel(levelID: string): void {
-    setEntityLevel(this._options.entityID, levelID);
-  }
-
-  public setEntityPosition(position: EntityPosition): void {
-    setEntityPosition(this._options.entityID, position);
+  public reset(): void {
+    this._hp = this._options.maxHP;
   }
 
   public startMovement(endPosition: EntityPosition): void {

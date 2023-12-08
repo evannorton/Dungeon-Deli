@@ -1,4 +1,5 @@
 import { Stage } from "./stages";
+import { createDeathHUD } from "./functions/createDeathHUD";
 import { createMonsterInstances } from "./functions/createMonsterInstances";
 import { getDefinable } from "./definables";
 import { musicVolumeChannelID } from "./volumeChannels";
@@ -9,6 +10,7 @@ export const run = (): void => {
   if (stageIDs.length === 0) {
     throw new Error("Attempted to run with no stages.");
   }
+  createDeathHUD();
   createMonsterInstances();
   getDefinable(Stage, stageIDs[0]).start();
   playAudioSource("cavern-theme-base", {

@@ -3,7 +3,10 @@ import {
   CollisionData,
   EntityPosition,
   getEntityFieldValue,
+  getEntityPosition,
   goToLevel,
+  setEntityLevel,
+  setEntityPosition,
 } from "pixel-pigeon";
 import { Stage } from "../stages";
 import { TurnPart } from "../types/TurnPart";
@@ -25,7 +28,9 @@ export const beginTurn = (): void => {
     Character,
     state.values.playerCharacterID,
   );
-  const playerPosition: EntityPosition = playerCharacter.getEntityPosition();
+  const playerPosition: EntityPosition = getEntityPosition(
+    playerCharacter.entityID,
+  );
   const transportCollisionData: CollisionData = getRectangleCollisionData(
     {
       height: 24,
@@ -61,8 +66,8 @@ export const beginTurn = (): void => {
         `Entity "${transportEntityID}" has an invalid "target_y" value.`,
       );
     }
-    playerCharacter.setEntityLevel(targetLevelID);
-    playerCharacter.setEntityPosition({
+    setEntityLevel(playerCharacter.entityID, targetLevelID);
+    setEntityPosition(playerCharacter.entityID, {
       x: targetX * 24,
       y: targetY * 24,
     });

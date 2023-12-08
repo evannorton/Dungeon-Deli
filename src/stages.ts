@@ -6,6 +6,8 @@ import {
   createLabel,
   createQuadrilateral,
   goToLevel,
+  lockCameraToEntity,
+  setEntityPosition,
 } from "pixel-pigeon";
 import { Mode } from "./modes";
 import { Weapon } from "./weapons";
@@ -48,7 +50,7 @@ export class Stage extends Definable {
         imagePath: "player",
         maxHP: playerMaxHP,
       });
-      character.lockCameraToEntity();
+      lockCameraToEntity(character.entityID);
       state.setValues({
         playerCharacterID: character.id,
       });
@@ -57,9 +59,10 @@ export class Stage extends Definable {
         Character,
         state.values.playerCharacterID,
       );
-      character.setEntityPosition(this._options.playerStartPosition);
+      setEntityPosition(character.entityID, this._options.playerStartPosition);
     }
     this.createHUD();
+    console.log("create hud");
   }
 
   private createHUD(): void {
@@ -71,7 +74,7 @@ export class Stage extends Definable {
         y: 270 - 35,
       },
       height: 33,
-      opacity: 0.5,
+      opacity: 0.625,
       width: 118,
     });
     createLabel({
@@ -80,8 +83,8 @@ export class Stage extends Definable {
         x: 5,
         y: 270 - 32,
       },
-      getText: (): string => "Mode:",
       horizontalAlignment: "left",
+      text: "Mode:",
       verticalAlignment: "top",
     });
     createLabel({
@@ -90,8 +93,8 @@ export class Stage extends Definable {
         x: 117,
         y: 270 - 32,
       },
-      getText: (): string => getDefinable(Mode, state.values.modeID).name,
       horizontalAlignment: "right",
+      text: (): string => getDefinable(Mode, state.values.modeID).name,
       verticalAlignment: "top",
     });
     createLabel({
@@ -100,8 +103,8 @@ export class Stage extends Definable {
         x: 5,
         y: 270 - 22,
       },
-      getText: (): string => "Next mode:",
       horizontalAlignment: "left",
+      text: "Next mode:",
       verticalAlignment: "top",
     });
     createLabel({
@@ -110,8 +113,8 @@ export class Stage extends Definable {
         x: 117,
         y: 270 - 22,
       },
-      getText: (): string => getDefinable(Mode, state.values.nextModeID).name,
       horizontalAlignment: "right",
+      text: (): string => getDefinable(Mode, state.values.nextModeID).name,
       verticalAlignment: "top",
     });
     createLabel({
@@ -120,8 +123,8 @@ export class Stage extends Definable {
         x: 5,
         y: 270 - 12,
       },
-      getText: (): string => "Until next:",
       horizontalAlignment: "left",
+      text: "Until next:",
       verticalAlignment: "top",
     });
     createLabel({
@@ -130,9 +133,9 @@ export class Stage extends Definable {
         x: 117,
         y: 270 - 12,
       },
-      getText: (): string =>
+      horizontalAlignment: "right",
+      text: (): string =>
         String(turnsPerMode - (state.values.turn % turnsPerMode)),
-      horizontalAlignment: "right",
       verticalAlignment: "top",
     });
     // Top right
@@ -143,7 +146,7 @@ export class Stage extends Definable {
         y: 2,
       },
       height: 3 + this._options.weaponIDs.length * 10,
-      opacity: 0.5,
+      opacity: 0.625,
       width: 92,
     });
     this._options.weaponIDs.forEach(
@@ -155,8 +158,8 @@ export class Stage extends Definable {
             x: 480 - 89,
             y: 5 + weaponIndex * 10,
           },
-          getText: (): string => `${weapon.name}:`,
           horizontalAlignment: "left",
+          text: weapon.name,
           verticalAlignment: "top",
         });
         createLabel({
@@ -165,12 +168,12 @@ export class Stage extends Definable {
             x: 480 - 5,
             y: 5 + weaponIndex * 10,
           },
-          getText: (): string =>
+          horizontalAlignment: "right",
+          text: (): string =>
             String(
               weapon.stepsPerAttack -
                 (state.values.turn % weapon.stepsPerAttack),
             ),
-          horizontalAlignment: "right",
           verticalAlignment: "top",
         });
       },
