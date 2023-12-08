@@ -48,7 +48,6 @@ export class Weapon extends Definable {
   }
 
   public attack(): void {
-    console.log("attack");
     if (state.values.playerCharacterID === null) {
       throw new Error(
         `Attempted to do Weapon "${this._id}" attack with no player character.`,
