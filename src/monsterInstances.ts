@@ -4,12 +4,14 @@ import { Direction } from "./types/Direction";
 import {
   EntityPosition,
   addEntitySprite,
+  createEntity,
   createSprite,
   getCurrentTime,
   getEntityCalculatedPath,
+  getEntityLevelID,
   getEntityPosition,
+  removeEntity,
   removeEntitySprite,
-  setEntityPosition,
 } from "pixel-pigeon";
 import { Monster } from "./monsters";
 import { beginTurn } from "./functions/beginTurn";
@@ -29,6 +31,7 @@ export class MonsterInstance extends Definable {
   private _attack: MonsterInstanceAttack | null = null;
   private readonly _characterID: string;
   private readonly _options: MonsterInstanceOptions;
+  private readonly _startLevelID: string;
   private readonly _startPosition: EntityPosition;
   public constructor(options: MonsterInstanceOptions) {
     super(options.entityID);
@@ -39,6 +42,7 @@ export class MonsterInstance extends Definable {
       maxHP: this.monster.maxHP,
     });
     this._characterID = character.id;
+    this._startLevelID = getEntityLevelID(options.entityID);
     this._startPosition = getEntityPosition(options.entityID);
   }
 
@@ -55,8 +59,23 @@ export class MonsterInstance extends Definable {
   }
 
   public reset(): void {
-    setEntityPosition(this._options.entityID, this._startPosition);
-    this.character.reset();
+    if (this.character.isAlive()) {
+      removeEntity(this._options.entityID);
+    }
+    const entityID: string = createEntity({
+      height: 24,
+      layerID: "characters",
+      levelID: this._startLevelID,
+      position: this._startPosition,
+      type: "monster",
+      width: 24,
+    });
+    new MonsterInstance({
+      ...this._options,
+      entityID,
+    });
+    this.character.remove();
+    this.remove();
   }
 
   public startAttack(): void {

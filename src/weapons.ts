@@ -4,6 +4,7 @@ import {
   EntityPosition,
   createEntity,
   createSprite,
+  getActiveLevelID,
   getCurrentTime,
   getEntityPosition,
   removeEntity,
@@ -60,6 +61,12 @@ export class Weapon extends Definable {
         `Attempted to do Weapon "${this._id}" attack with no player character.`,
       );
     }
+    const levelID: string | null = getActiveLevelID();
+    if (levelID === null) {
+      throw new Error(
+        `Attempted to do Weapon "${this._id}" attack with no active level.`,
+      );
+    }
     const playerCharacter: Character = getDefinable(
       Character,
       state.values.playerCharacterID,
@@ -89,6 +96,7 @@ export class Weapon extends Definable {
     const projectileEntityID: string = createEntity({
       height: 24,
       layerID: "projectiles",
+      levelID,
       position: playerEntityPosition,
       sprites: [
         {

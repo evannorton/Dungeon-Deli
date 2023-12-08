@@ -60,6 +60,7 @@ export class Stage extends Definable {
       const playerEntityID: string = createEntity({
         height: 24,
         layerID: "characters",
+        levelID: this._options.playerStartLevelID,
         position: this._options.playerStartPosition,
         width: 24,
         zIndex: 0,
