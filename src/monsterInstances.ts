@@ -9,6 +9,7 @@ import {
   getEntityCalculatedPath,
   getEntityPosition,
   removeEntitySprite,
+  setEntityPosition,
 } from "pixel-pigeon";
 import { Monster } from "./monsters";
 import { beginTurn } from "./functions/beginTurn";
@@ -28,6 +29,7 @@ export class MonsterInstance extends Definable {
   private _attack: MonsterInstanceAttack | null = null;
   private readonly _characterID: string;
   private readonly _options: MonsterInstanceOptions;
+  private readonly _startPosition: EntityPosition;
   public constructor(options: MonsterInstanceOptions) {
     super(options.entityID);
     this._options = options;
@@ -37,6 +39,7 @@ export class MonsterInstance extends Definable {
       maxHP: this.monster.maxHP,
     });
     this._characterID = character.id;
+    this._startPosition = getEntityPosition(options.entityID);
   }
 
   public get character(): Character {
@@ -49,6 +52,11 @@ export class MonsterInstance extends Definable {
 
   public isAttacking(): boolean {
     return this._attack !== null;
+  }
+
+  public reset(): void {
+    setEntityPosition(this._options.entityID, this._startPosition);
+    this.character.reset();
   }
 
   public startAttack(): void {

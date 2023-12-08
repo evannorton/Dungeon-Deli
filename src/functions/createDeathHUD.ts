@@ -1,10 +1,12 @@
 import { Character } from "../characters";
+import { MonsterInstance } from "../monsterInstances";
+import { Stage } from "../stages";
 import {
   createInputPressHandler,
   createLabel,
   createQuadrilateral,
 } from "pixel-pigeon";
-import { getDefinable } from "../definables";
+import { getDefinable, getDefinables } from "../definables";
 import { getRandomModeID } from "./getRandomModeID";
 import { getUniqueRandomModeID } from "./getUniqueRandomModeID";
 import { state } from "../state";
@@ -20,7 +22,7 @@ export const createDeathHUD = (): void => {
     if (state.values.playerCharacterID !== null) {
       const playerCharacter: Character = getDefinable(
         Character,
-        state.values.playerCharacterID
+        state.values.playerCharacterID,
       );
       return playerCharacter.isAlive() === false;
     }
@@ -57,12 +59,20 @@ export const createDeathHUD = (): void => {
     ],
     mouseButtons: [0],
     onInput: (): void => {
-      if (state.values.playerCharacterID !== null) {
+      if (
+        state.values.playerCharacterID !== null &&
+        state.values.stageID !== null
+      ) {
         const playerCharacter: Character = getDefinable(
           Character,
-          state.values.playerCharacterID
+          state.values.playerCharacterID,
         );
         playerCharacter.reset();
+        const stage: Stage = getDefinable(Stage, state.values.stageID);
+        stage.reset();
+        for (const monsterInstance of getDefinables(MonsterInstance).values()) {
+          monsterInstance.reset();
+        }
         const modeID: string = getRandomModeID();
         state.setValues({
           attackingMonsterInstancesIDs: [],

@@ -7,6 +7,7 @@ import {
   createQuadrilateral,
   goToLevel,
   lockCameraToEntity,
+  setEntityLevel,
   setEntityPosition,
 } from "pixel-pigeon";
 import { Mode } from "./modes";
@@ -16,7 +17,7 @@ import { state } from "./state";
 import { turnsPerMode } from "./constants/turnsPerMode";
 
 interface StageOptions {
-  readonly levelID: string;
+  readonly playerStartLevelID: string;
   readonly playerStartPosition: EntityPosition;
   readonly weaponIDs: string[];
 }
@@ -30,13 +31,31 @@ export class Stage extends Definable {
 
   public get weapons(): Weapon[] {
     return this._options.weaponIDs.map(
-      (weaponID: string): Weapon => getDefinable(Weapon, weaponID)
+      (weaponID: string): Weapon => getDefinable(Weapon, weaponID),
     );
+  }
+
+  public reset(): void {
+    if (state.values.playerCharacterID !== null) {
+      const playerCharacter: Character = getDefinable(
+        Character,
+        state.values.playerCharacterID,
+      );
+      setEntityLevel(
+        playerCharacter.entityID,
+        this._options.playerStartLevelID,
+      );
+      setEntityPosition(
+        playerCharacter.entityID,
+        this._options.playerStartPosition,
+      );
+      goToLevel(this._options.playerStartLevelID);
+    }
   }
 
   public start(): void {
     state.setValues({ stageID: this._id });
-    goToLevel(this._options.levelID);
+    goToLevel(this._options.playerStartLevelID);
     if (state.values.playerCharacterID === null) {
       const playerEntityID: string = createEntity({
         height: 24,
@@ -57,12 +76,11 @@ export class Stage extends Definable {
     } else {
       const character: Character = getDefinable(
         Character,
-        state.values.playerCharacterID
+        state.values.playerCharacterID,
       );
       setEntityPosition(character.entityID, this._options.playerStartPosition);
     }
     this.createHUD();
-    console.log("create hud");
   }
 
   private createHUD(): void {
@@ -165,15 +183,15 @@ export class Stage extends Definable {
           text: (): string =>
             String(
               weapon.stepsPerAttack -
-                (state.values.turn % weapon.stepsPerAttack)
+                (state.values.turn % weapon.stepsPerAttack),
             ),
         });
-      }
+      },
     );
   }
 }
 new Stage("1", {
-  levelID: "test_1",
+  playerStartLevelID: "test_1",
   playerStartPosition: {
     x: 48,
     y: 48,
