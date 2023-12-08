@@ -20,7 +20,7 @@ export const createDeathHUD = (): void => {
     if (state.values.playerCharacterID !== null) {
       const playerCharacter: Character = getDefinable(
         Character,
-        state.values.playerCharacterID,
+        state.values.playerCharacterID
       );
       return playerCharacter.isAlive() === false;
     }
@@ -46,7 +46,6 @@ export const createDeathHUD = (): void => {
     },
     horizontalAlignment: "center",
     text: "You died! Click to restart.",
-    verticalAlignment: "top",
   });
   createInputPressHandler({
     condition,
@@ -61,7 +60,7 @@ export const createDeathHUD = (): void => {
       if (state.values.playerCharacterID !== null) {
         const playerCharacter: Character = getDefinable(
           Character,
-          state.values.playerCharacterID,
+          state.values.playerCharacterID
         );
         playerCharacter.reset();
         const modeID: string = getRandomModeID();

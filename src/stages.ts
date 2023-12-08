@@ -30,7 +30,7 @@ export class Stage extends Definable {
 
   public get weapons(): Weapon[] {
     return this._options.weaponIDs.map(
-      (weaponID: string): Weapon => getDefinable(Weapon, weaponID),
+      (weaponID: string): Weapon => getDefinable(Weapon, weaponID)
     );
   }
 
@@ -57,7 +57,7 @@ export class Stage extends Definable {
     } else {
       const character: Character = getDefinable(
         Character,
-        state.values.playerCharacterID,
+        state.values.playerCharacterID
       );
       setEntityPosition(character.entityID, this._options.playerStartPosition);
     }
@@ -85,7 +85,6 @@ export class Stage extends Definable {
       },
       horizontalAlignment: "left",
       text: "Mode:",
-      verticalAlignment: "top",
     });
     createLabel({
       color: "#ffffff",
@@ -95,7 +94,6 @@ export class Stage extends Definable {
       },
       horizontalAlignment: "right",
       text: (): string => getDefinable(Mode, state.values.modeID).name,
-      verticalAlignment: "top",
     });
     createLabel({
       color: "#ffffff",
@@ -105,7 +103,6 @@ export class Stage extends Definable {
       },
       horizontalAlignment: "left",
       text: "Next mode:",
-      verticalAlignment: "top",
     });
     createLabel({
       color: "#ffffff",
@@ -115,7 +112,6 @@ export class Stage extends Definable {
       },
       horizontalAlignment: "right",
       text: (): string => getDefinable(Mode, state.values.nextModeID).name,
-      verticalAlignment: "top",
     });
     createLabel({
       color: "#ffffff",
@@ -125,7 +121,6 @@ export class Stage extends Definable {
       },
       horizontalAlignment: "left",
       text: "Until next:",
-      verticalAlignment: "top",
     });
     createLabel({
       color: "#ffffff",
@@ -136,7 +131,6 @@ export class Stage extends Definable {
       horizontalAlignment: "right",
       text: (): string =>
         String(turnsPerMode - (state.values.turn % turnsPerMode)),
-      verticalAlignment: "top",
     });
     // Top right
     createQuadrilateral({
@@ -160,7 +154,6 @@ export class Stage extends Definable {
           },
           horizontalAlignment: "left",
           text: weapon.name,
-          verticalAlignment: "top",
         });
         createLabel({
           color: "#ffffff",
@@ -172,11 +165,10 @@ export class Stage extends Definable {
           text: (): string =>
             String(
               weapon.stepsPerAttack -
-                (state.values.turn % weapon.stepsPerAttack),
+                (state.values.turn % weapon.stepsPerAttack)
             ),
-          verticalAlignment: "top",
         });
-      },
+      }
     );
   }
 }
