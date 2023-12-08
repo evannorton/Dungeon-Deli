@@ -1,12 +1,7 @@
 import { Character } from "../characters";
-import {
-  CollisionData,
-  EntityPosition,
-  getActiveLevelID,
-  getEntityIDs,
-} from "pixel-pigeon";
+import { CollisionData, EntityPosition, getActiveLevelID } from "pixel-pigeon";
 import { Direction } from "../types/Direction";
-import { MonsterInstance } from "../monsterInstances";
+import { TurnPart } from "../types/TurnPart";
 import { getDefinable } from "../definables";
 import { getRectangleCollisionData } from "pixel-pigeon/api/functions/getRectangleCollisionData";
 import { state } from "../state";
@@ -15,37 +10,23 @@ export const attemptPlayerMove = (xOffset: number, yOffset: number): void => {
   if (state.values.playerCharacterID === null) {
     throw new Error("Attempted to move player with no player character ID.");
   }
-  const playerCharacter: Character = getDefinable(
-    Character,
-    state.values.playerCharacterID,
-  );
-  const levelID: string | null = getActiveLevelID();
-  if (levelID === null) {
-    throw new Error(
-      "Attempted to attempt player move with no active level ID.",
+  if (state.values.turnPart === null) {
+    const playerCharacter: Character = getDefinable(
+      Character,
+      state.values.playerCharacterID,
     );
-  }
-  if (playerCharacter.isAlive()) {
-    const startPosition: EntityPosition = playerCharacter.getEntityPosition();
-    const endPosition: EntityPosition = {
-      x: startPosition.x + xOffset * 24,
-      y: startPosition.y + yOffset * 24,
-    };
-    if (
-      state.values.attackingMonsterInstancesIDs.length === 0 &&
-      playerCharacter.isMoving() === false &&
-      getEntityIDs({
-        layerIDs: ["characters"],
-        levelIDs: [levelID],
-        types: ["monster"],
-      }).every((entityID: string): boolean => {
-        const monsterInstance: MonsterInstance = getDefinable(
-          MonsterInstance,
-          entityID,
-        );
-        return monsterInstance.isMoving() === false;
-      })
-    ) {
+    const levelID: string | null = getActiveLevelID();
+    if (levelID === null) {
+      throw new Error(
+        "Attempted to attempt player move with no active level ID.",
+      );
+    }
+    if (playerCharacter.isAlive()) {
+      const startPosition: EntityPosition = playerCharacter.getEntityPosition();
+      const endPosition: EntityPosition = {
+        x: startPosition.x + xOffset * 24,
+        y: startPosition.y + yOffset * 24,
+      };
       const collisionData: CollisionData = getRectangleCollisionData(
         {
           height: 24,
@@ -60,6 +41,7 @@ export const attemptPlayerMove = (xOffset: number, yOffset: number): void => {
         collisionData.entityCollidables.length === 0
       ) {
         playerCharacter.startMovement(endPosition);
+        state.setValues({ turnPart: TurnPart.PlayerMoving });
       } else {
         if (xOffset > 0) {
           playerCharacter.direction = Direction.Right;

@@ -1,10 +1,22 @@
 import { Character } from "./characters";
-import { CollisionData, EntityCollidable, EntityPosition } from "pixel-pigeon";
 import { Definable, getDefinable } from "./definables";
-import { MonsterInstance } from "./monsterInstances";
-import { getRectangleCollisionData } from "pixel-pigeon/api/functions/getRectangleCollisionData";
+import {
+  EntityPosition,
+  createEntity,
+  createSprite,
+  getCurrentTime,
+  removeEntity,
+} from "pixel-pigeon";
+import { TurnPart } from "./types/TurnPart";
+import { projectileDuration } from "./constants/projectileDuration";
+import { startMonsterInstancesMovement } from "./functions/startMonsterInstancesMovement";
 import { state } from "./state";
 
+export interface WeaponAttack {
+  readonly entityID: string;
+  readonly positions: EntityPosition[];
+  readonly time: number;
+}
 interface WeaponOptionsProjectileMove {
   readonly x?: number;
   readonly y?: number;
@@ -20,6 +32,7 @@ interface WeaponOptions {
 }
 
 export class Weapon extends Definable {
+  private _attack: WeaponAttack | null = null;
   private readonly _options: WeaponOptions;
   public constructor(id: string, options: WeaponOptions) {
     super(id);
@@ -34,51 +47,85 @@ export class Weapon extends Definable {
     return this._options.stepsPerAttack;
   }
 
-  public doTurn(): void {
+  public attack(): void {
+    console.log("attack");
     if (state.values.playerCharacterID === null) {
       throw new Error(
-        `Weapon "${this._id}" attemped to do turn with no player character.`,
+        `Attempted to do Weapon "${this._id}" attack with no player character.`,
       );
     }
-    const character: Character = getDefinable(
+    const playerCharacter: Character = getDefinable(
       Character,
       state.values.playerCharacterID,
     );
-    if (state.values.turn % this._options.stepsPerAttack === 0) {
-      if (typeof this._options.projectile !== "undefined") {
-        const position: EntityPosition = character.getEntityPosition();
-        let entityID: string | null = null;
-        outerLoop: while (entityID === null) {
-          for (const move of this._options.projectile.moves) {
-            position.x += (move.x ?? 0) * 24;
-            position.y += (move.y ?? 0) * 24;
-            const collisionData: CollisionData = getRectangleCollisionData(
-              {
-                height: 24,
-                width: 24,
-                x: position.x,
-                y: position.y,
-              },
-              ["monster"],
-            );
-            if (collisionData.map === true) {
-              break outerLoop;
-            }
-            if (collisionData.entityCollidables.length > 0) {
-              const entityCollidable: EntityCollidable =
-                collisionData.entityCollidables[0];
-              entityID = entityCollidable.entityID;
-            }
-          }
-        }
-        if (entityID !== null) {
-          const monsterInstance: MonsterInstance = getDefinable(
-            MonsterInstance,
-            entityID,
-          );
-          monsterInstance.takeDamage(this._options.damage);
-          if (monsterInstance.hp === 0) {
-            monsterInstance.despawnEntity();
+    const playerEntityPosition: EntityPosition =
+      playerCharacter.getEntityPosition();
+    const projectileSpriteID: string = createSprite({
+      animationID: "default",
+      animations: [
+        {
+          frames: [
+            {
+              height: 24,
+              sourceHeight: 24,
+              sourceWidth: 24,
+              sourceX: 0,
+              sourceY: 0,
+              width: 24,
+            },
+          ],
+          id: "default",
+        },
+      ],
+      imagePath: "projectile",
+    });
+    const projectileEntityID: string = createEntity({
+      height: 24,
+      layerID: "projectiles",
+      position: playerEntityPosition,
+      sprites: [
+        {
+          spriteID: projectileSpriteID,
+        },
+      ],
+      width: 24,
+    });
+    this._attack = {
+      entityID: projectileEntityID,
+      positions: [playerEntityPosition],
+      time: getCurrentTime(),
+    };
+  }
+
+  public isAttacking(): boolean {
+    return this._attack !== null;
+  }
+
+  public updateAttack(): void {
+    if (state.values.playerCharacterID === null) {
+      throw new Error(
+        `Attempted to update MonsterInstance "${this._id}" attack with no player character.`,
+      );
+    }
+    if (this._attack !== null) {
+      const { time } = this._attack;
+      const currentTime: number = getCurrentTime();
+      if (currentTime > time + projectileDuration) {
+        state.setValues({
+          attackingWeaponsIDs: state.values.attackingWeaponsIDs.filter(
+            (weaponID: string): boolean => weaponID !== this._id,
+          ),
+        });
+        removeEntity(this._attack.entityID);
+        this._attack = null;
+        if (state.values.attackingWeaponsIDs.length === 0) {
+          startMonsterInstancesMovement();
+          if (state.values.movingMonsterInstancesIDs.length > 0) {
+            state.setValues({ turnPart: TurnPart.MonstersMoving });
+          } else if (state.values.attackingMonsterInstancesIDs.length > 0) {
+            state.setValues({ turnPart: TurnPart.MonstersAttacking });
+          } else {
+            state.setValues({ turnPart: null });
           }
         }
       }

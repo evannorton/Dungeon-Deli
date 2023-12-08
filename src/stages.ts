@@ -2,10 +2,10 @@ import { Character } from "./characters";
 import { Definable, getDefinable } from "./definables";
 import {
   EntityPosition,
+  createEntity,
   createLabel,
   createQuadrilateral,
   goToLevel,
-  spawnEntity,
 } from "pixel-pigeon";
 import { Mode } from "./modes";
 import { Weapon } from "./weapons";
@@ -26,11 +26,17 @@ export class Stage extends Definable {
     this._options = options;
   }
 
+  public get weapons(): Weapon[] {
+    return this._options.weaponIDs.map(
+      (weaponID: string): Weapon => getDefinable(Weapon, weaponID),
+    );
+  }
+
   public start(): void {
     state.setValues({ stageID: this._id });
     goToLevel(this._options.levelID);
     if (state.values.playerCharacterID === null) {
-      const playerEntityID: string = spawnEntity({
+      const playerEntityID: string = createEntity({
         height: 24,
         layerID: "characters",
         position: this._options.playerStartPosition,
@@ -54,13 +60,6 @@ export class Stage extends Definable {
       character.setEntityPosition(this._options.playerStartPosition);
     }
     this.createHUD();
-  }
-
-  public doTurn(): void {
-    for (const weaponID of this._options.weaponIDs) {
-      const weapon: Weapon = getDefinable(Weapon, weaponID);
-      weapon.doTurn();
-    }
   }
 
   private createHUD(): void {

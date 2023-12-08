@@ -34,7 +34,7 @@ export class MonsterInstance extends Definable {
     this._characterID = character.id;
   }
 
-  private get character(): Character {
+  public get character(): Character {
     return getDefinable(Character, this._characterID);
   }
 
@@ -42,11 +42,11 @@ export class MonsterInstance extends Definable {
     return getDefinable(Monster, this._options.monsterID);
   }
 
-  public get hp(): number {
-    return this.character.hp;
+  public isAttacking(): boolean {
+    return this._attack !== null;
   }
 
-  public attack(): void {
+  public startAttack(): void {
     if (state.values.playerCharacterID === null) {
       throw new Error(
         `Attempted to do MonsterInstance "${this._id}" attack with no player character.`,
@@ -133,11 +133,7 @@ export class MonsterInstance extends Definable {
     }
   }
 
-  public despawnEntity(): void {
-    this.character.despawnEntity();
-  }
-
-  public doTurn(): void {
+  public startMovement(): void {
     if (state.values.playerCharacterID === null) {
       throw new Error(
         `Attempted to do MonsterInstance "${this._id}" turn with no player character.`,
@@ -165,6 +161,12 @@ export class MonsterInstance extends Definable {
     );
     if (path.length > 2) {
       this.character.startMovement(path[1]);
+      state.setValues({
+        movingMonsterInstancesIDs: [
+          ...state.values.movingMonsterInstancesIDs,
+          this._id,
+        ],
+      });
     } else {
       state.setValues({
         attackingMonsterInstancesIDs: [
@@ -173,14 +175,6 @@ export class MonsterInstance extends Definable {
         ],
       });
     }
-  }
-
-  public isAttacking(): boolean {
-    return this._attack !== null;
-  }
-
-  public takeDamage(damage: number): void {
-    this.character.takeDamage(damage);
   }
 
   public updateAttack(): void {
@@ -207,15 +201,16 @@ export class MonsterInstance extends Definable {
         playerCharacter.takeDamage(this.monster.damage);
         playerCharacter.removeEntitySprite(this._attack.spriteID);
         this._attack = null;
+        state.setValues({
+          attackingMonsterInstancesIDs:
+            state.values.attackingMonsterInstancesIDs.filter(
+              (id: string): boolean => id !== this._id,
+            ),
+        });
+        if (state.values.attackingMonsterInstancesIDs.length === 0) {
+          state.setValues({ turnPart: null });
+        }
       }
     }
-  }
-
-  public updateMovement(): void {
-    this.character.updateMovement();
-  }
-
-  public isMoving(): boolean {
-    return this.character.isMoving();
   }
 }

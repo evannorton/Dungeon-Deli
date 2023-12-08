@@ -6,10 +6,10 @@ import {
   addEntitySprite,
   createQuadrilateral,
   createSprite,
-  despawnEntity,
   getCurrentTime,
   getEntityPosition,
   lockCameraToEntity,
+  removeEntity,
   removeEntitySprite,
   setEntityBlockingPosition,
   setEntityLevel,
@@ -351,8 +351,8 @@ export class Character extends Definable {
     });
   }
 
-  public despawnEntity(): void {
-    despawnEntity(this._options.entityID);
+  public removeEntity(): void {
+    removeEntity(this._options.entityID);
   }
 
   public removeEntitySprite(spriteID: string): void {
@@ -446,9 +446,5 @@ export class Character extends Definable {
         onEnd?.();
       }
     }
-  }
-
-  public isMoving(): boolean {
-    return this._move !== null;
   }
 }
