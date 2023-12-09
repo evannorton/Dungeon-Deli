@@ -5,32 +5,26 @@ import { state } from "../state";
 import { turnsPerMode } from "../constants/turnsPerMode";
 
 export const createModeHUD = (): void => {
+  const width: number = 120;
+  const height: number = 37;
+  const y: number = 270 - 2 - height;
   createQuadrilateral({
     color: "#000000",
     coordinates: {
       x: 2,
-      y: 270 - 35,
+      y,
     },
-    height: 33,
+    height,
     opacity: 0.75,
-    width: 118,
+    width,
   });
   createLabel({
     color: "#ffffff",
     coordinates: {
-      x: 5,
-      y: 270 - 32,
+      x: 5 + Math.floor(width / 2),
+      y: y + 5,
     },
-    horizontalAlignment: "left",
-    text: "Mode:",
-  });
-  createLabel({
-    color: "#ffffff",
-    coordinates: {
-      x: 117,
-      y: 270 - 32,
-    },
-    horizontalAlignment: "right",
+    horizontalAlignment: "center",
     text: (): string => {
       if (state.values.modeID !== null) {
         return getDefinable(Mode, state.values.modeID).name;
@@ -45,12 +39,12 @@ export const createModeHUD = (): void => {
       y: 270 - 22,
     },
     horizontalAlignment: "left",
-    text: "Next mode:",
+    text: "Next:",
   });
   createLabel({
     color: "#ffffff",
     coordinates: {
-      x: 117,
+      x: 2 + width - 2,
       y: 270 - 22,
     },
     horizontalAlignment: "right",
@@ -73,7 +67,7 @@ export const createModeHUD = (): void => {
   createLabel({
     color: "#ffffff",
     coordinates: {
-      x: 117,
+      x: 2 + width - 2,
       y: 270 - 12,
     },
     horizontalAlignment: "right",

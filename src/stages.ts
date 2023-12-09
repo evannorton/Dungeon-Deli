@@ -113,9 +113,9 @@ export class Stage extends Definable {
   }
 
   private createHUD(): void {
-    const width: number = 118;
-    const height: number = 3 + this._options.weaponIDs.length * 10;
-    const y: number = 270 - 2 - 33 - 2 - height;
+    const width: number = 120;
+    const height: number = 3 + this._options.weaponIDs.length * 10 + 14;
+    const y: number = 270 - 2 - 38 - 2 - height;
     this._quadrilateralIDs.push(
       createQuadrilateral({
         color: "#000000",
@@ -128,6 +128,17 @@ export class Stage extends Definable {
         width,
       }),
     );
+    this._labelIDs.push(
+      createLabel({
+        color: "#ffffff",
+        coordinates: {
+          x: Math.round(2 + width / 2),
+          y: y + 5,
+        },
+        horizontalAlignment: "center",
+        text: "Weapon cooldowns",
+      }),
+    );
     this._options.weaponIDs.forEach(
       (weaponID: string, weaponIndex: number): void => {
         const weapon: Weapon = getDefinable(Weapon, weaponID);
@@ -136,7 +147,7 @@ export class Stage extends Definable {
             color: "#ffffff",
             coordinates: {
               x: 5,
-              y: y + 3 + weaponIndex * 10,
+              y: y + 5 + weaponIndex * 10 + 12,
             },
             horizontalAlignment: "left",
             text: `${weapon.name}:`,
@@ -147,7 +158,7 @@ export class Stage extends Definable {
             color: "#ffffff",
             coordinates: {
               x: width + 2 - 2,
-              y: y + 3 + weaponIndex * 10,
+              y: y + 5 + weaponIndex * 10 + 12,
             },
             horizontalAlignment: "right",
             text: (): string =>
