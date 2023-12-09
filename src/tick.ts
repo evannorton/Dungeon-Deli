@@ -11,6 +11,7 @@ import { TurnPart } from "./types/TurnPart";
 import { Weapon } from "./weapons";
 import { beginTurn } from "./functions/beginTurn";
 import { getDefinable } from "./definables";
+import { goToNextMode } from "./functions/goToNextMode";
 import { playerIsBlocked } from "./functions/playerIsBlocked";
 import { state } from "./state";
 
@@ -65,6 +66,7 @@ export const tick = (): void => {
               } else {
                 if (playerIsBlocked() === false) {
                   state.setValues({ turnPart: null });
+                  goToNextMode();
                 } else {
                   beginTurn();
                 }

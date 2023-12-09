@@ -15,6 +15,7 @@ import {
 } from "pixel-pigeon";
 import { Monster } from "./monsters";
 import { beginTurn } from "./functions/beginTurn";
+import { goToNextMode } from "./functions/goToNextMode";
 import { monsterAttackDuration } from "./constants/monsterAttackDuration";
 import { playerIsBlocked } from "./functions/playerIsBlocked";
 import { state } from "./state";
@@ -251,6 +252,7 @@ export class MonsterInstance extends Definable {
             playerCharacter.isAlive() === false
           ) {
             state.setValues({ turnPart: null });
+            goToNextMode();
           } else {
             beginTurn();
           }

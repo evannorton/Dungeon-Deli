@@ -14,10 +14,9 @@ import { Stage } from "../stages";
 import { TurnPart } from "../types/TurnPart";
 import { getDefinable } from "../definables";
 import { getPlayerChest } from "./getPlayerChest";
-import { getUniqueRandomModeID } from "./getUniqueRandomModeID";
+import { goToNextMode } from "./goToNextMode";
 import { startMonsterInstancesMovement } from "./startMonsterInstancesMovement";
 import { state } from "../state";
-import { turnsPerMode } from "../constants/turnsPerMode";
 
 export const beginTurn = (): void => {
   if (state.values.playerCharacterID === null) {
@@ -107,16 +106,7 @@ export const beginTurn = (): void => {
         state.setValues({ turnPart: TurnPart.MonstersAttacking });
       } else {
         state.setValues({ turnPart: null });
-      }
-      if (state.values.turn % turnsPerMode === 0) {
-        const modeID: string | null = state.values.nextModeID;
-        if (modeID === null) {
-          throw new Error("Attempted to begin turn with no next mode ID.");
-        }
-        state.setValues({
-          modeID,
-          nextModeID: getUniqueRandomModeID(modeID),
-        });
+        goToNextMode();
       }
     }
   }

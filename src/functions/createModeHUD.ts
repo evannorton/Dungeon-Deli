@@ -2,7 +2,6 @@ import { Mode } from "../modes";
 import { createLabel, createQuadrilateral } from "pixel-pigeon";
 import { getDefinable } from "../definables";
 import { state } from "../state";
-import { turnsPerMode } from "../constants/turnsPerMode";
 
 export const createModeHUD = (): void => {
   const width: number = 120;
@@ -71,7 +70,6 @@ export const createModeHUD = (): void => {
       y: 270 - 12,
     },
     horizontalAlignment: "right",
-    text: (): string =>
-      String(turnsPerMode - (state.values.turn % turnsPerMode)),
+    text: (): string => String(state.values.untilNextMode),
   });
 };

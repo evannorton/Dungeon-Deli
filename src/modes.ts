@@ -15,8 +15,5 @@ export class Mode extends Definable {
     return this._options.name;
   }
 }
-new Mode("a", { name: "A Mode" });
-new Mode("b", { name: "B Mode" });
-new Mode("c", { name: "C Mode" });
-new Mode("d", { name: "D Mode" });
-new Mode("e", { name: "E Mode" });
+new Mode("lifesteal", { name: "Lifesteal Mode" });
+new Mode("normal", { name: "Normal Mode" });

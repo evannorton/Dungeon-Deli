@@ -16,7 +16,6 @@ import {
 import { Ingredient } from "./ingredients";
 import { MonsterInstance } from "./monsterInstances";
 import { Weapon } from "./weapons";
-import { getRandomModeID } from "./functions/getRandomModeID";
 import { getUniqueRandomModeID } from "./functions/getUniqueRandomModeID";
 import { playerMaxHP } from "./constants/playerMaxHP";
 import { state } from "./state";
@@ -99,7 +98,7 @@ export class Stage extends Definable {
     for (const chest of getDefinables(Chest).values()) {
       chest.close();
     }
-    const modeID: string = getRandomModeID();
+    const modeID: string = "normal";
     state.setValues({
       attackingMonsterInstancesIDs: [],
       attackingWeaponsIDs: [],

@@ -15,6 +15,7 @@ import {
 import { Definable, getDefinable } from "./definables";
 import { MonsterInstance } from "./monsterInstances";
 import { TurnPart } from "./types/TurnPart";
+import { goToNextMode } from "./functions/goToNextMode";
 import { projectileDuration } from "./constants/projectileDuration";
 import { startMonsterInstancesMovement } from "./functions/startMonsterInstancesMovement";
 import { state } from "./state";
@@ -221,6 +222,7 @@ export class Weapon extends Definable {
             state.setValues({ turnPart: TurnPart.MonstersAttacking });
           } else {
             state.setValues({ turnPart: null });
+            goToNextMode();
           }
         }
       }

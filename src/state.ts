@@ -1,5 +1,6 @@
 import { State } from "pixel-pigeon";
 import { TurnPart } from "./types/TurnPart";
+import { turnsPerMode } from "./constants/turnsPerMode";
 
 interface StateSchema {
   attackingMonsterInstancesIDs: string[];
@@ -11,6 +12,7 @@ interface StateSchema {
   stageID: string | null;
   turn: number;
   turnPart: TurnPart | null;
+  untilNextMode: number;
 }
 
 export const state: State<StateSchema> = new State<StateSchema>({
@@ -23,6 +25,7 @@ export const state: State<StateSchema> = new State<StateSchema>({
   stageID: null,
   turn: 0,
   turnPart: null,
+  untilNextMode: turnsPerMode,
 });
 (
   window as unknown as {
