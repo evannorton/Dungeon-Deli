@@ -82,7 +82,10 @@ export const beginTurn = (): void => {
     if (state.values.stageID !== null) {
       const stage: Stage = getDefinable(Stage, state.values.stageID);
       for (const weapon of stage.weapons) {
-        if (state.values.turn % weapon.stepsPerAttack === 0) {
+        if (
+          (state.values.turn + weapon.stepsOffset) % weapon.stepsPerAttack ===
+          0
+        ) {
           state.setValues({
             attackingWeaponsIDs: [
               ...state.values.attackingWeaponsIDs,

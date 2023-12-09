@@ -12,7 +12,7 @@ export const createModeHUD = (): void => {
       y: 270 - 35,
     },
     height: 33,
-    opacity: 0.625,
+    opacity: 0.75,
     width: 118,
   });
   createLabel({

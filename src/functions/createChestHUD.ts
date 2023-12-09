@@ -32,7 +32,7 @@ export const createChestHUD = (): void => {
       y,
     },
     height,
-    opacity: 0.625,
+    opacity: 0.75,
     width,
   });
   getDefinables<Ingredient>(Ingredient);

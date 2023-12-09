@@ -32,7 +32,7 @@ export const createDeathHUD = (): void => {
       y,
     },
     height,
-    opacity: 0.625,
+    opacity: 0.75,
     width,
   });
   createLabel({

@@ -36,6 +36,7 @@ interface WeaponOptions {
   readonly damage: number;
   readonly name: string;
   readonly projectile?: WeaponOptionsProjectile;
+  readonly stepsOffset: number;
   readonly stepsPerAttack: number;
 }
 
@@ -49,6 +50,10 @@ export class Weapon extends Definable {
 
   public get name(): string {
     return this._options.name;
+  }
+
+  public get stepsOffset(): number {
+    return this._options.stepsOffset;
   }
 
   public get stepsPerAttack(): number {
@@ -228,7 +233,8 @@ new Weapon("left", {
   projectile: {
     moves: [{ x: -1 }],
   },
-  stepsPerAttack: 5,
+  stepsOffset: 3,
+  stepsPerAttack: 4,
 });
 new Weapon("right", {
   damage: 25,
@@ -236,7 +242,8 @@ new Weapon("right", {
   projectile: {
     moves: [{ x: 1 }],
   },
-  stepsPerAttack: 3,
+  stepsOffset: 1,
+  stepsPerAttack: 4,
 });
 new Weapon("down", {
   damage: 25,
@@ -244,7 +251,8 @@ new Weapon("down", {
   projectile: {
     moves: [{ y: 1 }],
   },
-  stepsPerAttack: 7,
+  stepsOffset: 2,
+  stepsPerAttack: 4,
 });
 new Weapon("up", {
   damage: 25,
@@ -252,5 +260,6 @@ new Weapon("up", {
   projectile: {
     moves: [{ y: -1 }],
   },
-  stepsPerAttack: 9,
+  stepsOffset: 0,
+  stepsPerAttack: 4,
 });

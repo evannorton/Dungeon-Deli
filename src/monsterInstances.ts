@@ -246,7 +246,10 @@ export class MonsterInstance extends Definable {
             ),
         });
         if (state.values.attackingMonsterInstancesIDs.length === 0) {
-          if (playerIsBlocked() === false) {
+          if (
+            playerIsBlocked() === false ||
+            playerCharacter.isAlive() === false
+          ) {
             state.setValues({ turnPart: null });
           } else {
             beginTurn();

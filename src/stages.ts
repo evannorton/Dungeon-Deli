@@ -121,7 +121,7 @@ export class Stage extends Definable {
           y: 2,
         },
         height: 3 + this._options.weaponIDs.length * 10,
-        opacity: 0.625,
+        opacity: 0.75,
         width: 92,
       }),
     );
@@ -150,7 +150,8 @@ export class Stage extends Definable {
             text: (): string =>
               String(
                 weapon.stepsPerAttack -
-                  (state.values.turn % weapon.stepsPerAttack),
+                  ((state.values.turn + weapon.stepsOffset) %
+                    weapon.stepsPerAttack),
               ),
           }),
         );
@@ -172,10 +173,10 @@ new Stage("tutorial", {
   nextStageID: "crystals",
   playerStartLevelID: "tutorial_1",
   playerStartPosition: {
-    x: 264,
-    y: 168,
+    x: 10 * 24,
+    y: 8 * 24,
   },
-  weaponIDs: ["up", "left", "right", "down"],
+  weaponIDs: ["left", "down", "right", "up"],
 });
 new Stage("crystals", {
   ingredientID: "meat",
@@ -185,7 +186,7 @@ new Stage("crystals", {
     x: 240,
     y: 144,
   },
-  weaponIDs: ["up", "left", "right", "down"],
+  weaponIDs: ["left", "down", "right", "up"],
 });
 new Stage("cheese", {
   ingredientID: "cheese",
@@ -195,7 +196,7 @@ new Stage("cheese", {
     x: 240,
     y: 144,
   },
-  weaponIDs: ["up", "left", "right", "down"],
+  weaponIDs: ["left", "down", "right", "up"],
 });
 new Stage("ruins", {
   ingredientID: "lettuce",
@@ -205,7 +206,7 @@ new Stage("ruins", {
     x: 240,
     y: 144,
   },
-  weaponIDs: ["up", "left", "right", "down"],
+  weaponIDs: ["left", "down", "right", "up"],
 });
 new Stage("frozen", {
   ingredientID: "tomato",
@@ -215,5 +216,5 @@ new Stage("frozen", {
     x: 240,
     y: 144,
   },
-  weaponIDs: ["up", "left", "right", "down"],
+  weaponIDs: ["left", "down", "right", "up"],
 });
