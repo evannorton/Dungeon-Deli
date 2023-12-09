@@ -1,6 +1,11 @@
 import { Character } from "../characters";
 import { Chest } from "../chests";
-import { CollisionData, EntityPosition, getEntityPosition, getRectangleCollisionData } from "pixel-pigeon";
+import {
+  CollisionData,
+  EntityPosition,
+  getEntityPosition,
+  getRectangleCollisionData,
+} from "pixel-pigeon";
 import { getDefinable } from "../definables";
 import { state } from "../state";
 

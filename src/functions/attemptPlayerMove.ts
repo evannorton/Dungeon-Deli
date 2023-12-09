@@ -3,7 +3,8 @@ import {
   CollisionData,
   EntityPosition,
   getActiveLevelID,
-  getEntityPosition,getRectangleCollisionData
+  getEntityPosition,
+  getRectangleCollisionData,
 } from "pixel-pigeon";
 import { Direction } from "../types/Direction";
 import { TurnPart } from "../types/TurnPart";
