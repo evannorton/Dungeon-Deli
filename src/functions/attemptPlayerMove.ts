@@ -41,7 +41,7 @@ export const attemptPlayerMove = (xOffset: number, yOffset: number): void => {
           x: endPosition.x,
           y: endPosition.y,
         },
-        ["monster"],
+        ["chest", "monster"],
       );
       if (
         collisionData.map === false &&

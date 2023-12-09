@@ -192,7 +192,7 @@ export class MonsterInstance extends Definable {
             type: "transport",
           },
         ],
-        types: ["monster", "transport"],
+        types: ["chest", "monster", "transport"],
         x: playerEntityPosition.x,
         y: playerEntityPosition.y,
       },

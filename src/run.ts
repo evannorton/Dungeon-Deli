@@ -1,4 +1,5 @@
 import { Stage } from "./stages";
+import { createChests } from "./functions/createChests";
 import { createDeathHUD } from "./functions/createDeathHUD";
 import { createMonsterInstances } from "./functions/createMonsterInstances";
 import { getDefinable } from "./definables";
@@ -12,6 +13,7 @@ export const run = (): void => {
   }
   createDeathHUD();
   createMonsterInstances();
+  createChests();
   getDefinable(Stage, stageIDs[0]).start();
   playAudioSource("cavern-theme-base", {
     loopPoint: 12800,
