@@ -129,7 +129,6 @@ export class Stage extends Definable {
         width,
       }),
     );
-    console.log(this._quadrilateralIDs);
     this._labelIDs.push(
       createLabel({
         color: "#ffffff",
