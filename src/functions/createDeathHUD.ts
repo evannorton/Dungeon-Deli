@@ -13,11 +13,10 @@ import { state } from "../state";
 
 export const createDeathHUD = (): void => {
   const centerX: number = Math.floor(480 / 2);
-  const centerY: number = Math.floor(270 / 2);
-  const width: number = 176;
-  const height: number = 32;
+  const width: number = 161;
+  const height: number = 19;
   const x: number = centerX - Math.floor(width / 2);
-  const y: number = centerY - Math.floor(height / 2);
+  const y: number = 24;
   const condition = (): boolean => {
     if (state.values.playerCharacterID !== null) {
       const playerCharacter: Character = getDefinable(
@@ -43,8 +42,8 @@ export const createDeathHUD = (): void => {
     color: "#ffffff",
     coordinates: {
       condition,
-      x: centerX,
-      y: centerY - 4,
+      x: centerX + 2,
+      y: y + 6,
     },
     horizontalAlignment: "center",
     text: "You died! Click to restart.",
