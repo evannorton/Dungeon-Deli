@@ -1,3 +1,4 @@
+import "./ingredients";
 import "./inputHandlers";
 import "./modes";
 import "./monsters";

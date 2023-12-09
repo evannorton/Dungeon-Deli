@@ -1,14 +1,11 @@
 import { Character } from "../characters";
-import { MonsterInstance } from "../monsterInstances";
 import { Stage } from "../stages";
 import {
   createInputPressHandler,
   createLabel,
   createQuadrilateral,
 } from "pixel-pigeon";
-import { getDefinable, getDefinables } from "../definables";
-import { getRandomModeID } from "./getRandomModeID";
-import { getUniqueRandomModeID } from "./getUniqueRandomModeID";
+import { getDefinable } from "../definables";
 import { state } from "../state";
 
 export const createDeathHUD = (): void => {
@@ -62,26 +59,8 @@ export const createDeathHUD = (): void => {
         state.values.playerCharacterID !== null &&
         state.values.stageID !== null
       ) {
-        const playerCharacter: Character = getDefinable(
-          Character,
-          state.values.playerCharacterID,
-        );
-        playerCharacter.reset();
         const stage: Stage = getDefinable(Stage, state.values.stageID);
-        stage.reset();
-        for (const monsterInstance of getDefinables(MonsterInstance).values()) {
-          monsterInstance.reset();
-        }
-        const modeID: string = getRandomModeID();
-        state.setValues({
-          attackingMonsterInstancesIDs: [],
-          attackingWeaponsIDs: [],
-          modeID,
-          movingMonsterInstancesIDs: [],
-          nextModeID: getUniqueRandomModeID(modeID),
-          turn: 0,
-          turnPart: null,
-        });
+        stage.start();
       }
     },
   });

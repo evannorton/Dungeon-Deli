@@ -1,9 +1,11 @@
 import { Character } from "../characters";
+import { Chest } from "../chests";
 import {
   CollisionData,
   EntityPosition,
   getEntityFieldValue,
   getEntityPosition,
+  getRectangleCollisionData,
   goToLevel,
   setEntityLevel,
   setEntityPosition,
@@ -11,7 +13,7 @@ import {
 import { Stage } from "../stages";
 import { TurnPart } from "../types/TurnPart";
 import { getDefinable } from "../definables";
-import { getRectangleCollisionData } from "pixel-pigeon/api/functions/getRectangleCollisionData";
+import { getPlayerChest } from "./getPlayerChest";
 import { getUniqueRandomModeID } from "./getUniqueRandomModeID";
 import { startMonsterInstancesMovement } from "./startMonsterInstancesMovement";
 import { state } from "../state";
@@ -73,35 +75,46 @@ export const beginTurn = (): void => {
     });
     goToLevel(targetLevelID);
   }
-  if (state.values.stageID !== null) {
-    const stage: Stage = getDefinable(Stage, state.values.stageID);
-    for (const weapon of stage.weapons) {
-      if (state.values.turn % weapon.stepsPerAttack === 0) {
-        state.setValues({
-          attackingWeaponsIDs: [...state.values.attackingWeaponsIDs, weapon.id],
-        });
+  const chest: Chest | null = getPlayerChest();
+  if (chest !== null) {
+    chest.open();
+  } else {
+    if (state.values.stageID !== null) {
+      const stage: Stage = getDefinable(Stage, state.values.stageID);
+      for (const weapon of stage.weapons) {
+        if (state.values.turn % weapon.stepsPerAttack === 0) {
+          state.setValues({
+            attackingWeaponsIDs: [
+              ...state.values.attackingWeaponsIDs,
+              weapon.id,
+            ],
+          });
+        }
       }
     }
-  }
-  if (state.values.attackingWeaponsIDs.length > 0) {
-    state.setValues({
-      turnPart: TurnPart.WeaponsAttacking,
-    });
-  } else {
-    startMonsterInstancesMovement();
-    if (state.values.movingMonsterInstancesIDs.length > 0) {
-      state.setValues({ turnPart: TurnPart.MonstersMoving });
-    } else if (state.values.attackingMonsterInstancesIDs.length > 0) {
-      state.setValues({ turnPart: TurnPart.MonstersAttacking });
-    } else {
-      state.setValues({ turnPart: null });
-    }
-    if (state.values.turn % turnsPerMode === 0) {
-      const modeID: string = state.values.nextModeID;
+    if (state.values.attackingWeaponsIDs.length > 0) {
       state.setValues({
-        modeID,
-        nextModeID: getUniqueRandomModeID(modeID),
+        turnPart: TurnPart.WeaponsAttacking,
       });
+    } else {
+      startMonsterInstancesMovement();
+      if (state.values.movingMonsterInstancesIDs.length > 0) {
+        state.setValues({ turnPart: TurnPart.MonstersMoving });
+      } else if (state.values.attackingMonsterInstancesIDs.length > 0) {
+        state.setValues({ turnPart: TurnPart.MonstersAttacking });
+      } else {
+        state.setValues({ turnPart: null });
+      }
+      if (state.values.turn % turnsPerMode === 0) {
+        const modeID: string | null = state.values.nextModeID;
+        if (modeID === null) {
+          throw new Error("Attempted to begin turn with no next mode ID.");
+        }
+        state.setValues({
+          modeID,
+          nextModeID: getUniqueRandomModeID(modeID),
+        });
+      }
     }
   }
 };

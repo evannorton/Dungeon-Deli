@@ -1,12 +1,13 @@
 import { Character } from "../characters";
+import { Chest } from "../chests";
 import { CollisionData, EntityPosition, getEntityPosition, getRectangleCollisionData } from "pixel-pigeon";
 import { getDefinable } from "../definables";
 import { state } from "../state";
 
-export const playerIsBlocked = (): boolean => {
+export const getPlayerChest = (): Chest | null => {
   if (state.values.playerCharacterID === null) {
     throw new Error(
-      "Attempted to check if player can move with no player character ID.",
+      "Attempted to get player chest with no player character ID.",
     );
   }
   const playerCharacter: Character = getDefinable(
@@ -42,14 +43,11 @@ export const playerIsBlocked = (): boolean => {
         x: position.x,
         y: position.y,
       },
-      ["monster"],
+      ["chest"],
     );
-    if (
-      collisionData.map === false &&
-      collisionData.entityCollidables.length === 0
-    ) {
-      return false;
+    if (collisionData.entityCollidables.length > 0) {
+      return getDefinable(Chest, collisionData.entityCollidables[0].entityID);
     }
   }
-  return true;
+  return null;
 };

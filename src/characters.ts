@@ -351,6 +351,8 @@ export class Character extends Definable {
 
   public reset(): void {
     this._hp = this._options.maxHP;
+    this._direction = Direction.Down;
+    this._step = Step.Left;
   }
 
   public startMovement(endPosition: EntityPosition): void {

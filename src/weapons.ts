@@ -1,20 +1,20 @@
 import { Character } from "./characters";
 import {
   CollisionData,
+  EntityCollidable,
   EntityPosition,
   createEntity,
   createSprite,
   getActiveLevelID,
   getCurrentTime,
   getEntityPosition,
+  getRectangleCollisionData,
   removeEntity,
   setEntityPosition,
 } from "pixel-pigeon";
 import { Definable, getDefinable } from "./definables";
-import { EntityCollidable } from "pixel-pigeon/api/types/World";
 import { MonsterInstance } from "./monsterInstances";
 import { TurnPart } from "./types/TurnPart";
-import { getRectangleCollisionData } from "pixel-pigeon/api/functions/getRectangleCollisionData";
 import { projectileDuration } from "./constants/projectileDuration";
 import { startMonsterInstancesMovement } from "./functions/startMonsterInstancesMovement";
 import { state } from "./state";
