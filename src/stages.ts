@@ -14,6 +14,7 @@ import {
   setEntityPosition,
 } from "pixel-pigeon";
 import { Ingredient } from "./ingredients";
+import { Mode, normalModeID } from "./modes";
 import { MonsterInstance } from "./monsterInstances";
 import {
   Weapon,
@@ -23,7 +24,6 @@ import {
   upWeaponID,
 } from "./weapons";
 import { getUniqueRandomModeID } from "./functions/getUniqueRandomModeID";
-import { normalModeID } from "./modes";
 import { playerMaxHP } from "./constants/playerMaxHP";
 import { state } from "./state";
 
@@ -106,6 +106,7 @@ export class Stage extends Definable {
       chest.close();
     }
     const modeID: string = normalModeID;
+    const mode: Mode = getDefinable(Mode, modeID);
     state.setValues({
       attackingMonsterInstancesIDs: [],
       attackingWeaponsIDs: [],
@@ -114,6 +115,7 @@ export class Stage extends Definable {
       nextModeID: getUniqueRandomModeID(modeID),
       turn: 0,
       turnPart: null,
+      untilNextMode: mode.turns,
     });
     this.removeHUD();
     this.createHUD();
