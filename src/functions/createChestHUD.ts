@@ -72,7 +72,7 @@ export const createChestHUD = (): void => {
     color: "#ffffff",
     coordinates: {
       condition,
-      x: centerX + 1,
+      x: centerX,
       y: y + 36,
     },
     horizontalAlignment: "center",

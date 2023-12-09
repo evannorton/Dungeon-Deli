@@ -30,9 +30,9 @@ interface StageOptions {
 }
 
 export class Stage extends Definable {
-  private readonly _labelIDs: string[] = [];
+  private _labelIDs: string[] = [];
   private readonly _options: StageOptions;
-  private readonly _quadrilateralIDs: string[] = [];
+  private _quadrilateralIDs: string[] = [];
   public constructor(id: string, options: StageOptions) {
     super(id);
     this._options = options;
@@ -109,6 +109,7 @@ export class Stage extends Definable {
       turn: 0,
       turnPart: null,
     });
+    this.removeHUD();
     this.createHUD();
   }
 
@@ -128,6 +129,7 @@ export class Stage extends Definable {
         width,
       }),
     );
+    console.log(this._quadrilateralIDs);
     this._labelIDs.push(
       createLabel({
         color: "#ffffff",
@@ -178,8 +180,11 @@ export class Stage extends Definable {
       removeLabel(labelID);
     }
     for (const quadrilateralID of this._quadrilateralIDs) {
+      console.log("remove quadrilateral")
       removeQuadrilateral(quadrilateralID);
     }
+    this._labelIDs = [];
+    this._quadrilateralIDs = [];
   }
 }
 new Stage("tutorial", {

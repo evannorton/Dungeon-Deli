@@ -21,7 +21,7 @@ export const createModeHUD = (): void => {
   createLabel({
     color: "#ffffff",
     coordinates: {
-      x: 5 + Math.floor(width / 2),
+      x: 2 + Math.floor(width / 2),
       y: y + 5,
     },
     horizontalAlignment: "center",
