@@ -113,16 +113,19 @@ export class Stage extends Definable {
   }
 
   private createHUD(): void {
+    const width: number = 118;
+    const height: number = 3 + this._options.weaponIDs.length * 10;
+    const y: number = 270 - 2 - 33 - 2 - height;
     this._quadrilateralIDs.push(
       createQuadrilateral({
         color: "#000000",
         coordinates: {
-          x: 480 - 92,
-          y: 2,
+          x: 2,
+          y,
         },
-        height: 3 + this._options.weaponIDs.length * 10,
+        height,
         opacity: 0.75,
-        width: 92,
+        width,
       }),
     );
     this._options.weaponIDs.forEach(
@@ -132,19 +135,19 @@ export class Stage extends Definable {
           createLabel({
             color: "#ffffff",
             coordinates: {
-              x: 480 - 89,
-              y: 5 + weaponIndex * 10,
+              x: 5,
+              y: y + 3 + weaponIndex * 10,
             },
             horizontalAlignment: "left",
-            text: weapon.name,
+            text: `${weapon.name}:`,
           }),
         );
         this._labelIDs.push(
           createLabel({
             color: "#ffffff",
             coordinates: {
-              x: 480 - 5,
-              y: 5 + weaponIndex * 10,
+              x: width + 2 - 2,
+              y: y + 3 + weaponIndex * 10,
             },
             horizontalAlignment: "right",
             text: (): string =>
