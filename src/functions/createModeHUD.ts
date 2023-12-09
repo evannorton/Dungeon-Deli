@@ -6,7 +6,7 @@ import { state } from "../state";
 export const createModeHUD = (): void => {
   const width: number = 120;
   const height: number = 37;
-  const y: number = 270 - 2 - height;
+  const y: number = 312 - 2 - height;
   createQuadrilateral({
     color: "#000000",
     coordinates: {
@@ -35,7 +35,7 @@ export const createModeHUD = (): void => {
     color: "#ffffff",
     coordinates: {
       x: 5,
-      y: 270 - 22,
+      y: 312 - 22,
     },
     horizontalAlignment: "left",
     text: "Next:",
@@ -44,7 +44,7 @@ export const createModeHUD = (): void => {
     color: "#ffffff",
     coordinates: {
       x: 2 + width - 2,
-      y: 270 - 22,
+      y: 312 - 22,
     },
     horizontalAlignment: "right",
     text: (): string => {
@@ -58,7 +58,7 @@ export const createModeHUD = (): void => {
     color: "#ffffff",
     coordinates: {
       x: 5,
-      y: 270 - 12,
+      y: 312 - 12,
     },
     horizontalAlignment: "left",
     text: "Until next:",
@@ -67,7 +67,7 @@ export const createModeHUD = (): void => {
     color: "#ffffff",
     coordinates: {
       x: 2 + width - 2,
-      y: 270 - 12,
+      y: 312 - 12,
     },
     horizontalAlignment: "right",
     text: (): string => String(state.values.untilNextMode),
