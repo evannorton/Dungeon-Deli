@@ -15,9 +15,16 @@ import {
 } from "pixel-pigeon";
 import { Ingredient } from "./ingredients";
 import { MonsterInstance } from "./monsterInstances";
-import { Weapon } from "./weapons";
+import {
+  Weapon,
+  downWeaponID,
+  leftWeaponID,
+  rightWeaponID,
+  upWeaponID,
+} from "./weapons";
 import { getUniqueRandomModeID } from "./functions/getUniqueRandomModeID";
 import { playerMaxHP } from "./constants/playerMaxHP";
+import { slipperyModeID } from "./modes";
 import { state } from "./state";
 
 interface StageOptions {
@@ -98,7 +105,7 @@ export class Stage extends Definable {
     for (const chest of getDefinables(Chest).values()) {
       chest.close();
     }
-    const modeID: string = "normal";
+    const modeID: string = slipperyModeID;
     state.setValues({
       attackingMonsterInstancesIDs: [],
       attackingWeaponsIDs: [],
@@ -193,7 +200,7 @@ new Stage("tutorial", {
     x: 10 * 24,
     y: 8 * 24,
   },
-  weaponIDs: ["left", "down", "right", "up"],
+  weaponIDs: [leftWeaponID, downWeaponID, rightWeaponID, upWeaponID],
 });
 new Stage("crystals", {
   ingredientID: "meat",

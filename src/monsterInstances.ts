@@ -16,6 +16,7 @@ import {
 import { Monster } from "./monsters";
 import { beginTurn } from "./functions/beginTurn";
 import { goToNextMode } from "./functions/goToNextMode";
+import { lifestealModeID } from "./modes";
 import { monsterAttackDuration } from "./constants/monsterAttackDuration";
 import { playerIsBlocked } from "./functions/playerIsBlocked";
 import { state } from "./state";
@@ -238,7 +239,7 @@ export class MonsterInstance extends Definable {
           state.values.playerCharacterID,
         );
         playerCharacter.takeDamage(this.monster.damage);
-        if (state.values.modeID === "lifesteal") {
+        if (state.values.modeID === lifestealModeID) {
           this.character.restoreHealth(this.monster.damage);
         }
         removeEntitySprite(playerCharacter.entityID, this._attack.spriteID);

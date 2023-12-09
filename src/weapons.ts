@@ -12,10 +12,11 @@ import {
   removeEntity,
   setEntityPosition,
 } from "pixel-pigeon";
-import { Definable, getDefinable } from "./definables";
+import { Definable, getDefinable, getToken } from "./definables";
 import { MonsterInstance } from "./monsterInstances";
 import { TurnPart } from "./types/TurnPart";
 import { goToNextMode } from "./functions/goToNextMode";
+import { lifestealModeID } from "./modes";
 import { projectileDuration } from "./constants/projectileDuration";
 import { startMonsterInstancesMovement } from "./functions/startMonsterInstancesMovement";
 import { state } from "./state";
@@ -44,8 +45,8 @@ interface WeaponOptions {
 export class Weapon extends Definable {
   private _attack: WeaponAttack | null = null;
   private readonly _options: WeaponOptions;
-  public constructor(id: string, options: WeaponOptions) {
-    super(id);
+  public constructor(options: WeaponOptions) {
+    super(getToken());
     this._options = options;
   }
 
@@ -207,7 +208,7 @@ export class Weapon extends Definable {
             Character,
             state.values.playerCharacterID,
           );
-          if (state.values.modeID === "lifesteal") {
+          if (state.values.modeID === lifestealModeID) {
             playerCharacter.restoreHealth(this._options.damage);
           }
           if (monsterInstance.character.isAlive() === false) {
@@ -236,7 +237,7 @@ export class Weapon extends Definable {
     }
   }
 }
-new Weapon("left", {
+export const leftWeaponID: string = new Weapon({
   damage: 25,
   name: "Shoot left",
   projectile: {
@@ -244,8 +245,8 @@ new Weapon("left", {
   },
   stepsOffset: 3,
   stepsPerAttack: 4,
-});
-new Weapon("right", {
+}).id;
+export const rightWeaponID: string = new Weapon({
   damage: 25,
   name: "Shoot right",
   projectile: {
@@ -253,8 +254,8 @@ new Weapon("right", {
   },
   stepsOffset: 1,
   stepsPerAttack: 4,
-});
-new Weapon("down", {
+}).id;
+export const downWeaponID: string = new Weapon({
   damage: 25,
   name: "Shoot down",
   projectile: {
@@ -262,8 +263,8 @@ new Weapon("down", {
   },
   stepsOffset: 2,
   stepsPerAttack: 4,
-});
-new Weapon("up", {
+}).id;
+export const upWeaponID: string = new Weapon({
   damage: 25,
   name: "Shoot up",
   projectile: {
@@ -271,4 +272,4 @@ new Weapon("up", {
   },
   stepsOffset: 0,
   stepsPerAttack: 4,
-});
+}).id;

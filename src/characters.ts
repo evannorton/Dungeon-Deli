@@ -396,23 +396,20 @@ export class Character extends Definable {
     if (this._move !== null) {
       const { endPosition, startPosition, time } = this._move;
       const currentTime: number = getCurrentTime();
-      if (currentTime <= time + walkDuration) {
+      const xDiff: number = Math.abs(endPosition.x - startPosition.x);
+      const yDiff: number = Math.abs(endPosition.y - startPosition.y);
+      const maxDiff: number = Math.max(xDiff, yDiff);
+      const totalDuration: number = (maxDiff / 24) * walkDuration;
+      if (currentTime <= time + totalDuration) {
         const divisor: number = currentTime - time;
-        const percent: number = Math.min(divisor / walkDuration, 1);
-        const offset: number = Math.floor(24 * percent);
-        let xOffset: number = 0;
-        let yOffset: number = 0;
-        if (endPosition.x > startPosition.x) {
-          xOffset = offset;
-        }
+        const percent: number = Math.min(divisor / totalDuration, 1);
+        let xOffset: number = Math.floor(xDiff * percent);
+        let yOffset: number = Math.floor(yDiff * percent);
         if (endPosition.x < startPosition.x) {
-          xOffset = -offset;
-        }
-        if (endPosition.y > startPosition.y) {
-          yOffset = offset;
+          xOffset = -xOffset;
         }
         if (endPosition.y < startPosition.y) {
-          yOffset = -offset;
+          yOffset = -yOffset;
         }
         setEntityPosition(this._options.entityID, {
           x: startPosition.x + xOffset,

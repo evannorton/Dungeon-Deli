@@ -9,6 +9,7 @@ import {
 import { Direction } from "../types/Direction";
 import { TurnPart } from "../types/TurnPart";
 import { getDefinable } from "../definables";
+import { slipperyModeID } from "../modes";
 import { state } from "../state";
 
 export const attemptPlayerMove = (xOffset: number, yOffset: number): void => {
@@ -30,22 +31,54 @@ export const attemptPlayerMove = (xOffset: number, yOffset: number): void => {
       const startPosition: EntityPosition = getEntityPosition(
         playerCharacter.entityID,
       );
-      const endPosition: EntityPosition = {
-        x: startPosition.x + xOffset * 24,
-        y: startPosition.y + yOffset * 24,
+      let endPosition: EntityPosition = {
+        x: startPosition.x,
+        y: startPosition.y,
       };
-      const collisionData: CollisionData = getRectangleCollisionData(
-        {
-          height: 24,
-          width: 24,
-          x: endPosition.x,
-          y: endPosition.y,
-        },
-        ["chest", "monster"],
-      );
+      if (state.values.modeID === slipperyModeID) {
+        let hitCollision: boolean = false;
+        while (hitCollision === false) {
+          const newPosition: EntityPosition = {
+            ...endPosition,
+          };
+          newPosition.x += xOffset * 24;
+          newPosition.y += yOffset * 24;
+          const collisionData: CollisionData = getRectangleCollisionData(
+            {
+              height: 24,
+              width: 24,
+              x: newPosition.x,
+              y: newPosition.y,
+            },
+            ["chest", "monster"],
+          );
+          if (collisionData.map || collisionData.entityCollidables.length > 0) {
+            hitCollision = true;
+          } else {
+            endPosition = newPosition;
+          }
+        }
+      } else {
+        const collisionData: CollisionData = getRectangleCollisionData(
+          {
+            height: 24,
+            width: 24,
+            x: endPosition.x,
+            y: endPosition.y,
+          },
+          ["chest", "monster"],
+        );
+        if (
+          collisionData.map === false &&
+          collisionData.entityCollidables.length === 0
+        ) {
+          endPosition.x += xOffset * 24;
+          endPosition.y += yOffset * 24;
+        }
+      }
       if (
-        collisionData.map === false &&
-        collisionData.entityCollidables.length === 0
+        endPosition.x !== startPosition.x ||
+        endPosition.y !== startPosition.y
       ) {
         playerCharacter.startMovement(endPosition);
         state.setValues({ turnPart: TurnPart.PlayerMoving });

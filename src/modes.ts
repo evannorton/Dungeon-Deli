@@ -1,4 +1,4 @@
-import { Definable } from "./definables";
+import { Definable, getToken } from "./definables";
 
 interface ModeOptions {
   readonly name: string;
@@ -6,8 +6,8 @@ interface ModeOptions {
 
 export class Mode extends Definable {
   private readonly _options: ModeOptions;
-  public constructor(id: string, options: ModeOptions) {
-    super(id);
+  public constructor(options: ModeOptions) {
+    super(getToken());
     this._options = options;
   }
 
@@ -15,5 +15,8 @@ export class Mode extends Definable {
     return this._options.name;
   }
 }
-new Mode("lifesteal", { name: "Lifesteal Mode" });
-new Mode("normal", { name: "Normal Mode" });
+export const lifestealModeID: string = new Mode({
+  name: "Lifesteal Mode",
+}).id;
+export const normalModeID: string = new Mode({ name: "Normal Mode" }).id;
+export const slipperyModeID: string = new Mode({ name: "Slippery Mode" }).id;
