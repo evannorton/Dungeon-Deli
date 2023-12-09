@@ -23,8 +23,8 @@ import {
   upWeaponID,
 } from "./weapons";
 import { getUniqueRandomModeID } from "./functions/getUniqueRandomModeID";
+import { normalModeID } from "./modes";
 import { playerMaxHP } from "./constants/playerMaxHP";
-import { slipperyModeID } from "./modes";
 import { state } from "./state";
 
 interface StageOptions {
@@ -105,7 +105,7 @@ export class Stage extends Definable {
     for (const chest of getDefinables(Chest).values()) {
       chest.close();
     }
-    const modeID: string = slipperyModeID;
+    const modeID: string = normalModeID;
     state.setValues({
       attackingMonsterInstancesIDs: [],
       attackingWeaponsIDs: [],

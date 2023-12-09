@@ -1,6 +1,7 @@
 import { Definable, getToken } from "./definables";
 
 interface ModeOptions {
+  readonly duration: number;
   readonly name: string;
 }
 
@@ -16,7 +17,14 @@ export class Mode extends Definable {
   }
 }
 export const lifestealModeID: string = new Mode({
+  duration: 8,
   name: "Lifesteal Mode",
 }).id;
-export const normalModeID: string = new Mode({ name: "Normal Mode" }).id;
-export const slipperyModeID: string = new Mode({ name: "Slippery Mode" }).id;
+export const normalModeID: string = new Mode({
+  duration: 8,
+  name: "Normal Mode",
+}).id;
+export const slipperyModeID: string = new Mode({
+  duration: 4,
+  name: "Slippery Mode",
+}).id;
