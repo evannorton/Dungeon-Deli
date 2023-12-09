@@ -43,6 +43,20 @@ export const attemptPlayerMove = (xOffset: number, yOffset: number): void => {
           };
           newPosition.x += xOffset * 24;
           newPosition.y += yOffset * 24;
+          const transportCollisionData: CollisionData =
+            getRectangleCollisionData(
+              {
+                height: 24,
+                width: 24,
+                x: newPosition.x,
+                y: newPosition.y,
+              },
+              ["transport"],
+            );
+          if (transportCollisionData.entityCollidables.length > 0) {
+            hitCollision = true;
+            endPosition = newPosition;
+          }
           const collisionData: CollisionData = getRectangleCollisionData(
             {
               height: 24,
