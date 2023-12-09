@@ -70,8 +70,8 @@ export const beginTurn = (): void => {
     }
     setEntityLevel(playerCharacter.entityID, targetLevelID);
     setEntityPosition(playerCharacter.entityID, {
-      x: targetX * 24,
-      y: targetY * 24,
+      x: targetX,
+      y: targetY,
     });
     goToLevel(targetLevelID);
   }

@@ -173,8 +173,8 @@ new Stage("tutorial", {
   nextStageID: "crystals",
   playerStartLevelID: "tutorial_1",
   playerStartPosition: {
-    x: 240,
-    y: 144,
+    x: 264,
+    y: 168,
   },
   weaponIDs: ["up", "left", "right", "down"],
 });

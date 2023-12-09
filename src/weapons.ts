@@ -121,7 +121,7 @@ export class Weapon extends Definable {
               x: positions[positions.length - 1].x,
               y: positions[positions.length - 1].y,
             },
-            ["monster"],
+            ["chest", "monster", "transport"],
           );
           if (collisionData.map === true) {
             break outerLoop;
@@ -129,7 +129,11 @@ export class Weapon extends Definable {
           if (collisionData.entityCollidables.length > 0) {
             const entityCollidable: EntityCollidable =
               collisionData.entityCollidables[0];
-            entityID = entityCollidable.entityID;
+            if (entityCollidable.type === "monster") {
+              entityID = entityCollidable.entityID;
+            } else {
+              break outerLoop;
+            }
           }
         }
       }
