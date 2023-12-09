@@ -22,13 +22,13 @@ export class Mode extends Definable {
 }
 export const lifestealModeID: string = new Mode({
   name: "Lifesteal Mode",
-  turns: 8,
+  turns: 6,
 }).id;
 export const normalModeID: string = new Mode({
   name: "Normal Mode",
-  turns: 8,
+  turns: 6,
 }).id;
 export const slipperyModeID: string = new Mode({
   name: "Slippery Mode",
-  turns: 4,
+  turns: 3,
 }).id;
