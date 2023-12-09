@@ -203,7 +203,7 @@ new Stage("crystals", {
     x: 240,
     y: 144,
   },
-  weaponIDs: ["left", "down", "right", "up"],
+  weaponIDs: [],
 });
 new Stage("cheese", {
   ingredientID: "cheese",
@@ -213,7 +213,7 @@ new Stage("cheese", {
     x: 240,
     y: 144,
   },
-  weaponIDs: ["left", "down", "right", "up"],
+  weaponIDs: [],
 });
 new Stage("ruins", {
   ingredientID: "lettuce",
@@ -223,7 +223,7 @@ new Stage("ruins", {
     x: 240,
     y: 144,
   },
-  weaponIDs: ["left", "down", "right", "up"],
+  weaponIDs: [],
 });
 new Stage("frozen", {
   ingredientID: "tomato",
@@ -233,5 +233,5 @@ new Stage("frozen", {
     x: 240,
     y: 144,
   },
-  weaponIDs: ["left", "down", "right", "up"],
+  weaponIDs: [],
 });
