@@ -113,7 +113,6 @@ export class Stage extends Definable {
   }
 
   private createHUD(): void {
-    // Top right
     this._quadrilateralIDs.push(
       createQuadrilateral({
         color: "#000000",
