@@ -13,7 +13,7 @@ import { state } from "../state";
 
 export const createChestHUD = (): void => {
   const centerX: number = Math.floor(480 / 2);
-  const width: number = 161;
+  const width: number = 158;
   const height: number = 65;
   const x: number = centerX - Math.floor(width / 2);
   const y: number = 24;
@@ -86,7 +86,7 @@ export const createChestHUD = (): void => {
       y: y + 48,
     },
     horizontalAlignment: "center",
-    text: "Click to go to next level.",
+    text: "Click to continue.",
   });
   createInputPressHandler({
     condition,

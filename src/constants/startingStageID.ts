@@ -1,1 +1,1 @@
-export const startingStageID: string = "crystals-1";
+export const startingStageID: string = "tutorial";

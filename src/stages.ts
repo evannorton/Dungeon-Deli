@@ -168,53 +168,53 @@ export class Stage extends Definable {
     }
   }
 }
-new Stage("crystals-1", {
-  ingredientID: "lettuce",
-  nextStageID: "crystals-2",
-  playerStartLevelID: "test_1",
+new Stage("tutorial", {
+  ingredientID: "bread",
+  nextStageID: "crystals",
+  playerStartLevelID: "tutorial_1",
   playerStartPosition: {
-    x: 96,
-    y: 192,
+    x: 240,
+    y: 144,
   },
   weaponIDs: ["up", "left", "right", "down"],
 });
-new Stage("crystals-2", {
-  ingredientID: "bread",
+new Stage("crystals", {
+  ingredientID: "meat",
   nextStageID: "cheese",
-  playerStartLevelID: "test_1",
+  playerStartLevelID: "crystals_1",
   playerStartPosition: {
-    x: 96,
-    y: 192,
+    x: 240,
+    y: 144,
   },
   weaponIDs: ["up", "left", "right", "down"],
 });
 new Stage("cheese", {
   ingredientID: "cheese",
   nextStageID: "ruins",
-  playerStartLevelID: "test_1",
+  playerStartLevelID: "cheese_1",
   playerStartPosition: {
-    x: 96,
-    y: 192,
+    x: 240,
+    y: 144,
   },
   weaponIDs: ["up", "left", "right", "down"],
 });
 new Stage("ruins", {
-  ingredientID: "tomato",
+  ingredientID: "lettuce",
   nextStageID: "frozen",
-  playerStartLevelID: "test_1",
+  playerStartLevelID: "ruins_1",
   playerStartPosition: {
-    x: 96,
-    y: 192,
+    x: 240,
+    y: 144,
   },
   weaponIDs: ["up", "left", "right", "down"],
 });
 new Stage("frozen", {
-  ingredientID: "meat",
+  ingredientID: "tomato",
   nextStageID: null,
-  playerStartLevelID: "test_1",
+  playerStartLevelID: "frozen_1",
   playerStartPosition: {
-    x: 96,
-    y: 192,
+    x: 240,
+    y: 144,
   },
   weaponIDs: ["up", "left", "right", "down"],
 });
