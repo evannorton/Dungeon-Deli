@@ -203,6 +203,13 @@ export class Weapon extends Definable {
             this._attack.monsterEntityID,
           );
           monsterInstance.character.takeDamage(this._options.damage);
+          const playerCharacter: Character = getDefinable(
+            Character,
+            state.values.playerCharacterID,
+          );
+          if (state.values.modeID === "lifesteal") {
+            playerCharacter.restoreHealth(this._options.damage);
+          }
           if (monsterInstance.character.isAlive() === false) {
             removeEntity(this._attack.monsterEntityID);
           }

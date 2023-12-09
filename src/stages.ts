@@ -115,7 +115,7 @@ export class Stage extends Definable {
   private createHUD(): void {
     const width: number = 120;
     const height: number = 3 + this._options.weaponIDs.length * 10 + 14;
-    const y: number = 270 - 2 - 38 - 2 - height;
+    const y: number = 270 - 3 - 38 - height;
     this._quadrilateralIDs.push(
       createQuadrilateral({
         color: "#000000",

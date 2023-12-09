@@ -1,1 +1,1 @@
-export const turnsPerMode: number = 10;
+export const turnsPerMode: number = 5;

@@ -355,6 +355,10 @@ export class Character extends Definable {
     this._step = Step.Left;
   }
 
+  public restoreHealth(health: number): void {
+    this._hp = Math.min(this._hp + health, this._options.maxHP);
+  }
+
   public startMovement(endPosition: EntityPosition): void {
     const startPosition: EntityPosition = getEntityPosition(
       this._options.entityID,

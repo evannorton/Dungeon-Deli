@@ -51,7 +51,7 @@ export class MonsterInstance extends Definable {
     return getDefinable(Character, this._characterID);
   }
 
-  private get monster(): Monster {
+  public get monster(): Monster {
     return getDefinable(Monster, this._options.monsterID);
   }
 
@@ -238,6 +238,9 @@ export class MonsterInstance extends Definable {
           state.values.playerCharacterID,
         );
         playerCharacter.takeDamage(this.monster.damage);
+        if (state.values.modeID === "lifesteal") {
+          this.character.restoreHealth(this.monster.damage);
+        }
         removeEntitySprite(playerCharacter.entityID, this._attack.spriteID);
         this._attack = null;
         state.setValues({
