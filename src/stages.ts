@@ -180,7 +180,7 @@ export class Stage extends Definable {
       removeLabel(labelID);
     }
     for (const quadrilateralID of this._quadrilateralIDs) {
-      console.log("remove quadrilateral")
+      console.log("remove quadrilateral");
       removeQuadrilateral(quadrilateralID);
     }
     this._labelIDs = [];
