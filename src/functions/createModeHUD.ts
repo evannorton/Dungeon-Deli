@@ -8,6 +8,26 @@ export const createModeHUD = (): void => {
   const height: number = 37;
   const y: number = 312 - 2 - height;
   const condition = (): boolean => state.values.isMain;
+  const modeColor = (): string => {
+    if (state.values.modeID !== null) {
+      const mode: Mode = getDefinable(Mode, state.values.modeID);
+      return mode.color;
+    }
+    return "#ffffff";
+  };
+  const nextModeColor = (): string => {
+    if (state.values.nextModeID !== null) {
+      const mode: Mode = getDefinable(Mode, state.values.nextModeID);
+      return mode.color;
+    }
+    return "#ffffff";
+  };
+  const untilNextColor = (): string  => {
+    if (state.values.untilNextMode === 1) {
+      return "#58d332"
+    }
+    return "#a8a8a8";
+  }
   createQuadrilateral({
     color: "#000000",
     coordinates: {
@@ -20,7 +40,7 @@ export const createModeHUD = (): void => {
     width,
   });
   createLabel({
-    color: "#ffffff",
+    color: modeColor,
     coordinates: {
       condition,
       x: 2 + Math.floor(width / 2),
@@ -35,7 +55,7 @@ export const createModeHUD = (): void => {
     },
   });
   createLabel({
-    color: "#ffffff",
+    color: nextModeColor,
     coordinates: {
       condition,
       x: 5,
@@ -45,7 +65,7 @@ export const createModeHUD = (): void => {
     text: "Next:",
   });
   createLabel({
-    color: "#ffffff",
+    color: nextModeColor,
     coordinates: {
       condition,
       x: 2 + width - 2,
@@ -60,7 +80,7 @@ export const createModeHUD = (): void => {
     },
   });
   createLabel({
-    color: "#ffffff",
+    color: untilNextColor,
     coordinates: {
       condition,
       x: 5,
@@ -70,7 +90,7 @@ export const createModeHUD = (): void => {
     text: "Until next:",
   });
   createLabel({
-    color: "#ffffff",
+    color: untilNextColor,
     coordinates: {
       condition,
       x: 2 + width - 2,
