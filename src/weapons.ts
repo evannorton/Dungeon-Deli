@@ -138,9 +138,8 @@ export class Weapon extends Definable {
               collisionData.entityCollidables[0];
             if (entityCollidable.type === "monster") {
               entityID = entityCollidable.entityID;
-            } else {
-              break outerLoop;
             }
+            break outerLoop;
           }
         }
       }
@@ -272,4 +271,60 @@ export const upWeaponID: string = new Weapon({
   },
   stepsOffset: 0,
   stepsPerAttack: 4,
+}).id;
+export const diagonalBottomLeft: string = new Weapon({
+  damage: 25,
+  name: "Shoot down left",
+  projectile: {
+    moves: [
+      {
+        x: -1,
+        y: 1,
+      },
+    ],
+  },
+  stepsOffset: 0,
+  stepsPerAttack: 2,
+}).id;
+export const diagonalBottomRight: string = new Weapon({
+  damage: 25,
+  name: "Shoot down right",
+  projectile: {
+    moves: [
+      {
+        x: 1,
+        y: 1,
+      },
+    ],
+  },
+  stepsOffset: 0,
+  stepsPerAttack: 2,
+}).id;
+export const diagonalTopLeft: string = new Weapon({
+  damage: 25,
+  name: "Shoot up left",
+  projectile: {
+    moves: [
+      {
+        x: -1,
+        y: -1,
+      },
+    ],
+  },
+  stepsOffset: 0,
+  stepsPerAttack: 2,
+}).id;
+export const diagonalTopRight: string = new Weapon({
+  damage: 25,
+  name: "Shoot up right",
+  projectile: {
+    moves: [
+      {
+        x: 1,
+        y: -1,
+      },
+    ],
+  },
+  stepsOffset: 0,
+  stepsPerAttack: 2,
 }).id;
