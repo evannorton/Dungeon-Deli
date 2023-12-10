@@ -22,12 +22,12 @@ export const createModeHUD = (): void => {
     }
     return "#ffffff";
   };
-  const untilNextColor = (): string  => {
+  const untilNextColor = (): string => {
     if (state.values.untilNextMode === 1) {
-      return "#58d332"
+      return "#58d332";
     }
     return "#a8a8a8";
-  }
+  };
   createQuadrilateral({
     color: "#000000",
     coordinates: {

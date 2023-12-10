@@ -158,14 +158,17 @@ export class Stage extends Definable {
     this._options.weaponIDs.forEach(
       (weaponID: string, weaponIndex: number): void => {
         const weapon: Weapon = getDefinable(Weapon, weaponID);
-        const untilNextColor = (): string  => {
-          if (weapon.stepsPerAttack -
-            ((state.values.turn + weapon.stepsOffset) %
-              weapon.stepsPerAttack) === 1) {
-            return "#58d332"
+        const untilNextColor = (): string => {
+          if (
+            weapon.stepsPerAttack -
+              ((state.values.turn + weapon.stepsOffset) %
+                weapon.stepsPerAttack) ===
+            1
+          ) {
+            return "#58d332";
           }
           return "#a8a8a8";
-        }
+        };
         this._labelIDs.push(
           createLabel({
             color: untilNextColor,
