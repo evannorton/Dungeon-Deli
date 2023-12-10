@@ -73,12 +73,17 @@ export const attemptPlayerMove = (xOffset: number, yOffset: number): void => {
           }
         }
       } else {
+        const newPosition: EntityPosition = {
+          ...endPosition,
+        };
+        newPosition.x += xOffset * 24;
+        newPosition.y += yOffset * 24;
         const collisionData: CollisionData = getRectangleCollisionData(
           {
             height: 24,
             width: 24,
-            x: endPosition.x,
-            y: endPosition.y,
+            x: newPosition.x,
+            y: newPosition.y,
           },
           ["chest", "monster"],
         );
@@ -86,8 +91,7 @@ export const attemptPlayerMove = (xOffset: number, yOffset: number): void => {
           collisionData.map === false &&
           collisionData.entityCollidables.length === 0
         ) {
-          endPosition.x += xOffset * 24;
-          endPosition.y += yOffset * 24;
+          endPosition = newPosition;
         }
       }
       if (

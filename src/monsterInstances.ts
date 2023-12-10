@@ -1,7 +1,6 @@
 import { Character } from "./characters";
-import { Definable, getDefinable } from "./definables";
-import { Direction } from "./types/Direction";
 import {
+  CollisionData,
   EntityPosition,
   addEntitySprite,
   createEntity,
@@ -10,13 +9,16 @@ import {
   getEntityCalculatedPath,
   getEntityLevelID,
   getEntityPosition,
+  getRectangleCollisionData,
   removeEntity,
   removeEntitySprite,
 } from "pixel-pigeon";
+import { Definable, getDefinable } from "./definables";
+import { Direction } from "./types/Direction";
 import { Monster } from "./monsters";
 import { beginTurn } from "./functions/beginTurn";
 import { goToNextMode } from "./functions/goToNextMode";
-import { lifestealModeID } from "./modes";
+import { lifestealModeID, slipperyModeID } from "./modes";
 import { monsterAttackDuration } from "./constants/monsterAttackDuration";
 import { playerIsBlocked } from "./functions/playerIsBlocked";
 import { state } from "./state";
@@ -182,6 +184,9 @@ export class MonsterInstance extends Definable {
       Character,
       state.values.playerCharacterID,
     );
+    const entityPosition: EntityPosition = getEntityPosition(
+      this._options.entityID,
+    );
     const playerEntityPosition: EntityPosition = getEntityPosition(
       playerCharacter.entityID,
     );
@@ -200,7 +205,65 @@ export class MonsterInstance extends Definable {
       },
     );
     if (path.length > 2) {
-      this.character.startMovement(path[1]);
+      let endPosition: EntityPosition = path[1];
+      if (state.values.modeID === slipperyModeID) {
+        let xOffset: number = 0;
+        let yOffset: number = 0;
+        if (endPosition.x > entityPosition.x) {
+          xOffset = 1;
+        }
+        if (endPosition.x < entityPosition.x) {
+          xOffset = -1;
+        }
+        if (endPosition.y > entityPosition.y) {
+          yOffset = 1;
+        }
+        if (endPosition.y < entityPosition.y) {
+          yOffset = -1;
+        }
+        let hitCollision: boolean = false;
+        while (hitCollision === false) {
+          const newPosition: EntityPosition = {
+            ...endPosition,
+          };
+          const newHalfPosition: EntityPosition = {
+            ...endPosition,
+          };
+          newPosition.x += xOffset * 24;
+          newPosition.y += yOffset * 24;
+          newHalfPosition.x += xOffset * 12;
+          newHalfPosition.y += yOffset * 12;
+          const collisionData: CollisionData = getRectangleCollisionData(
+            {
+              height: 24,
+              width: 24,
+              x: newPosition.x,
+              y: newPosition.y,
+            },
+            ["chest", "monster", "player", "transport"],
+          );
+          const halfCollisionData: CollisionData = getRectangleCollisionData(
+            {
+              height: 24,
+              width: 24,
+              x: newHalfPosition.x,
+              y: newHalfPosition.y,
+            },
+            ["chest", "monster", "player", "transport"],
+          );
+          if (
+            collisionData.map ||
+            halfCollisionData.map ||
+            collisionData.entityCollidables.length > 0 ||
+            halfCollisionData.entityCollidables.length > 0
+          ) {
+            hitCollision = true;
+          } else {
+            endPosition = newPosition;
+          }
+        }
+      }
+      this.character.startMovement(endPosition);
       state.setValues({
         movingMonsterInstancesIDs: [
           ...state.values.movingMonsterInstancesIDs,

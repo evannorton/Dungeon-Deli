@@ -75,6 +75,7 @@ export class Stage extends Definable {
         layerID: "characters",
         levelID: this._options.playerStartLevelID,
         position: this._options.playerStartPosition,
+        type: "player",
         width: 24,
         zIndex: 0,
       });
