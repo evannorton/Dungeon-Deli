@@ -504,8 +504,8 @@ export const aoeCircleWeaponID: string = new Weapon({
       },
     ],
   },
-  damage: 10,
+  damage: 25,
   name: "Area of effect",
   stepsOffset: 0,
-  stepsPerAttack: 6,
+  stepsPerAttack: 5,
 }).id;

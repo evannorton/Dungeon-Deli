@@ -18,6 +18,7 @@ import { Mode, normalModeID } from "./modes";
 import { MonsterInstance } from "./monsterInstances";
 import {
   Weapon,
+  aoeCircleWeaponID,
   downWeaponID,
   leftWeaponID,
   rightWeaponID,
@@ -221,7 +222,13 @@ new Stage("tutorial", {
     x: 11 * 24,
     y: 8 * 24,
   },
-  weaponIDs: [leftWeaponID, downWeaponID, rightWeaponID, upWeaponID],
+  weaponIDs: [
+    aoeCircleWeaponID,
+    leftWeaponID,
+    downWeaponID,
+    rightWeaponID,
+    upWeaponID,
+  ],
 });
 new Stage("crystals", {
   ingredientID: "meat",
