@@ -145,7 +145,7 @@ export class Stage extends Definable {
     );
     this._labelIDs.push(
       createLabel({
-        color: "#ffffff",
+        color: "#a8a8a8",
         coordinates: {
           condition,
           x: Math.round(2 + width / 2),
