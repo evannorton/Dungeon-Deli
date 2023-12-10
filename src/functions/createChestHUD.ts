@@ -18,9 +18,11 @@ export const createChestHUD = (): void => {
   const x: number = centerX - Math.floor(width / 2);
   const y: number = 24;
   const condition = (): boolean => {
-    const chest: Chest | null = getPlayerChest();
-    if (chest !== null) {
-      return chest.isOpen();
+    if (state.values.isMain) {
+      const chest: Chest | null = getPlayerChest();
+      if (chest !== null) {
+        return chest.isOpen();
+      }
     }
     return false;
   };

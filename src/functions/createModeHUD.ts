@@ -7,9 +7,11 @@ export const createModeHUD = (): void => {
   const width: number = 120;
   const height: number = 37;
   const y: number = 312 - 2 - height;
+  const condition = (): boolean => state.values.isMain;
   createQuadrilateral({
     color: "#000000",
     coordinates: {
+      condition,
       x: 2,
       y,
     },
@@ -20,6 +22,7 @@ export const createModeHUD = (): void => {
   createLabel({
     color: "#ffffff",
     coordinates: {
+      condition,
       x: 2 + Math.floor(width / 2),
       y: y + 5,
     },
@@ -34,6 +37,7 @@ export const createModeHUD = (): void => {
   createLabel({
     color: "#ffffff",
     coordinates: {
+      condition,
       x: 5,
       y: 312 - 22,
     },
@@ -43,6 +47,7 @@ export const createModeHUD = (): void => {
   createLabel({
     color: "#ffffff",
     coordinates: {
+      condition,
       x: 2 + width - 2,
       y: 312 - 22,
     },
@@ -57,6 +62,7 @@ export const createModeHUD = (): void => {
   createLabel({
     color: "#ffffff",
     coordinates: {
+      condition,
       x: 5,
       y: 312 - 12,
     },
@@ -66,6 +72,7 @@ export const createModeHUD = (): void => {
   createLabel({
     color: "#ffffff",
     coordinates: {
+      condition,
       x: 2 + width - 2,
       y: 312 - 12,
     },

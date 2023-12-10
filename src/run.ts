@@ -4,6 +4,7 @@ import { createChests } from "./functions/createChests";
 import { createDeathHUD } from "./functions/createDeathHUD";
 import { createModeHUD } from "./functions/createModeHUD";
 import { createMonsterInstances } from "./functions/createMonsterInstances";
+import { createVictoryHUD } from "./functions/createVictoryHUD";
 import { getDefinable } from "./definables";
 import { musicVolumeChannelID } from "./volumeChannels";
 import { playAudioSource } from "pixel-pigeon";
@@ -13,6 +14,7 @@ export const run = (): void => {
   createModeHUD();
   createDeathHUD();
   createChestHUD();
+  createVictoryHUD();
   createMonsterInstances();
   createChests();
   getDefinable(Stage, startingStageID).start();

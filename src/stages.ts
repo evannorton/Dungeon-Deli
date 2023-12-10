@@ -59,7 +59,10 @@ export class Stage extends Definable {
       this.removeHUD();
       getDefinable(Stage, this._options.nextStageID).start();
     } else {
-      console.log("you beat the game");
+      state.setValues({
+        isMain: false,
+        isVictory: true,
+      });
     }
   }
 
@@ -125,10 +128,12 @@ export class Stage extends Definable {
     const width: number = 120;
     const height: number = 3 + this._options.weaponIDs.length * 10 + 14;
     const y: number = 312 - 3 - 38 - height;
+    const condition = (): boolean => state.values.isMain;
     this._quadrilateralIDs.push(
       createQuadrilateral({
         color: "#000000",
         coordinates: {
+          condition,
           x: 2,
           y,
         },
@@ -141,6 +146,7 @@ export class Stage extends Definable {
       createLabel({
         color: "#ffffff",
         coordinates: {
+          condition,
           x: Math.round(2 + width / 2),
           y: y + 5,
         },
@@ -155,6 +161,7 @@ export class Stage extends Definable {
           createLabel({
             color: "#ffffff",
             coordinates: {
+              condition,
               x: 5,
               y: y + 5 + weaponIndex * 10 + 12,
             },
@@ -166,6 +173,7 @@ export class Stage extends Definable {
           createLabel({
             color: "#ffffff",
             coordinates: {
+              condition,
               x: width + 2 - 2,
               y: y + 5 + weaponIndex * 10 + 12,
             },
@@ -187,7 +195,6 @@ export class Stage extends Definable {
       removeLabel(labelID);
     }
     for (const quadrilateralID of this._quadrilateralIDs) {
-      console.log("remove quadrilateral");
       removeQuadrilateral(quadrilateralID);
     }
     this._labelIDs = [];

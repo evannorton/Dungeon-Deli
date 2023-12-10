@@ -4,6 +4,8 @@ import { TurnPart } from "./types/TurnPart";
 interface StateSchema {
   attackingMonsterInstancesIDs: string[];
   attackingWeaponsIDs: string[];
+  isMain: boolean;
+  isVictory: boolean;
   modeID: string | null;
   movingMonsterInstancesIDs: string[];
   nextModeID: string | null;
@@ -17,6 +19,8 @@ interface StateSchema {
 export const state: State<StateSchema> = new State<StateSchema>({
   attackingMonsterInstancesIDs: [],
   attackingWeaponsIDs: [],
+  isMain: true,
+  isVictory: false,
   modeID: null,
   movingMonsterInstancesIDs: [],
   nextModeID: null,
