@@ -740,24 +740,7 @@
 					"seed": 8725736,
 					"overrideTilesetUid": null,
 					"gridTiles": [],
-					"entityInstances": [
-						{
-							"__identifier": "chest",
-							"__grid": [13,10],
-							"__pivot": [0,0],
-							"__tags": [],
-							"__tile": null,
-							"__smartColor": "#48FF00",
-							"__worldX": 144,
-							"__worldY": -12,
-							"iid": "624aba40-8990-11ee-a9a2-81e66a75bc01",
-							"width": 24,
-							"height": 24,
-							"defUid": 20,
-							"px": [312,240],
-							"fieldInstances": []
-						}
-					]
+					"entityInstances": []
 				},
 				{
 					"__identifier": "projectiles",
