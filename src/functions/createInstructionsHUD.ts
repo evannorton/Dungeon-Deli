@@ -91,7 +91,7 @@ export const createInstructionsHUD = (): void => {
       y: y + 86,
     },
     horizontalAlignment: "left",
-    text: "- Modes: Effects on the field",
+    text: "- Modes: Effects on the field.",
   });
   createInputPressHandler({
     condition,
