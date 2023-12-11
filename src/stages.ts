@@ -30,6 +30,7 @@ import { state } from "./state";
 
 interface StageOptions {
   readonly ingredientID: string;
+  readonly modeIDs: string[];
   readonly nextStageID: string | null;
   readonly playerStartLevelID: string;
   readonly playerStartPosition: EntityPosition;
@@ -216,6 +217,7 @@ export class Stage extends Definable {
 }
 new Stage("1", {
   ingredientID: "bread",
+  modeIDs: [normalModeID],
   nextStageID: "2",
   playerStartLevelID: "tutorial_1",
   playerStartPosition: {
@@ -232,6 +234,7 @@ new Stage("1", {
 });
 new Stage("2", {
   ingredientID: "meat",
+  modeIDs: [normalModeID],
   nextStageID: "3",
   playerStartLevelID: "crystals_1",
   playerStartPosition: {
@@ -242,6 +245,7 @@ new Stage("2", {
 });
 new Stage("3", {
   ingredientID: "cheese",
+  modeIDs: [normalModeID],
   nextStageID: "4",
   playerStartLevelID: "cheese_1",
   playerStartPosition: {
@@ -252,6 +256,7 @@ new Stage("3", {
 });
 new Stage("4", {
   ingredientID: "lettuce",
+  modeIDs: [normalModeID],
   nextStageID: "5",
   playerStartLevelID: "ruins_1",
   playerStartPosition: {
@@ -262,6 +267,7 @@ new Stage("4", {
 });
 new Stage("5", {
   ingredientID: "tomato",
+  modeIDs: [normalModeID],
   nextStageID: null,
   playerStartLevelID: "frozen_1",
   playerStartPosition: {
