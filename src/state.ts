@@ -2,23 +2,25 @@ import { State } from "pixel-pigeon";
 import { TurnPart } from "./types/TurnPart";
 
 interface StateSchema {
-  attackingMonsterInstancesIDs: string[];
-  attackingWeaponsIDs: string[];
-  isMain: boolean;
-  isVictory: boolean;
-  modeID: string | null;
-  movingMonsterInstancesIDs: string[];
-  nextModeID: string | null;
-  playerCharacterID: string | null;
-  stageID: string | null;
-  turn: number;
-  turnPart: TurnPart | null;
-  untilNextMode: number | null;
+  readonly attackingMonsterInstancesIDs: string[];
+  readonly attackingWeaponsIDs: string[];
+  readonly instructionsOpen: boolean;
+  readonly isMain: boolean;
+  readonly isVictory: boolean;
+  readonly modeID: string | null;
+  readonly movingMonsterInstancesIDs: string[];
+  readonly nextModeID: string | null;
+  readonly playerCharacterID: string | null;
+  readonly stageID: string | null;
+  readonly turn: number;
+  readonly turnPart: TurnPart | null;
+  readonly untilNextMode: number | null;
 }
 
 export const state: State<StateSchema> = new State<StateSchema>({
   attackingMonsterInstancesIDs: [],
   attackingWeaponsIDs: [],
+  instructionsOpen: false,
   isMain: true,
   isVictory: false,
   modeID: null,

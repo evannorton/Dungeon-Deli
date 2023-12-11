@@ -14,7 +14,7 @@ import { state } from "../state";
 export const createChestHUD = (): void => {
   const centerX: number = Math.floor(480 / 2);
   const width: number = 158;
-  const height: number = 65;
+  const height: number = 53;
   const x: number = centerX - Math.floor(width / 2);
   const y: number = 24;
   const condition = (): boolean => {
@@ -74,21 +74,11 @@ export const createChestHUD = (): void => {
     color: "#ffffff",
     coordinates: {
       condition,
-      x: centerX,
+      x: centerX + 1,
       y: y + 36,
     },
     horizontalAlignment: "center",
     text: "New sandwich ingredient!",
-  });
-  createLabel({
-    color: "#ffffff",
-    coordinates: {
-      condition,
-      x: centerX + 2,
-      y: y + 48,
-    },
-    horizontalAlignment: "center",
-    text: "Click to continue.",
   });
   createInputPressHandler({
     condition,

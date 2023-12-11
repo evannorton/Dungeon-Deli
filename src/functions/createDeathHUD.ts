@@ -10,7 +10,7 @@ import { state } from "../state";
 
 export const createDeathHUD = (): void => {
   const centerX: number = Math.floor(480 / 2);
-  const width: number = 161;
+  const width: number = 63;
   const height: number = 19;
   const x: number = centerX - Math.floor(width / 2);
   const y: number = 24;
@@ -39,11 +39,11 @@ export const createDeathHUD = (): void => {
     color: "#ffffff",
     coordinates: {
       condition,
-      x: centerX + 2,
+      x: centerX + 1,
       y: y + 6,
     },
     horizontalAlignment: "center",
-    text: "You died! Click to restart.",
+    text: "You died!",
   });
   createInputPressHandler({
     condition,

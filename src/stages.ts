@@ -32,6 +32,7 @@ interface StageOptions {
   readonly ingredientID: string;
   readonly modeIDs: string[];
   readonly nextStageID: string | null;
+  readonly onStart?: () => void;
   readonly playerStartLevelID: string;
   readonly playerStartPosition: EntityPosition;
   readonly weaponIDs: string[];
@@ -48,6 +49,12 @@ export class Stage extends Definable {
 
   public get ingredient(): Ingredient {
     return getDefinable(Ingredient, this._options.ingredientID);
+  }
+
+  public get modes(): Mode[] {
+    return this._options.modeIDs.map(
+      (modeID: string): Mode => getDefinable(Mode, modeID),
+    );
   }
 
   public get weapons(): Weapon[] {
@@ -125,12 +132,13 @@ export class Stage extends Definable {
     });
     this.removeHUD();
     this.createHUD();
+    this._options.onStart?.();
   }
 
   private createHUD(): void {
     const width: number = 120;
     const height: number = 3 + this._options.weaponIDs.length * 10 + 14;
-    const y: number = 312 - 3 - 38 - height;
+    const y: number = 312 - 2 - height;
     const condition = (): boolean => state.values.isMain;
     this._quadrilateralIDs.push(
       createQuadrilateral({
@@ -188,7 +196,7 @@ export class Stage extends Definable {
             color: untilNextColor,
             coordinates: {
               condition,
-              x: width + 2 - 2,
+              x: 2 + width - 1,
               y: y + 5 + weaponIndex * 10 + 12,
             },
             horizontalAlignment: "right",
@@ -219,6 +227,9 @@ new Stage("1", {
   ingredientID: "bread",
   modeIDs: [normalModeID],
   nextStageID: "2",
+  onStart: (): void => {
+    state.setValues({ instructionsOpen: true });
+  },
   playerStartLevelID: "tutorial_1",
   playerStartPosition: {
     x: 11 * 24,

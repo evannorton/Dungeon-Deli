@@ -6,7 +6,7 @@ import { state } from "../state";
 export const createModeHUD = (): void => {
   const width: number = 120;
   const height: number = 37;
-  const y: number = 312 - 2 - height;
+  const y: number = 312 - 59 - 2 - height;
   const condition = (): boolean => state.values.isMain;
   const modeColor = (): string => {
     if (state.values.modeID !== null) {
@@ -59,7 +59,7 @@ export const createModeHUD = (): void => {
     coordinates: {
       condition,
       x: 5,
-      y: 312 - 22,
+      y: y + 17,
     },
     horizontalAlignment: "left",
     text: "Next:",
@@ -69,14 +69,14 @@ export const createModeHUD = (): void => {
     coordinates: {
       condition,
       x: 2 + width - 2,
-      y: 312 - 22,
+      y: y + 17,
     },
     horizontalAlignment: "right",
     text: (): string => {
       if (state.values.nextModeID !== null) {
         return getDefinable(Mode, state.values.nextModeID).name;
       }
-      return "";
+      return "N/A";
     },
   });
   createLabel({
@@ -84,7 +84,7 @@ export const createModeHUD = (): void => {
     coordinates: {
       condition,
       x: 5,
-      y: 312 - 12,
+      y: y + 27,
     },
     horizontalAlignment: "left",
     text: "Until next:",
@@ -94,9 +94,17 @@ export const createModeHUD = (): void => {
     coordinates: {
       condition,
       x: 2 + width - 2,
-      y: 312 - 12,
+      y: y + 27,
     },
     horizontalAlignment: "right",
-    text: (): string => String(state.values.untilNextMode),
+    text: (): string => {
+      if (
+        state.values.nextModeID !== null &&
+        state.values.untilNextMode !== null
+      ) {
+        return String(state.values.untilNextMode);
+      }
+      return "N/A";
+    },
   });
 };
