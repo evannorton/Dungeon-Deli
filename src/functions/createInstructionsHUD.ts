@@ -51,7 +51,7 @@ export const createInstructionsHUD = (): void => {
       y: y + 34,
     },
     horizontalAlignment: "left",
-    text: "- Arrow keys/WASD/D-Pad to move",
+    text: "- Arrow keys/WASD/D-Pad to move.",
   });
   createLabel({
     color: "#ffffff",
