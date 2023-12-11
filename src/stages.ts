@@ -205,7 +205,7 @@ export class Stage extends Definable {
                 weapon.stepsPerAttack -
                 ((state.values.turn + weapon.stepsOffset) %
                   weapon.stepsPerAttack);
-              return `${amount} turns`;
+              return `${amount} ${amount === 1 ? "turn" : "turns"}`;
             },
           }),
         );
