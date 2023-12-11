@@ -1,3 +1,4 @@
+import { atemptPlayerPass } from "./functions/atemptPlayerPass";
 import { attemptPlayerMove } from "./functions/attemptPlayerMove";
 import { createInputPressHandler, takeScreenshot } from "pixel-pigeon";
 import { state } from "./state";
@@ -68,5 +69,22 @@ createInputPressHandler({
   keyboardButtons: [{ value: "KeyP" }],
   onInput: (): void => {
     takeScreenshot();
+  },
+});
+createInputPressHandler({
+  condition,
+  gamepadButtons: [0],
+  keyboardButtons: [
+    {
+      value: "Space",
+    },
+    {
+      value: "Numpad5",
+      withoutNumlock: true,
+    },
+  ],
+  mouseButtons: [0],
+  onInput: (): void => {
+    atemptPlayerPass();
   },
 });
