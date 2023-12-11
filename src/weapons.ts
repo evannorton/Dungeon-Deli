@@ -181,7 +181,7 @@ export class Weapon extends Definable {
             x: position.x,
             y: position.y,
           },
-          ["chest", "transport"],
+          ["chest"],
         );
         const monsterCollisionData: CollisionData = getRectangleCollisionData(
           {
@@ -196,16 +196,54 @@ export class Weapon extends Definable {
           monsterCollisionData.map === false &&
           collisionData.entityCollidables.length === 0
         ) {
+          const duration: number = aoeDuration / 5;
           const spriteID: string = createSprite({
             animationID: "default",
             animations: [
               {
                 frames: [
                   {
+                    duration,
                     height: 24,
                     sourceHeight: 24,
                     sourceWidth: 24,
                     sourceX: 0,
+                    sourceY: 0,
+                    width: 24,
+                  },
+                  {
+                    duration,
+                    height: 24,
+                    sourceHeight: 24,
+                    sourceWidth: 24,
+                    sourceX: 24,
+                    sourceY: 0,
+                    width: 24,
+                  },
+                  {
+                    duration,
+                    height: 24,
+                    sourceHeight: 24,
+                    sourceWidth: 24,
+                    sourceX: 48,
+                    sourceY: 0,
+                    width: 24,
+                  },
+                  {
+                    duration,
+                    height: 24,
+                    sourceHeight: 24,
+                    sourceWidth: 24,
+                    sourceX: 72,
+                    sourceY: 0,
+                    width: 24,
+                  },
+                  {
+                    duration,
+                    height: 24,
+                    sourceHeight: 24,
+                    sourceWidth: 24,
+                    sourceX: 96,
                     sourceY: 0,
                     width: 24,
                   },

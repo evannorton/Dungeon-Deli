@@ -1,1 +1,1 @@
-export const aoeDuration: number = 750;
+export const aoeDuration: number = 500;
