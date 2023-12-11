@@ -1,15 +1,4 @@
-import { Character } from "../characters";
 import { Chest } from "../chests";
-import {
-  CollisionData,
-  EntityPosition,
-  getEntityFieldValue,
-  getEntityPosition,
-  getRectangleCollisionData,
-  goToLevel,
-  setEntityLevel,
-  setEntityPosition,
-} from "pixel-pigeon";
 import { Stage } from "../stages";
 import { TurnPart } from "../types/TurnPart";
 import { getDefinable } from "../definables";
@@ -19,61 +8,9 @@ import { startMonsterInstancesMovement } from "./startMonsterInstancesMovement";
 import { state } from "../state";
 
 export const beginTurn = (): void => {
-  if (state.values.playerCharacterID === null) {
-    throw new Error("Attempted to begin turn with no player character.");
-  }
   state.setValues({
     turn: state.values.turn + 1,
   });
-  const playerCharacter: Character = getDefinable(
-    Character,
-    state.values.playerCharacterID,
-  );
-  const playerPosition: EntityPosition = getEntityPosition(
-    playerCharacter.entityID,
-  );
-  const transportCollisionData: CollisionData = getRectangleCollisionData(
-    {
-      height: 24,
-      width: 24,
-      x: playerPosition.x,
-      y: playerPosition.y,
-    },
-    ["transport"],
-  );
-  const transportEntityID: string | null =
-    transportCollisionData.entityCollidables.length > 0
-      ? transportCollisionData.entityCollidables[0].entityID
-      : null;
-  if (transportEntityID !== null) {
-    const targetLevelID: unknown = getEntityFieldValue(
-      transportEntityID,
-      "target_level_id",
-    );
-    const targetX: unknown = getEntityFieldValue(transportEntityID, "target_x");
-    const targetY: unknown = getEntityFieldValue(transportEntityID, "target_y");
-    if (typeof targetLevelID !== "string") {
-      throw new Error(
-        `Entity "${transportEntityID}" has an invalid "target_level_id" value.`,
-      );
-    }
-    if (typeof targetX !== "number") {
-      throw new Error(
-        `Entity "${transportEntityID}" has an invalid "target_x" value.`,
-      );
-    }
-    if (typeof targetY !== "number") {
-      throw new Error(
-        `Entity "${transportEntityID}" has an invalid "target_y" value.`,
-      );
-    }
-    setEntityLevel(playerCharacter.entityID, targetLevelID);
-    setEntityPosition(playerCharacter.entityID, {
-      x: targetX,
-      y: targetY,
-    });
-    goToLevel(targetLevelID);
-  }
   const chest: Chest | null = getPlayerChest();
   if (chest !== null) {
     chest.open();
