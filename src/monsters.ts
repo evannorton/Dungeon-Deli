@@ -1,6 +1,6 @@
 import { Definable } from "./definables";
 
-enum MonsterMovementBehavior {
+export enum MonsterMovementBehavior {
   Chase = "chase",
   Horizontal = "horizontal",
 }
@@ -29,10 +29,26 @@ export class Monster extends Definable {
   public get maxHP(): number {
     return this._options.maxHP;
   }
+
+  public get movementBehavior(): MonsterMovementBehavior {
+    return this._options.movementBehavior;
+  }
 }
 new Monster("rat", {
   damage: 20,
   imagePath: "monsters/rat",
   maxHP: 50,
   movementBehavior: MonsterMovementBehavior.Chase,
+});
+new Monster("duck", {
+  damage: 15,
+  imagePath: "monsters/duck",
+  maxHP: 75,
+  movementBehavior: MonsterMovementBehavior.Chase,
+});
+new Monster("crab", {
+  damage: 25,
+  imagePath: "monsters/crab",
+  maxHP: 50,
+  movementBehavior: MonsterMovementBehavior.Horizontal,
 });

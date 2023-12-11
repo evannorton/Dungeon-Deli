@@ -162,7 +162,7 @@ export class Stage extends Definable {
           y: y + 5,
         },
         horizontalAlignment: "center",
-        text: "Powers",
+        text: "Power cooldowns",
       }),
     );
     this._options.weaponIDs.forEach(
@@ -200,12 +200,13 @@ export class Stage extends Definable {
               y: y + 5 + weaponIndex * 10 + 12,
             },
             horizontalAlignment: "right",
-            text: (): string =>
-              String(
+            text: (): string => {
+              const amount: number =
                 weapon.stepsPerAttack -
-                  ((state.values.turn + weapon.stepsOffset) %
-                    weapon.stepsPerAttack),
-              ),
+                ((state.values.turn + weapon.stepsOffset) %
+                  weapon.stepsPerAttack);
+              return `${amount} turns`;
+            },
           }),
         );
       },
@@ -243,8 +244,8 @@ new Stage("2", {
   nextStageID: "3",
   playerStartLevelID: "crystals_1",
   playerStartPosition: {
-    x: 240,
-    y: 144,
+    x: 14 * 24,
+    y: 15 * 24,
   },
   weaponIDs: [leftWeaponID, downWeaponID, rightWeaponID, upWeaponID],
 });

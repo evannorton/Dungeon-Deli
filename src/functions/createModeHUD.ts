@@ -110,7 +110,7 @@ export const createModeHUD = (): void => {
         state.values.nextModeID !== null &&
         state.values.untilNextMode !== null
       ) {
-        return String(state.values.untilNextMode);
+        return `${state.values.untilNextMode} turns`;
       }
       return "N/A";
     },

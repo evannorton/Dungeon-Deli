@@ -15,7 +15,8 @@ import {
 } from "pixel-pigeon";
 import { Definable, getDefinable } from "./definables";
 import { Direction } from "./types/Direction";
-import { Monster } from "./monsters";
+import { Monster, MonsterMovementBehavior } from "./monsters";
+import { alertDistance } from "./constants/alertDistance";
 import { beginTurn } from "./functions/beginTurn";
 import { goToNextMode } from "./functions/goToNextMode";
 import { lifestealModeID, slipperyModeID } from "./modes";
@@ -32,6 +33,7 @@ export interface MonsterInstanceOptions {
   readonly monsterID: string;
 }
 export class MonsterInstance extends Definable {
+  private _alerted: boolean = false;
   private _attack: MonsterInstanceAttack | null = null;
   private readonly _characterID: string;
   private readonly _options: MonsterInstanceOptions;
@@ -63,6 +65,7 @@ export class MonsterInstance extends Definable {
   }
 
   public reset(): void {
+    this._alerted = false;
     if (this.character.isAlive()) {
       removeEntity(this._options.entityID);
     }
@@ -190,6 +193,7 @@ export class MonsterInstance extends Definable {
     const playerEntityPosition: EntityPosition = getEntityPosition(
       playerCharacter.entityID,
     );
+    let endPosition: EntityPosition | null = null;
     const path: EntityPosition[] = getEntityCalculatedPath(
       this._options.entityID,
       {
@@ -204,79 +208,123 @@ export class MonsterInstance extends Definable {
         y: playerEntityPosition.y,
       },
     );
-    if (path.length > 2) {
-      let endPosition: EntityPosition = path[1];
-      if (state.values.modeID === slipperyModeID) {
-        let xOffset: number = 0;
-        let yOffset: number = 0;
-        if (endPosition.x > entityPosition.x) {
-          xOffset = 1;
+    if (path.length <= alertDistance) {
+      this._alerted = true;
+    }
+    if (this._alerted) {
+      if (this.monster.movementBehavior === MonsterMovementBehavior.Chase) {
+        if (path.length > 2) {
+          endPosition = path[1];
         }
-        if (endPosition.x < entityPosition.x) {
-          xOffset = -1;
-        }
-        if (endPosition.y > entityPosition.y) {
-          yOffset = 1;
-        }
-        if (endPosition.y < entityPosition.y) {
-          yOffset = -1;
-        }
-        let hitCollision: boolean = false;
-        while (hitCollision === false) {
-          const newPosition: EntityPosition = {
-            ...endPosition,
+      } else if (
+        this.monster.movementBehavior === MonsterMovementBehavior.Horizontal &&
+        path.length !== 2
+      ) {
+        let horizontalPosition: EntityPosition | null = null;
+        if (entityPosition.x > playerEntityPosition.x) {
+          horizontalPosition = {
+            ...entityPosition,
+            x: entityPosition.x - 24,
           };
-          const newHalfPosition: EntityPosition = {
-            ...endPosition,
+        } else if (entityPosition.x < playerEntityPosition.x) {
+          horizontalPosition = {
+            ...entityPosition,
+            x: entityPosition.x + 24,
           };
-          newPosition.x += xOffset * 24;
-          newPosition.y += yOffset * 24;
-          newHalfPosition.x += xOffset * 12;
-          newHalfPosition.y += yOffset * 12;
+        }
+        if (horizontalPosition !== null) {
           const collisionData: CollisionData = getRectangleCollisionData(
             {
               height: 24,
               width: 24,
-              x: newPosition.x,
-              y: newPosition.y,
-            },
-            ["chest", "monster", "player", "transport"],
-          );
-          const halfCollisionData: CollisionData = getRectangleCollisionData(
-            {
-              height: 24,
-              width: 24,
-              x: newHalfPosition.x,
-              y: newHalfPosition.y,
+              x: horizontalPosition.x,
+              y: horizontalPosition.y,
             },
             ["chest", "monster", "player", "transport"],
           );
           if (
-            collisionData.map ||
-            halfCollisionData.map ||
-            collisionData.entityCollidables.length > 0 ||
-            halfCollisionData.entityCollidables.length > 0
+            collisionData.map === false &&
+            collisionData.entityCollidables.length === 0
           ) {
-            hitCollision = true;
-          } else {
-            endPosition = newPosition;
+            endPosition = horizontalPosition;
           }
         }
       }
-      this.character.startMovement(endPosition);
-      state.setValues({
-        movingMonsterInstancesIDs: [
-          ...state.values.movingMonsterInstancesIDs,
-          this._id,
-        ],
-      });
-    } else {
-      state.setValues({
-        attackingMonsterInstancesIDs: [
-          ...state.values.attackingMonsterInstancesIDs,
-          this._id,
-        ],
-      });
+      if (endPosition !== null) {
+        if (state.values.modeID === slipperyModeID) {
+          let xOffset: number = 0;
+          let yOffset: number = 0;
+          if (endPosition.x > entityPosition.x) {
+            xOffset = 1;
+          }
+          if (endPosition.x < entityPosition.x) {
+            xOffset = -1;
+          }
+          if (endPosition.y > entityPosition.y) {
+            yOffset = 1;
+          }
+          if (endPosition.y < entityPosition.y) {
+            yOffset = -1;
+          }
+          let hitCollision: boolean = false;
+          while (hitCollision === false) {
+            const newPosition: EntityPosition = {
+              ...endPosition,
+            };
+            const newHalfPosition: EntityPosition = {
+              ...endPosition,
+            };
+            newPosition.x += xOffset * 24;
+            newPosition.y += yOffset * 24;
+            newHalfPosition.x += xOffset * 12;
+            newHalfPosition.y += yOffset * 12;
+            const collisionData: CollisionData = getRectangleCollisionData(
+              {
+                height: 24,
+                width: 24,
+                x: newPosition.x,
+                y: newPosition.y,
+              },
+              ["chest", "monster", "player", "transport"],
+            );
+            const halfCollisionData: CollisionData = getRectangleCollisionData(
+              {
+                height: 24,
+                width: 24,
+                x: newHalfPosition.x,
+                y: newHalfPosition.y,
+              },
+              ["chest", "monster", "player", "transport"],
+            );
+            if (
+              collisionData.map ||
+              halfCollisionData.map ||
+              collisionData.entityCollidables.length > 0 ||
+              halfCollisionData.entityCollidables.length > 0
+            ) {
+              hitCollision = true;
+            } else {
+              endPosition = newPosition;
+            }
+          }
+        }
+        this.character.startMovement(endPosition);
+        state.setValues({
+          movingMonsterInstancesIDs: [
+            ...state.values.movingMonsterInstancesIDs,
+            this._id,
+          ],
+        });
+      } else {
+        if (path.length === 2) {
+          state.setValues({
+            attackingMonsterInstancesIDs: [
+              ...state.values.attackingMonsterInstancesIDs,
+              this._id,
+            ],
+          });
+        }
+      }
     }
   }
 
