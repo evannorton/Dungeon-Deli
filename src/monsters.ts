@@ -1,6 +1,11 @@
 import { Definable } from "./definables";
 
+enum MonsterMovementBehavior {
+  Chase = "chase",
+  Horizontal = "horizontal"
+}
 interface MonsterOptions {
+  readonly movementBehavior: MonsterMovementBehavior;
   readonly damage: number;
   readonly imagePath: string;
   readonly maxHP: number;
@@ -29,4 +34,5 @@ new Monster("rat", {
   damage: 20,
   imagePath: "monsters/rat",
   maxHP: 50,
+  movementBehavior: MonsterMovementBehavior.Chase,
 });
