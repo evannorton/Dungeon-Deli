@@ -214,9 +214,9 @@ export class Stage extends Definable {
     this._quadrilateralIDs = [];
   }
 }
-new Stage("tutorial", {
+new Stage("1", {
   ingredientID: "bread",
-  nextStageID: "crystals",
+  nextStageID: "2",
   playerStartLevelID: "tutorial_1",
   playerStartPosition: {
     x: 11 * 24,
@@ -230,9 +230,9 @@ new Stage("tutorial", {
     upWeaponID,
   ],
 });
-new Stage("crystals", {
+new Stage("2", {
   ingredientID: "meat",
-  nextStageID: "cheese",
+  nextStageID: "3",
   playerStartLevelID: "crystals_1",
   playerStartPosition: {
     x: 240,
@@ -240,9 +240,9 @@ new Stage("crystals", {
   },
   weaponIDs: [],
 });
-new Stage("cheese", {
+new Stage("3", {
   ingredientID: "cheese",
-  nextStageID: "ruins",
+  nextStageID: "4",
   playerStartLevelID: "cheese_1",
   playerStartPosition: {
     x: 240,
@@ -250,9 +250,9 @@ new Stage("cheese", {
   },
   weaponIDs: [],
 });
-new Stage("ruins", {
+new Stage("4", {
   ingredientID: "lettuce",
-  nextStageID: "frozen",
+  nextStageID: "5",
   playerStartLevelID: "ruins_1",
   playerStartPosition: {
     x: 240,
@@ -260,7 +260,7 @@ new Stage("ruins", {
   },
   weaponIDs: [],
 });
-new Stage("frozen", {
+new Stage("5", {
   ingredientID: "tomato",
   nextStageID: null,
   playerStartLevelID: "frozen_1",
