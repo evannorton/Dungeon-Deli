@@ -6,6 +6,7 @@ interface StateSchema {
   readonly attackingWeaponsIDs: string[];
   readonly instructionsOpen: boolean;
   readonly isMain: boolean;
+  readonly isTitle: boolean;
   readonly isVictory: boolean;
   readonly modeID: string | null;
   readonly movingMonsterInstancesIDs: string[];
@@ -21,7 +22,8 @@ export const state: State<StateSchema> = new State<StateSchema>({
   attackingMonsterInstancesIDs: [],
   attackingWeaponsIDs: [],
   instructionsOpen: false,
-  isMain: true,
+  isMain: false,
+  isTitle: true,
   isVictory: false,
   modeID: null,
   movingMonsterInstancesIDs: [],

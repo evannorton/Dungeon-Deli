@@ -2,7 +2,7 @@ import { Definable } from "./definables";
 
 enum MonsterMovementBehavior {
   Chase = "chase",
-  Horizontal = "horizontal"
+  Horizontal = "horizontal",
 }
 interface MonsterOptions {
   readonly movementBehavior: MonsterMovementBehavior;

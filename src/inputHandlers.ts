@@ -1,7 +1,10 @@
 import { attemptPlayerMove } from "./functions/attemptPlayerMove";
 import { createInputPressHandler, takeScreenshot } from "pixel-pigeon";
+import { state } from "./state";
 
+const condition = (): boolean => state.values.isMain;
 createInputPressHandler({
+  condition,
   gamepadButtons: [14],
   keyboardButtons: [
     { value: "ArrowLeft" },
@@ -16,6 +19,7 @@ createInputPressHandler({
   },
 });
 createInputPressHandler({
+  condition,
   gamepadButtons: [15],
   keyboardButtons: [
     { value: "ArrowRight" },
@@ -30,6 +34,7 @@ createInputPressHandler({
   },
 });
 createInputPressHandler({
+  condition,
   gamepadButtons: [12],
   keyboardButtons: [
     { value: "ArrowUp" },
@@ -44,6 +49,7 @@ createInputPressHandler({
   },
 });
 createInputPressHandler({
+  condition,
   gamepadButtons: [13],
   keyboardButtons: [
     { value: "ArrowDown" },
@@ -58,6 +64,7 @@ createInputPressHandler({
   },
 });
 createInputPressHandler({
+  condition,
   keyboardButtons: [{ value: "KeyP" }],
   onInput: (): void => {
     takeScreenshot();

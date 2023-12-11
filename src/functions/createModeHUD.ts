@@ -14,7 +14,8 @@ export const createModeHUD = (): void => {
     const stage: Stage = getDefinable(Stage, state.values.stageID);
     return 312 - stage.weapons.length * 10 - height - 21;
   };
-  const condition = (): boolean => state.values.isMain && state.values.stageID !== null;
+  const condition = (): boolean =>
+    state.values.isMain && state.values.stageID !== null;
   const modeColor = (): string => {
     if (state.values.modeID !== null) {
       const mode: Mode = getDefinable(Mode, state.values.modeID);

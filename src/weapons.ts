@@ -239,7 +239,6 @@ export class Weapon extends Definable {
                     width: 24,
                   },
                   {
-                    duration,
                     height: 24,
                     sourceHeight: 24,
                     sourceWidth: 24,
