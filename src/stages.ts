@@ -14,7 +14,7 @@ import {
   setEntityPosition,
 } from "pixel-pigeon";
 import { Ingredient } from "./ingredients";
-import { Mode, normalModeID } from "./modes";
+import { Mode, lifestealModeID, normalModeID, slipperyModeID } from "./modes";
 import { MonsterInstance } from "./monsterInstances";
 import {
   Weapon,
@@ -224,39 +224,33 @@ new Stage("1", {
     x: 11 * 24,
     y: 8 * 24,
   },
-  weaponIDs: [
-    aoeCircleWeaponID,
-    leftWeaponID,
-    downWeaponID,
-    rightWeaponID,
-    upWeaponID,
-  ],
+  weaponIDs: [leftWeaponID, downWeaponID, rightWeaponID, upWeaponID],
 });
 new Stage("2", {
   ingredientID: "meat",
-  modeIDs: [normalModeID],
+  modeIDs: [normalModeID, lifestealModeID, slipperyModeID],
   nextStageID: "3",
   playerStartLevelID: "crystals_1",
   playerStartPosition: {
     x: 240,
     y: 144,
   },
-  weaponIDs: [],
+  weaponIDs: [leftWeaponID, downWeaponID, rightWeaponID, upWeaponID],
 });
 new Stage("3", {
   ingredientID: "cheese",
-  modeIDs: [normalModeID],
+  modeIDs: [normalModeID, lifestealModeID, slipperyModeID],
   nextStageID: "4",
   playerStartLevelID: "cheese_1",
   playerStartPosition: {
     x: 240,
     y: 144,
   },
-  weaponIDs: [],
+  weaponIDs: [aoeCircleWeaponID],
 });
 new Stage("4", {
   ingredientID: "lettuce",
-  modeIDs: [normalModeID],
+  modeIDs: [normalModeID, lifestealModeID, slipperyModeID],
   nextStageID: "5",
   playerStartLevelID: "ruins_1",
   playerStartPosition: {
@@ -267,7 +261,7 @@ new Stage("4", {
 });
 new Stage("5", {
   ingredientID: "tomato",
-  modeIDs: [normalModeID],
+  modeIDs: [normalModeID, lifestealModeID, slipperyModeID],
   nextStageID: null,
   playerStartLevelID: "frozen_1",
   playerStartPosition: {
