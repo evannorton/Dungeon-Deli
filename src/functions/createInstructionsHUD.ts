@@ -100,6 +100,10 @@ export const createInstructionsHUD = (): void => {
       {
         value: "Space",
       },
+      {
+        value: "Numpad5",
+        withoutNumlock: true,
+      },
     ],
     mouseButtons: [0],
     onInput: (): void => {
