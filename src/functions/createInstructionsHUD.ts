@@ -51,7 +51,7 @@ export const createInstructionsHUD = (): void => {
       y: y + 30,
     },
     horizontalAlignment: "left",
-    text: "- Weapons trigger as you step.",
+    text: "- Powers trigger as you step.",
   });
   createLabel({
     color: "#ffffff",

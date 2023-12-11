@@ -162,7 +162,7 @@ export class Stage extends Definable {
           y: y + 5,
         },
         horizontalAlignment: "center",
-        text: "Weapon cooldowns",
+        text: "Powers",
       }),
     );
     this._options.weaponIDs.forEach(

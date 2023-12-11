@@ -20,7 +20,7 @@ export const createModeHUD = (): void => {
       const mode: Mode = getDefinable(Mode, state.values.nextModeID);
       return mode.color;
     }
-    return "#ffffff";
+    return "#a8a8a8";
   };
   const untilNextColor = (): string => {
     if (state.values.untilNextMode === 1) {
