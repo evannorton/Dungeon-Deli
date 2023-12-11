@@ -1,4 +1,5 @@
 import { Mode } from "../modes";
+import { Stage } from "../stages";
 import { createLabel, createQuadrilateral } from "pixel-pigeon";
 import { getDefinable } from "../definables";
 import { state } from "../state";
@@ -6,8 +7,14 @@ import { state } from "../state";
 export const createModeHUD = (): void => {
   const width: number = 120;
   const height: number = 37;
-  const y: number = 312 - 59 - 2 - height;
-  const condition = (): boolean => state.values.isMain;
+  const y = (): number => {
+    if (state.values.stageID === null) {
+      throw new Error("Attempted to get mode hud y with no stage ID");
+    }
+    const stage: Stage = getDefinable(Stage, state.values.stageID);
+    return 312 - stage.weapons.length * 10 - height - 21;
+  };
+  const condition = (): boolean => state.values.isMain && state.values.stageID !== null;
   const modeColor = (): string => {
     if (state.values.modeID !== null) {
       const mode: Mode = getDefinable(Mode, state.values.modeID);
@@ -44,7 +51,7 @@ export const createModeHUD = (): void => {
     coordinates: {
       condition,
       x: 2 + Math.floor(width / 2),
-      y: y + 5,
+      y: (): number => y() + 5,
     },
     horizontalAlignment: "center",
     text: (): string => {
@@ -59,7 +66,7 @@ export const createModeHUD = (): void => {
     coordinates: {
       condition,
       x: 5,
-      y: y + 17,
+      y: (): number => y() + 17,
     },
     horizontalAlignment: "left",
     text: "Next:",
@@ -69,7 +76,7 @@ export const createModeHUD = (): void => {
     coordinates: {
       condition,
       x: 2 + width - 2,
-      y: y + 17,
+      y: (): number => y() + 17,
     },
     horizontalAlignment: "right",
     text: (): string => {
@@ -84,7 +91,7 @@ export const createModeHUD = (): void => {
     coordinates: {
       condition,
       x: 5,
-      y: y + 27,
+      y: (): number => y() + 27,
     },
     horizontalAlignment: "left",
     text: "Until next:",
@@ -94,7 +101,7 @@ export const createModeHUD = (): void => {
     coordinates: {
       condition,
       x: 2 + width - 2,
-      y: y + 27,
+      y: (): number => y() + 27,
     },
     horizontalAlignment: "right",
     text: (): string => {
