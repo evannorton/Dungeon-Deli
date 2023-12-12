@@ -27,21 +27,21 @@ export class Mode extends Definable {
 }
 export const lifestealModeID: string = new Mode({
   color: "#e03c28",
-  name: "Lifesteal Mode",
+  name: "Lifesteal",
   turns: 6,
 }).id;
 export const normalModeID: string = new Mode({
   color: "#ffffff",
-  name: "Normal Mode",
+  name: "Normal",
   turns: 6,
 }).id;
 export const slipperyModeID: string = new Mode({
   color: "#5ba8ff",
-  name: "Slippery Mode",
+  name: "Slippery",
   turns: 3,
 }).id;
 export const knockbackModeID: string = new Mode({
   color: "#cc8f15",
-  name: "Knockback Mode",
+  name: "Knockback",
   turns: 6,
 }).id;

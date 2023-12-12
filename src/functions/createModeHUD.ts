@@ -57,7 +57,7 @@ export const createModeHUD = (): void => {
     horizontalAlignment: "center",
     text: (): string => {
       if (state.values.modeID !== null) {
-        return getDefinable(Mode, state.values.modeID).name;
+        return `${getDefinable(Mode, state.values.modeID).name} Mode`;
       }
       return "";
     },
