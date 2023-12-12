@@ -18,7 +18,7 @@ export const createTitleHUD = (): void => {
   };
   for (let i: number = 0; i < 8160; i += 480) {
     animation.frames.push({
-      duration: 250,
+      duration: 200,
       height: 312,
       sourceHeight: 312,
       sourceWidth: 480,
@@ -43,12 +43,12 @@ export const createTitleHUD = (): void => {
       {
         frames: [
           {
-            height: 312,
-            sourceHeight: 312,
-            sourceWidth: 480,
+            height: 105,
+            sourceHeight: 105,
+            sourceWidth: 256,
             sourceX: 0,
             sourceY: 0,
-            width: 480,
+            width: 256,
           },
         ],
         id: "default",
@@ -56,8 +56,32 @@ export const createTitleHUD = (): void => {
     ],
     coordinates: {
       condition,
-      x: 0,
+      x: 225,
       y: 0,
+    },
+    imagePath: "title-sign",
+  });
+  createSprite({
+    animationID: "default",
+    animations: [
+      {
+        frames: [
+          {
+            height: 46,
+            sourceHeight: 46,
+            sourceWidth: 108,
+            sourceX: 0,
+            sourceY: 0,
+            width: 108,
+          },
+        ],
+        id: "default",
+      },
+    ],
+    coordinates: {
+      condition,
+      x: 360,
+      y: 249,
     },
     imagePath: "title-start",
   });
