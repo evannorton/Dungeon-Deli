@@ -17,7 +17,7 @@ import { MonsterInstance } from "./monsterInstances";
 import { TurnPart } from "./types/TurnPart";
 import { aoeDuration } from "./constants/aoeDuration";
 import { goToNextMode } from "./functions/goToNextMode";
-import { lifestealModeID } from "./modes";
+import { knockbackModeID, lifestealModeID } from "./modes";
 import { projectileDuration } from "./constants/projectileDuration";
 import { startMonsterInstancesMovement } from "./functions/startMonsterInstancesMovement";
 import { state } from "./state";
@@ -350,6 +350,15 @@ export class Weapon extends Definable {
           }
           if (monsterInstance.character.isAlive() === false) {
             removeEntity(this._projectileAttack.monsterEntityID);
+          } else {
+            if (state.values.modeID === knockbackModeID) {
+              state.setValues({
+                knockbackCharacterIDs: [
+                  ...state.values.knockbackCharacterIDs,
+                  monsterInstance.character.id,
+                ],
+              });
+            }
           }
         }
         state.setValues({
@@ -359,17 +368,6 @@ export class Weapon extends Definable {
         });
         removeEntity(this._projectileAttack.projectileEntityID);
         this._projectileAttack = null;
-        if (state.values.attackingWeaponsIDs.length === 0) {
-          startMonsterInstancesMovement();
-          if (state.values.movingMonsterInstancesIDs.length > 0) {
-            state.setValues({ turnPart: TurnPart.MonstersMoving });
-          } else if (state.values.attackingMonsterInstancesIDs.length > 0) {
-            state.setValues({ turnPart: TurnPart.MonstersAttacking });
-          } else {
-            state.setValues({ turnPart: null });
-            goToNextMode();
-          }
-        }
       }
     } else if (this._aoeAttack !== null) {
       const { time } = this._aoeAttack;
@@ -390,6 +388,15 @@ export class Weapon extends Definable {
           }
           if (monsterInstance.character.isAlive() === false) {
             removeEntity(monsterInstanceID);
+          } else {
+            if (state.values.modeID === knockbackModeID) {
+              state.setValues({
+                knockbackCharacterIDs: [
+                  ...state.values.knockbackCharacterIDs,
+                  monsterInstance.character.id,
+                ],
+              });
+            }
           }
         }
         state.setValues({
@@ -401,16 +408,114 @@ export class Weapon extends Definable {
           removeEntity(areaEntityID);
         }
         this._aoeAttack = null;
-        if (state.values.attackingWeaponsIDs.length === 0) {
-          startMonsterInstancesMovement();
-          if (state.values.movingMonsterInstancesIDs.length > 0) {
-            state.setValues({ turnPart: TurnPart.MonstersMoving });
-          } else if (state.values.attackingMonsterInstancesIDs.length > 0) {
-            state.setValues({ turnPart: TurnPart.MonstersAttacking });
+      }
+    }
+    if (state.values.attackingWeaponsIDs.length === 0) {
+      const playerCharacter: Character = getDefinable(
+        Character,
+        state.values.playerCharacterID,
+      );
+      if (state.values.knockbackCharacterIDs.length > 0) {
+        for (const characterID of state.values.knockbackCharacterIDs) {
+          const character: Character = getDefinable(Character, characterID);
+          const playerPosition: EntityPosition = getEntityPosition(
+            playerCharacter.entityID,
+          );
+          if (playerPosition !== null) {
+            const entityPosition: EntityPosition = getEntityPosition(
+              character.entityID,
+            );
+            const endPosition: EntityPosition = { ...entityPosition };
+            const endHalfPosition: EntityPosition = { ...entityPosition };
+            let xOffset: number = 0;
+            let yOffset: number = 0;
+            if (playerPosition.x > endPosition.x) {
+              endPosition.x -= 24;
+            } else if (playerPosition.x < endPosition.x) {
+              endPosition.x += 24;
+            }
+            if (playerPosition.y > endPosition.y) {
+              endPosition.y -= 24;
+            } else if (playerPosition.y < endPosition.y) {
+              endPosition.y += 24;
+            }
+            if (endPosition.x > entityPosition.x) {
+              xOffset = 1;
+            }
+            if (endPosition.x < entityPosition.x) {
+              xOffset = -1;
+            }
+            if (endPosition.y > entityPosition.y) {
+              yOffset = 1;
+            }
+            if (endPosition.y < entityPosition.y) {
+              yOffset = -1;
+            }
+            endHalfPosition.x += xOffset * 12;
+            endHalfPosition.y += yOffset * 12;
+            const collisionData: CollisionData = getRectangleCollisionData(
+              {
+                height: 24,
+                width: 24,
+                x: endPosition.x,
+                y: endPosition.y,
+              },
+              ["chest", "monster", "player", "transport"],
+            );
+            const halfCollisionData: CollisionData = getRectangleCollisionData(
+              {
+                height: 24,
+                width: 24,
+                x: endHalfPosition.x,
+                y: endHalfPosition.y,
+              },
+              ["chest", "monster", "player", "transport"],
+            );
+            collisionData.entityCollidables =
+              collisionData.entityCollidables.filter(
+                (entityCollidable: EntityCollidable): boolean =>
+                  entityCollidable.entityID !== character.entityID,
+              );
+            halfCollisionData.entityCollidables =
+              halfCollisionData.entityCollidables.filter(
+                (entityCollidable: EntityCollidable): boolean =>
+                  entityCollidable.entityID !== character.entityID,
+              );
+            if (
+              !collisionData.map &&
+              !halfCollisionData.map &&
+              collisionData.entityCollidables.length === 0 &&
+              halfCollisionData.entityCollidables.length === 0
+            ) {
+              character.startKnockback(endPosition);
+            } else {
+              state.setValues({
+                knockbackCharacterIDs:
+                  state.values.knockbackCharacterIDs.filter(
+                    (id: string): boolean => id !== characterID,
+                  ),
+              });
+            }
           } else {
-            state.setValues({ turnPart: null });
-            goToNextMode();
+            state.setValues({
+              knockbackCharacterIDs: state.values.knockbackCharacterIDs.filter(
+                (id: string): boolean => id !== characterID,
+              ),
+            });
           }
+        }
+      }
+      if (state.values.knockbackCharacterIDs.length > 0) {
+        state.setValues({ turnPart: TurnPart.MonstersKnockback });
+      } else {
+        startMonsterInstancesMovement();
+        if (state.values.movingMonsterInstancesIDs.length > 0) {
+          state.setValues({ turnPart: TurnPart.MonstersMoving });
+        } else if (state.values.attackingMonsterInstancesIDs.length > 0) {
+          state.setValues({ turnPart: TurnPart.MonstersAttacking });
+        } else {
+          state.setValues({ turnPart: null });
+          goToNextMode();
         }
       }
     }

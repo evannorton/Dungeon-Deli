@@ -16,10 +16,11 @@ import {
 import { Definable, getDefinable } from "./definables";
 import { Direction } from "./types/Direction";
 import { Monster, MonsterMovementBehavior } from "./monsters";
+import { TurnPart } from "./types/TurnPart";
 import { alertDistance } from "./constants/alertDistance";
 import { beginTurn } from "./functions/beginTurn";
 import { goToNextMode } from "./functions/goToNextMode";
-import { lifestealModeID, slipperyModeID } from "./modes";
+import { knockbackModeID, lifestealModeID, slipperyModeID } from "./modes";
 import { monsterAttackDuration } from "./constants/monsterAttackDuration";
 import { playerIsBlocked } from "./functions/playerIsBlocked";
 import { state } from "./state";
@@ -366,6 +367,87 @@ export class MonsterInstance extends Definable {
         });
         if (state.values.attackingMonsterInstancesIDs.length === 0) {
           if (
+            playerCharacter.isAlive() &&
+            state.values.modeID === knockbackModeID
+          ) {
+            const startPosition: EntityPosition = getEntityPosition(
+              playerCharacter.entityID,
+            );
+            const endPosition: EntityPosition = { ...startPosition };
+            const entityPosition: EntityPosition = getEntityPosition(
+              this.character.entityID,
+            );
+            const endHalfPosition: EntityPosition = { ...startPosition };
+            if (entityPosition.x > endPosition.x) {
+              endPosition.x -= 24;
+            } else if (entityPosition.x < endPosition.x) {
+              endPosition.x += 24;
+            }
+            if (entityPosition.y > endPosition.y) {
+              endPosition.y -= 24;
+            } else if (entityPosition.y < endPosition.y) {
+              endPosition.y += 24;
+            }
+            let xOffset: number = 0;
+            let yOffset: number = 0;
+            if (entityPosition.x > startPosition.x) {
+              xOffset = -1;
+            }
+            if (entityPosition.x < startPosition.x) {
+              xOffset = 1;
+            }
+            if (entityPosition.y > startPosition.y) {
+              yOffset = -1;
+            }
+            if (entityPosition.y < startPosition.y) {
+              yOffset = 1;
+            }
+            endHalfPosition.x += xOffset * 12;
+            endHalfPosition.y += yOffset * 12;
+            const collisionData: CollisionData = getRectangleCollisionData(
+              {
+                height: 24,
+                width: 24,
+                x: endPosition.x,
+                y: endPosition.y,
+              },
+              ["chest", "monster"],
+            );
+            const halfCollisionData: CollisionData = getRectangleCollisionData(
+              {
+                height: 24,
+                width: 24,
+                x: endHalfPosition.x,
+                y: endHalfPosition.y,
+              },
+              ["chest", "monster"],
+            );
+            console.log(startPosition);
+            console.log(endHalfPosition);
+            console.log(endPosition);
+            if (
+              !collisionData.map &&
+              !halfCollisionData.map &&
+              collisionData.entityCollidables.length === 0 &&
+              halfCollisionData.entityCollidables.length === 0
+            ) {
+              console.log("knockback");
+              playerCharacter.startKnockback(endPosition);
+              state.setValues({
+                knockbackCharacterIDs: [
+                  ...state.values.knockbackCharacterIDs,
+                  playerCharacter.id,
+                ],
+              });
+            }
+          }
+          if (
+            playerCharacter.isAlive() &&
+            state.values.modeID === knockbackModeID &&
+            state.values.knockbackCharacterIDs.length > 0
+          ) {
+            state.setValues({ turnPart: TurnPart.PlayerKnockback });
+          } else if (
             playerIsBlocked() === false ||
             playerCharacter.isAlive() === false
           ) {

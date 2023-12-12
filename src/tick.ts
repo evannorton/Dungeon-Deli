@@ -19,6 +19,7 @@ import { beginTurn } from "./functions/beginTurn";
 import { getDefinable } from "./definables";
 import { goToNextMode } from "./functions/goToNextMode";
 import { playerIsBlocked } from "./functions/playerIsBlocked";
+import { startMonsterInstancesMovement } from "./functions/startMonsterInstancesMovement";
 import { state } from "./state";
 
 export const tick = (): void => {
@@ -115,6 +116,30 @@ export const tick = (): void => {
           weapon.updateAttack();
         }
         break;
+      case TurnPart.MonstersKnockback:
+        console.log("knockback");
+        for (const characterID of state.values.knockbackCharacterIDs) {
+          const character: Character = getDefinable(Character, characterID);
+          character.updateKnockback((): void => {
+            state.setValues({
+              knockbackCharacterIDs: state.values.knockbackCharacterIDs.filter(
+                (id: string): boolean => id !== characterID,
+              ),
+            });
+            if (state.values.knockbackCharacterIDs.length === 0) {
+              startMonsterInstancesMovement();
+              if (state.values.movingMonsterInstancesIDs.length > 0) {
+                state.setValues({ turnPart: TurnPart.MonstersMoving });
+              } else if (state.values.attackingMonsterInstancesIDs.length > 0) {
+                state.setValues({ turnPart: TurnPart.MonstersAttacking });
+              } else {
+                state.setValues({ turnPart: null });
+                goToNextMode();
+              }
+            }
+          });
+        }
+        break;
       case TurnPart.MonstersMoving:
         for (const monsterInstanceID of state.values
           .movingMonsterInstancesIDs) {
@@ -169,6 +194,76 @@ export const tick = (): void => {
             monsterInstanceID,
           );
           monsterInstance.updateAttack();
+        }
+        break;
+      case TurnPart.PlayerKnockback:
+        for (const characterID of state.values.knockbackCharacterIDs) {
+          const character: Character = getDefinable(Character, characterID);
+          const characterPosition: EntityPosition = getEntityPosition(
+            character.entityID,
+          );
+          character.updateKnockback((): void => {
+            const transportCollisionData: CollisionData =
+              getRectangleCollisionData(
+                {
+                  height: 24,
+                  width: 24,
+                  x: characterPosition.x,
+                  y: characterPosition.y,
+                },
+                ["transport"],
+              );
+            const transportEntityID: string | null =
+              transportCollisionData.entityCollidables.length > 0
+                ? transportCollisionData.entityCollidables[0].entityID
+                : null;
+            if (transportEntityID !== null) {
+              const targetLevelID: unknown = getEntityFieldValue(
+                transportEntityID,
+                "target_level_id",
+              );
+              const targetX: unknown = getEntityFieldValue(
+                transportEntityID,
+                "target_x",
+              );
+              const targetY: unknown = getEntityFieldValue(
+                transportEntityID,
+                "target_y",
+              );
+              if (typeof targetLevelID !== "string") {
+                throw new Error(
+                  `Entity "${transportEntityID}" has an invalid "target_level_id" value.`,
+                );
+              }
+              if (typeof targetX !== "number") {
+                throw new Error(
+                  `Entity "${transportEntityID}" has an invalid "target_x" value.`,
+                );
+              }
+              if (typeof targetY !== "number") {
+                throw new Error(
+                  `Entity "${transportEntityID}" has an invalid "target_y" value.`,
+                );
+              }
+              setEntityLevel(character.entityID, targetLevelID);
+              setEntityPosition(character.entityID, {
+                x: targetX,
+                y: targetY,
+              });
+              goToLevel(targetLevelID);
+            }
+            state.setValues({
+              knockbackCharacterIDs: state.values.knockbackCharacterIDs.filter(
+                (id: string): boolean => id !== characterID,
+              ),
+            });
+            if (playerIsBlocked() === false) {
+              state.setValues({ turnPart: null });
+              goToNextMode();
+            } else {
+              beginTurn();
+            }
+          });
         }
         break;
     }

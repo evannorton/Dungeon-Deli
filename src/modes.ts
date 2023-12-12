@@ -40,3 +40,8 @@ export const slipperyModeID: string = new Mode({
   name: "Slippery Mode",
   turns: 3,
 }).id;
+export const knockbackModeID: string = new Mode({
+  color: "#cc8f15",
+  name: "Knockback Mode",
+  turns: 6,
+}).id;

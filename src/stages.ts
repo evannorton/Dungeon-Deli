@@ -14,7 +14,13 @@ import {
   setEntityPosition,
 } from "pixel-pigeon";
 import { Ingredient } from "./ingredients";
-import { Mode, lifestealModeID, normalModeID, slipperyModeID } from "./modes";
+import {
+  Mode,
+  knockbackModeID,
+  lifestealModeID,
+  normalModeID,
+  slipperyModeID,
+} from "./modes";
 import { MonsterInstance } from "./monsterInstances";
 import {
   Weapon,
@@ -118,7 +124,7 @@ export class Stage extends Definable {
     for (const chest of getDefinables(Chest).values()) {
       chest.close();
     }
-    const modeID: string = normalModeID;
+    const modeID: string = this._options.modeIDs[0];
     const mode: Mode = getDefinable(Mode, modeID);
     state.setValues({
       attackingMonsterInstancesIDs: [],
@@ -240,7 +246,7 @@ new Stage("1", {
 });
 new Stage("2", {
   ingredientID: "meat",
-  modeIDs: [normalModeID, lifestealModeID, slipperyModeID],
+  modeIDs: [normalModeID, lifestealModeID, slipperyModeID, knockbackModeID],
   nextStageID: "3",
   playerStartLevelID: "crystals_1",
   playerStartPosition: {
@@ -251,7 +257,7 @@ new Stage("2", {
 });
 new Stage("3", {
   ingredientID: "cheese",
-  modeIDs: [normalModeID, lifestealModeID, slipperyModeID],
+  modeIDs: [normalModeID, lifestealModeID, slipperyModeID, knockbackModeID],
   nextStageID: "4",
   playerStartLevelID: "cheese_1",
   playerStartPosition: {
@@ -262,7 +268,7 @@ new Stage("3", {
 });
 new Stage("4", {
   ingredientID: "lettuce",
-  modeIDs: [normalModeID, lifestealModeID, slipperyModeID],
+  modeIDs: [normalModeID, lifestealModeID, slipperyModeID, knockbackModeID],
   nextStageID: "5",
   playerStartLevelID: "ruins_1",
   playerStartPosition: {
@@ -273,7 +279,7 @@ new Stage("4", {
 });
 new Stage("5", {
   ingredientID: "tomato",
-  modeIDs: [normalModeID, lifestealModeID, slipperyModeID],
+  modeIDs: [normalModeID, lifestealModeID, slipperyModeID, knockbackModeID],
   nextStageID: null,
   playerStartLevelID: "frozen_1",
   playerStartPosition: {

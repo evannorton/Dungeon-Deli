@@ -15,6 +15,11 @@ import { Move } from "./types/Move";
 import { Step } from "./types/Step";
 import { walkDuration } from "./constants/walkDuration";
 
+interface Knockback {
+  readonly endPosition: EntityPosition;
+  readonly startPosition: EntityPosition;
+  readonly time: number;
+}
 interface CharacterOptions {
   readonly entityID: string;
   readonly imagePath: string;
@@ -26,7 +31,9 @@ export class Character extends Definable {
   private readonly _spriteID: string;
   private _direction: Direction = Direction.Down;
   private _hp: number;
+  private _knockback: Knockback | null = null;
   private _move: Move | null = null;
+  private _lastPosition: EntityPosition | null = null;
   private _step: Step = Step.Left;
   public constructor(options: CharacterOptions) {
     super(getToken());
@@ -337,6 +344,10 @@ export class Character extends Definable {
     return this._hp;
   }
 
+  public get lastPosition(): EntityPosition | null {
+    return this._lastPosition;
+  }
+
   public get step(): Step {
     return this._step;
   }
@@ -357,6 +368,19 @@ export class Character extends Definable {
 
   public restoreHealth(health: number): void {
     this._hp = Math.min(this._hp + health, this._options.maxHP);
+  }
+
+  public startKnockback(endPosition: EntityPosition): void {
+    const startPosition: EntityPosition = getEntityPosition(
+      this._options.entityID,
+    );
+    this._knockback = {
+      endPosition,
+      startPosition,
+      time: getCurrentTime(),
+    };
+    setEntityBlockingPosition(this._options.entityID, endPosition);
+    this._lastPosition = startPosition;
   }
 
   public startMovement(endPosition: EntityPosition): void {
@@ -386,10 +410,42 @@ export class Character extends Definable {
       time: getCurrentTime(),
     };
     setEntityBlockingPosition(this._options.entityID, endPosition);
+    this._lastPosition = startPosition;
   }
 
   public takeDamage(damage: number): void {
     this._hp = Math.max(this._hp - damage, 0);
+  }
+
+  public updateKnockback(onEnd?: () => void): void {
+    if (this._knockback !== null) {
+      const { endPosition, startPosition, time } = this._knockback;
+      const currentTime: number = getCurrentTime();
+      const xDiff: number = Math.abs(endPosition.x - startPosition.x);
+      const yDiff: number = Math.abs(endPosition.y - startPosition.y);
+      const maxDiff: number = Math.max(xDiff, yDiff);
+      const totalDuration: number = (maxDiff / 24) * walkDuration;
+      if (currentTime <= time + totalDuration) {
+        const divisor: number = currentTime - time;
+        const percent: number = Math.min(divisor / totalDuration, 1);
+        let xOffset: number = Math.floor(xDiff * percent);
+        let yOffset: number = Math.floor(yDiff * percent);
+        if (endPosition.x < startPosition.x) {
+          xOffset = -xOffset;
+        }
+        if (endPosition.y < startPosition.y) {
+          yOffset = -yOffset;
+        }
+        setEntityPosition(this._options.entityID, {
+          x: startPosition.x + xOffset,
+          y: startPosition.y + yOffset,
+        });
+      } else {
+        setEntityPosition(this._options.entityID, endPosition);
+        this._knockback = null;
+        onEnd?.();
+      }
+    }
   }
 
   public updateMovement(onEnd?: () => void): void {
