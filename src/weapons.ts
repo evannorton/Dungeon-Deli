@@ -350,6 +350,11 @@ export class Weapon extends Definable {
           }
           if (monsterInstance.character.isAlive() === false) {
             removeEntity(this._projectileAttack.monsterEntityID);
+            state.setValues({
+              knockbackCharacterIDs: state.values.knockbackCharacterIDs.filter(
+                (id: string): boolean => id !== monsterInstance.character.id,
+              ),
+            });
           } else {
             if (state.values.modeID === knockbackModeID) {
               state.setValues({
@@ -388,6 +393,11 @@ export class Weapon extends Definable {
           }
           if (monsterInstance.character.isAlive() === false) {
             removeEntity(monsterInstanceID);
+            state.setValues({
+              knockbackCharacterIDs: state.values.knockbackCharacterIDs.filter(
+                (id: string): boolean => id !== monsterInstance.character.id,
+              ),
+            });
           } else {
             if (state.values.modeID === knockbackModeID) {
               state.setValues({

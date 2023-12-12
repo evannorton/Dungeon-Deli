@@ -198,10 +198,10 @@ export const tick = (): void => {
       case TurnPart.PlayerKnockback:
         for (const characterID of state.values.knockbackCharacterIDs) {
           const character: Character = getDefinable(Character, characterID);
-          const characterPosition: EntityPosition = getEntityPosition(
-            character.entityID,
-          );
           character.updateKnockback((): void => {
+            const characterPosition: EntityPosition = getEntityPosition(
+              character.entityID,
+            );
             const transportCollisionData: CollisionData =
               getRectangleCollisionData(
                 {

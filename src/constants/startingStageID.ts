@@ -1,1 +1,1 @@
-export const startingStageID: string = "3";
+export const startingStageID: string = "1";
