@@ -209,7 +209,7 @@ export class MonsterInstance extends Definable {
         y: playerEntityPosition.y,
       },
     );
-    if (path.length <= alertDistance) {
+    if (path.length <= alertDistance && path.length > 0) {
       this._alerted = true;
     }
     if (this._alerted) {
