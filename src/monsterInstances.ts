@@ -422,16 +422,12 @@ export class MonsterInstance extends Definable {
               },
               ["chest", "monster"],
             );
-            console.log(startPosition);
-            console.log(endHalfPosition);
-            console.log(endPosition);
             if (
               !collisionData.map &&
               !halfCollisionData.map &&
               collisionData.entityCollidables.length === 0 &&
               halfCollisionData.entityCollidables.length === 0
             ) {
-              console.log("knockback");
               playerCharacter.startKnockback(endPosition);
               state.setValues({
                 knockbackCharacterIDs: [

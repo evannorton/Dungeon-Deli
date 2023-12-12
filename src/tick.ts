@@ -117,7 +117,6 @@ export const tick = (): void => {
         }
         break;
       case TurnPart.MonstersKnockback:
-        console.log("knockback");
         for (const characterID of state.values.knockbackCharacterIDs) {
           const character: Character = getDefinable(Character, characterID);
           character.updateKnockback((): void => {
