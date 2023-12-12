@@ -35,15 +35,15 @@ export class Monster extends Definable {
   }
 }
 new Monster("rat", {
-  damage: 20,
+  damage: 15,
   imagePath: "monsters/rat",
   maxHP: 50,
   movementBehavior: MonsterMovementBehavior.Chase,
 });
 new Monster("duck", {
-  damage: 15,
+  damage: 20,
   imagePath: "monsters/duck",
-  maxHP: 75,
+  maxHP: 50,
   movementBehavior: MonsterMovementBehavior.Chase,
 });
 new Monster("crab", {
