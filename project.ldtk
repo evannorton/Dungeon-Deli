@@ -4487,18 +4487,18 @@
 						},
 						{
 							"__identifier": "monster",
-							"__grid": [38,20],
+							"__grid": [38,19],
 							"__pivot": [0,0],
 							"__tags": [],
 							"__tile": null,
 							"__smartColor": "#BE4A2F",
 							"__worldX": 1848,
-							"__worldY": 1348,
+							"__worldY": 1324,
 							"iid": "0fc4dd50-8990-11ee-920b-bb32506c7bca",
 							"width": 24,
 							"height": 24,
 							"defUid": 15,
-							"px": [912,480],
+							"px": [912,456],
 							"fieldInstances": [{ "__identifier": "monster_id", "__type": "String", "__value": "duck", "__tile": null, "defUid": 16, "realEditorValues": [{
 								"id": "V_String",
 								"params": ["duck"]
