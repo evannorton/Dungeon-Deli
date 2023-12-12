@@ -2,11 +2,9 @@ import {
   CreateSpriteOptionsAnimation,
   createInputPressHandler,
   createSprite,
-  playAudioSource,
 } from "pixel-pigeon";
 import { Stage } from "../stages";
 import { getDefinable } from "../definables";
-import { musicVolumeChannelID } from "../volumeChannels";
 import { startingStageID } from "../constants/startingStageID";
 import { state } from "../state";
 
@@ -104,10 +102,6 @@ export const createTitleHUD = (): void => {
         isTitle: false,
       });
       getDefinable(Stage, startingStageID).start();
-      playAudioSource("cavern-theme-base", {
-        loopPoint: 12800,
-        volumeChannelID: musicVolumeChannelID,
-      });
     },
   });
 };

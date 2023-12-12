@@ -8,10 +8,12 @@ import {
   createQuadrilateral,
   goToLevel,
   lockCameraToEntity,
+  playAudioSource,
   removeLabel,
   removeQuadrilateral,
   setEntityLevel,
   setEntityPosition,
+  stopAudioSource,
 } from "pixel-pigeon";
 import { Ingredient } from "./ingredients";
 import {
@@ -31,11 +33,14 @@ import {
   upWeaponID,
 } from "./weapons";
 import { getUniqueRandomModeID } from "./functions/getUniqueRandomModeID";
+import { musicVolumeChannelID } from "./volumeChannels";
 import { playerMaxHP } from "./constants/playerMaxHP";
 import { state } from "./state";
 
 interface StageOptions {
+  readonly audioSourceID: string;
   readonly ingredientID: string;
+  readonly loopPoint: number;
   readonly modeIDs: string[];
   readonly nextStageID: string | null;
   readonly onStart?: () => void;
@@ -82,6 +87,16 @@ export class Stage extends Definable {
   }
 
   public start(): void {
+    if (state.values.musicAudioSourceID !== null) {
+      stopAudioSource(state.values.musicAudioSourceID);
+    }
+    state.setValues({
+      musicAudioSourceID: this._options.audioSourceID,
+    });
+    playAudioSource(this._options.audioSourceID, {
+      loopPoint: this._options.loopPoint,
+      volumeChannelID: musicVolumeChannelID,
+    });
     state.setValues({ stageID: this._id });
     goToLevel(this._options.playerStartLevelID);
     if (state.values.playerCharacterID === null) {
@@ -231,7 +246,9 @@ export class Stage extends Definable {
   }
 }
 new Stage("1", {
+  audioSourceID: "cavern-theme-base",
   ingredientID: "bread",
+  loopPoint: 12800,
   modeIDs: [normalModeID],
   nextStageID: "2",
   onStart: (): void => {
@@ -245,7 +262,9 @@ new Stage("1", {
   weaponIDs: [leftWeaponID, downWeaponID, rightWeaponID, upWeaponID],
 });
 new Stage("2", {
+  audioSourceID: "cavern-theme-base",
   ingredientID: "meat",
+  loopPoint: 12800,
   modeIDs: [normalModeID, lifestealModeID, slipperyModeID, knockbackModeID],
   nextStageID: "3",
   playerStartLevelID: "crystals_1",
@@ -256,7 +275,9 @@ new Stage("2", {
   weaponIDs: [leftWeaponID, downWeaponID, rightWeaponID, upWeaponID],
 });
 new Stage("3", {
+  audioSourceID: "cheese-cave-base",
   ingredientID: "cheese",
+  loopPoint: 13060,
   modeIDs: [normalModeID, lifestealModeID, slipperyModeID, knockbackModeID],
   nextStageID: "4",
   playerStartLevelID: "cheese_1",
@@ -273,7 +294,9 @@ new Stage("3", {
   ],
 });
 new Stage("4", {
+  audioSourceID: "cheese-cave-base",
   ingredientID: "lettuce",
+  loopPoint: 13060,
   modeIDs: [normalModeID, lifestealModeID, slipperyModeID, knockbackModeID],
   nextStageID: "5",
   playerStartLevelID: "ruins_1",
@@ -284,7 +307,9 @@ new Stage("4", {
   weaponIDs: [],
 });
 new Stage("5", {
+  audioSourceID: "cheese-cave-base",
   ingredientID: "tomato",
+  loopPoint: 13060,
   modeIDs: [normalModeID, lifestealModeID, slipperyModeID, knockbackModeID],
   nextStageID: null,
   playerStartLevelID: "frozen_1",

@@ -11,6 +11,7 @@ interface StateSchema {
   readonly isVictory: boolean;
   readonly modeID: string | null;
   readonly movingMonsterInstancesIDs: string[];
+  readonly musicAudioSourceID: string | null;
   readonly nextModeID: string | null;
   readonly playerCharacterID: string | null;
   readonly stageID: string | null;
@@ -29,6 +30,7 @@ export const state: State<StateSchema> = new State<StateSchema>({
   knockbackCharacterIDs: [],
   modeID: null,
   movingMonsterInstancesIDs: [],
+  musicAudioSourceID: null,
   nextModeID: null,
   playerCharacterID: null,
   stageID: null,
