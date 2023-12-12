@@ -65,7 +65,6 @@ createInputPressHandler({
   },
 });
 createInputPressHandler({
-  condition,
   keyboardButtons: [{ value: "KeyP" }],
   onInput: (): void => {
     takeScreenshot();
