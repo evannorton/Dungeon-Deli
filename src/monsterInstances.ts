@@ -250,6 +250,44 @@ export class MonsterInstance extends Definable {
             endPosition = horizontalPosition;
           }
         }
+      } else if (
+        this.monster.movementBehavior === MonsterMovementBehavior.Cart &&
+        path.length !== 2
+      ) {
+        let verticalPosition: EntityPosition | null = null;
+        if (entityPosition.y > playerEntityPosition.y) {
+          verticalPosition = {
+            ...entityPosition,
+            y: entityPosition.y - 24,
+          };
+        } else if (entityPosition.y < playerEntityPosition.y) {
+          verticalPosition = {
+            ...entityPosition,
+            y: entityPosition.y + 24,
+          };
+        }
+        if (verticalPosition !== null) {
+          const collisionData: CollisionData = getRectangleCollisionData(
+            {
+              height: 24,
+              width: 24,
+              x: verticalPosition.x,
+              y: verticalPosition.y,
+            },
+            ["chest", "monster", "player", "transport"],
+          );
+          if (
+            collisionData.map === false &&
+            collisionData.entityCollidables.length === 0
+          ) {
+            if (
+              this.monster.movementBehavior !== MonsterMovementBehavior.Cart ||
+              entityPosition.x === this._startPosition.x
+            ) {
+              endPosition = verticalPosition;
+            }
+          }
+        }
       }
       if (endPosition !== null) {
         if (state.values.modeID === slipperyModeID) {

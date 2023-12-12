@@ -1,6 +1,7 @@
 import { Definable } from "./definables";
 
 export enum MonsterMovementBehavior {
+  Cart = "cart",
   Chase = "chase",
   Horizontal = "horizontal",
 }
@@ -39,6 +40,12 @@ new Monster("rat", {
   imagePath: "monsters/rat",
   maxHP: 50,
   movementBehavior: MonsterMovementBehavior.Chase,
+});
+new Monster("cart-rat", {
+  damage: 24,
+  imagePath: "monsters/cart-rat",
+  maxHP: 50,
+  movementBehavior: MonsterMovementBehavior.Cart,
 });
 new Monster("duck", {
   damage: 20,

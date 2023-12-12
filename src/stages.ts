@@ -261,10 +261,16 @@ new Stage("3", {
   nextStageID: "4",
   playerStartLevelID: "cheese_1",
   playerStartPosition: {
-    x: 240,
-    y: 144,
+    x: 24 * 24,
+    y: 16 * 24,
   },
-  weaponIDs: [aoeCircleWeaponID],
+  weaponIDs: [
+    aoeCircleWeaponID,
+    leftWeaponID,
+    downWeaponID,
+    rightWeaponID,
+    upWeaponID,
+  ],
 });
 new Stage("4", {
   ingredientID: "lettuce",
