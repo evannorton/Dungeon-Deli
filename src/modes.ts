@@ -45,3 +45,8 @@ export const knockbackModeID: string = new Mode({
   name: "Knockback",
   turns: 6,
 }).id;
+export const reverseModeID: string = new Mode({
+  color: "#6a31ca",
+  name: "Reverse",
+  turns: 6,
+}).id;

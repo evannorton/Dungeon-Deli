@@ -1,6 +1,7 @@
 import { Character } from "./characters";
 import {
   CollisionData,
+  EntityCollidable,
   EntityPosition,
   addEntitySprite,
   createEntity,
@@ -20,7 +21,12 @@ import { TurnPart } from "./types/TurnPart";
 import { alertDistance } from "./constants/alertDistance";
 import { beginTurn } from "./functions/beginTurn";
 import { goToNextMode } from "./functions/goToNextMode";
-import { knockbackModeID, lifestealModeID, slipperyModeID } from "./modes";
+import {
+  knockbackModeID,
+  lifestealModeID,
+  reverseModeID,
+  slipperyModeID,
+} from "./modes";
 import { monsterAttackDuration } from "./constants/monsterAttackDuration";
 import { playerIsBlocked } from "./functions/playerIsBlocked";
 import { state } from "./state";
@@ -215,7 +221,57 @@ export class MonsterInstance extends Definable {
     if (this._alerted) {
       if (this.monster.movementBehavior === MonsterMovementBehavior.Chase) {
         if (path.length > 2) {
-          endPosition = path[1];
+          if (state.values.modeID === reverseModeID) {
+            const reversePosition: EntityPosition = { ...entityPosition };
+            const reverseHalfPosition: EntityPosition = { ...reversePosition };
+            if (path[1].x > entityPosition.x) {
+              reversePosition.x -= 24;
+              reverseHalfPosition.x -= 12;
+            } else if (path[1].x < entityPosition.x) {
+              reversePosition.x += 24;
+              reverseHalfPosition.x += 12;
+            }
+            if (path[1].y > entityPosition.y) {
+              reversePosition.y -= 24;
+              reverseHalfPosition.y -= 12;
+            } else if (path[1].y < entityPosition.y) {
+              reversePosition.y += 24;
+              reverseHalfPosition.y += 12;
+            }
+            const collisionData: CollisionData = getRectangleCollisionData(
+              {
+                height: 24,
+                width: 24,
+                x: reversePosition.x,
+                y: reversePosition.y,
+              },
+              ["chest", "monster", "player", "transport"],
+            );
+            const halfCollisionData: CollisionData = getRectangleCollisionData(
+              {
+                height: 24,
+                width: 24,
+                x: reverseHalfPosition.x,
+                y: reverseHalfPosition.y,
+              },
+              ["chest", "monster", "player", "transport"],
+            );
+            halfCollisionData.entityCollidables =
+              halfCollisionData.entityCollidables.filter(
+                (entityCollidable: EntityCollidable): boolean =>
+                  entityCollidable.entityID !== this._options.entityID,
+              );
+            if (
+              !collisionData.map &&
+              !halfCollisionData.map &&
+              collisionData.entityCollidables.length === 0 &&
+              halfCollisionData.entityCollidables.length === 0
+            ) {
+              endPosition = reversePosition;
+            }
+          } else {
+            endPosition = path[1];
+          }
         }
       } else if (
         this.monster.movementBehavior === MonsterMovementBehavior.Horizontal &&
@@ -223,15 +279,29 @@ export class MonsterInstance extends Definable {
       ) {
         let horizontalPosition: EntityPosition | null = null;
         if (entityPosition.x > playerEntityPosition.x) {
-          horizontalPosition = {
-            ...entityPosition,
-            x: entityPosition.x - 24,
-          };
+          if (state.values.modeID === reverseModeID) {
+            horizontalPosition = {
+              ...entityPosition,
+              x: entityPosition.x + 24,
+            };
+          } else {
+            horizontalPosition = {
+              ...entityPosition,
+              x: entityPosition.x - 24,
+            };
+          }
         } else if (entityPosition.x < playerEntityPosition.x) {
-          horizontalPosition = {
-            ...entityPosition,
-            x: entityPosition.x + 24,
-          };
+          if (state.values.modeID === reverseModeID) {
+            horizontalPosition = {
+              ...entityPosition,
+              x: entityPosition.x - 24,
+            };
+          } else {
+            horizontalPosition = {
+              ...entityPosition,
+              x: entityPosition.x + 24,
+            };
+          }
         }
         if (horizontalPosition !== null) {
           const collisionData: CollisionData = getRectangleCollisionData(
@@ -256,15 +326,29 @@ export class MonsterInstance extends Definable {
       ) {
         let verticalPosition: EntityPosition | null = null;
         if (entityPosition.y > playerEntityPosition.y) {
-          verticalPosition = {
-            ...entityPosition,
-            y: entityPosition.y - 24,
-          };
+          if (state.values.modeID === reverseModeID) {
+            verticalPosition = {
+              ...entityPosition,
+              y: entityPosition.y + 24,
+            };
+          } else {
+            verticalPosition = {
+              ...entityPosition,
+              y: entityPosition.y - 24,
+            };
+          }
         } else if (entityPosition.y < playerEntityPosition.y) {
-          verticalPosition = {
-            ...entityPosition,
-            y: entityPosition.y + 24,
-          };
+          if (state.values.modeID === reverseModeID) {
+            verticalPosition = {
+              ...entityPosition,
+              y: entityPosition.y - 24,
+            };
+          } else {
+            verticalPosition = {
+              ...entityPosition,
+              y: entityPosition.y + 24,
+            };
+          }
         }
         if (verticalPosition !== null) {
           const collisionData: CollisionData = getRectangleCollisionData(

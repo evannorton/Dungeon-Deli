@@ -1,6 +1,7 @@
 import { atemptPlayerPass } from "./functions/atemptPlayerPass";
 import { attemptPlayerMove } from "./functions/attemptPlayerMove";
 import { createInputPressHandler, takeScreenshot } from "pixel-pigeon";
+import { reverseModeID } from "./modes";
 import { state } from "./state";
 
 const condition = (): boolean => state.values.isMain;
@@ -16,7 +17,11 @@ createInputPressHandler({
     },
   ],
   onInput: (): void => {
-    attemptPlayerMove(-1, 0);
+    if (state.values.modeID === reverseModeID) {
+      attemptPlayerMove(1, 0);
+    } else {
+      attemptPlayerMove(-1, 0);
+    }
   },
 });
 createInputPressHandler({
@@ -31,7 +36,11 @@ createInputPressHandler({
     },
   ],
   onInput: (): void => {
-    attemptPlayerMove(1, 0);
+    if (state.values.modeID === reverseModeID) {
+      attemptPlayerMove(-1, 0);
+    } else {
+      attemptPlayerMove(1, 0);
+    }
   },
 });
 createInputPressHandler({
@@ -46,7 +55,11 @@ createInputPressHandler({
     },
   ],
   onInput: (): void => {
-    attemptPlayerMove(0, -1);
+    if (state.values.modeID === reverseModeID) {
+      attemptPlayerMove(0, 1);
+    } else {
+      attemptPlayerMove(0, -1);
+    }
   },
 });
 createInputPressHandler({
@@ -61,7 +74,11 @@ createInputPressHandler({
     },
   ],
   onInput: (): void => {
-    attemptPlayerMove(0, 1);
+    if (state.values.modeID === reverseModeID) {
+      attemptPlayerMove(0, -1);
+    } else {
+      attemptPlayerMove(0, 1);
+    }
   },
 });
 createInputPressHandler({

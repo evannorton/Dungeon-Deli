@@ -21,6 +21,7 @@ import {
   knockbackModeID,
   lifestealModeID,
   normalModeID,
+  reverseModeID,
   slipperyModeID,
 } from "./modes";
 import { MonsterInstance } from "./monsterInstances";
@@ -265,7 +266,13 @@ new Stage("2", {
   audioSourceID: "cavern-theme-base",
   ingredientID: "meat",
   loopPoint: 12800,
-  modeIDs: [normalModeID, lifestealModeID, slipperyModeID, knockbackModeID],
+  modeIDs: [
+    normalModeID,
+    lifestealModeID,
+    slipperyModeID,
+    knockbackModeID,
+    reverseModeID,
+  ],
   nextStageID: "3",
   playerStartLevelID: "crystals_1",
   playerStartPosition: {
@@ -278,7 +285,13 @@ new Stage("3", {
   audioSourceID: "cheese-cave-base",
   ingredientID: "cheese",
   loopPoint: 13060,
-  modeIDs: [normalModeID, lifestealModeID, slipperyModeID, knockbackModeID],
+  modeIDs: [
+    normalModeID,
+    lifestealModeID,
+    slipperyModeID,
+    knockbackModeID,
+    reverseModeID,
+  ],
   nextStageID: "4",
   playerStartLevelID: "cheese_1",
   playerStartPosition: {
@@ -297,7 +310,13 @@ new Stage("4", {
   audioSourceID: "cheese-cave-base",
   ingredientID: "lettuce",
   loopPoint: 13060,
-  modeIDs: [normalModeID, lifestealModeID, slipperyModeID, knockbackModeID],
+  modeIDs: [
+    normalModeID,
+    lifestealModeID,
+    slipperyModeID,
+    knockbackModeID,
+    reverseModeID,
+  ],
   nextStageID: "5",
   playerStartLevelID: "ruins_1",
   playerStartPosition: {
@@ -310,7 +329,13 @@ new Stage("5", {
   audioSourceID: "cheese-cave-base",
   ingredientID: "tomato",
   loopPoint: 13060,
-  modeIDs: [normalModeID, lifestealModeID, slipperyModeID, knockbackModeID],
+  modeIDs: [
+    normalModeID,
+    lifestealModeID,
+    slipperyModeID,
+    knockbackModeID,
+    reverseModeID,
+  ],
   nextStageID: null,
   playerStartLevelID: "frozen_1",
   playerStartPosition: {
