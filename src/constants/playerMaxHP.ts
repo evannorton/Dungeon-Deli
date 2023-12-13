@@ -1,1 +1,1 @@
-export const playerMaxHP: number = 140;
+export const playerMaxHP: number = 180;
