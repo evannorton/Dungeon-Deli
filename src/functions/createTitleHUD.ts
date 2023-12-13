@@ -2,10 +2,9 @@ import {
   CreateSpriteOptionsAnimation,
   createInputPressHandler,
   createSprite,
+  getCurrentTime,
 } from "pixel-pigeon";
-import { Stage } from "../stages";
-import { getDefinable } from "../definables";
-import { startingStageID } from "../constants/startingStageID";
+import { createIntro1HUD } from "./createIntro1HUD";
 import { state } from "../state";
 
 export const createTitleHUD = (): void => {
@@ -98,10 +97,11 @@ export const createTitleHUD = (): void => {
     mouseButtons: [0],
     onInput: (): void => {
       state.setValues({
-        isMain: true,
+        intro1StartedAt: getCurrentTime(),
+        isIntro1: true,
         isTitle: false,
       });
-      getDefinable(Stage, startingStageID).start();
+      createIntro1HUD();
     },
   });
 };
