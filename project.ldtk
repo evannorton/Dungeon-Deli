@@ -39,7 +39,7 @@
 	"levelNamePattern": "Level_%idx",
 	"tutorialDesc": null,
 	"customCommands": [],
-	"flags": [],
+	"flags": ["IgnoreBackupSuggest"],
 	"defs": { "layers": [
 		{
 			"__type": "Entities",
@@ -2845,8 +2845,7 @@
 					"overrideTilesetUid": null,
 					"gridTiles": [
 						{ "px": [384,480], "src": [192,0], "f": 0, "t": 8, "d": [756], "a": 1 },
-						{ "px": [384,504], "src": [192,24], "f": 0, "t": 40, "d": [793], "a": 1 },
-						{ "px": [408,552], "src": [120,240], "f": 0, "t": 325, "d": [868], "a": 1 }
+						{ "px": [384,504], "src": [192,24], "f": 0, "t": 40, "d": [793], "a": 1 }
 					],
 					"entityInstances": []
 				},
