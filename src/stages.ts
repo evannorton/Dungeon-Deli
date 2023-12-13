@@ -284,7 +284,7 @@ new Stage("2", {
 new Stage("3", {
   audioSourceID: "cheese-cave-base",
   ingredientID: "cheese",
-  loopPoint: 13060,
+  loopPoint: 65300,
   modeIDs: [
     normalModeID,
     lifestealModeID,
@@ -309,7 +309,7 @@ new Stage("3", {
 new Stage("4", {
   audioSourceID: "cheese-cave-base",
   ingredientID: "lettuce",
-  loopPoint: 13060,
+  loopPoint: 65300,
   modeIDs: [
     normalModeID,
     lifestealModeID,
@@ -334,7 +334,7 @@ new Stage("4", {
 new Stage("5", {
   audioSourceID: "cheese-cave-base",
   ingredientID: "tomato",
-  loopPoint: 13060,
+  loopPoint: 65300,
   modeIDs: [
     normalModeID,
     lifestealModeID,
