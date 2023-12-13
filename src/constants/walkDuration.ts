@@ -1,1 +1,1 @@
-export const walkDuration: number = 200;
+export const walkDuration: number = 175;

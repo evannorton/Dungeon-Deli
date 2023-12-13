@@ -1,1 +1,1 @@
-export const projectileDuration: number = 100;
+export const projectileDuration: number = 85;
