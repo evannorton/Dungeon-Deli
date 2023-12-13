@@ -1,6 +1,5 @@
-import { Definable, getToken } from "./definables";
-import { Direction } from "./types/Direction";
 import {
+  CreateSpriteOptionsAnimation,
   EntityPosition,
   addEntityQuadrilateral,
   addEntitySprite,
@@ -11,8 +10,12 @@ import {
   setEntityBlockingPosition,
   setEntityPosition,
 } from "pixel-pigeon";
+import { Definable, getDefinables, getToken } from "./definables";
+import { Direction } from "./types/Direction";
+import { Mode } from "./modes";
 import { Move } from "./types/Move";
 import { Step } from "./types/Step";
+import { state } from "./state";
 import { walkDuration } from "./constants/walkDuration";
 
 interface Knockback {
@@ -28,7 +31,6 @@ interface CharacterOptions {
 
 export class Character extends Definable {
   private readonly _options: CharacterOptions;
-  private readonly _spriteID: string;
   private _direction: Direction = Direction.Down;
   private _hp: number;
   private _knockback: Knockback | null = null;
@@ -40,7 +42,7 @@ export class Character extends Definable {
     this._options = options;
     this._hp = options.maxHP;
     const walkFrameDuration: number = Math.round(walkDuration / 2);
-    this._spriteID = createSprite({
+    const spriteID: string = createSprite({
       animationID: (): string => {
         const step: string = this._step;
         const direction: string = this._direction;
@@ -307,8 +309,65 @@ export class Character extends Definable {
       ],
       imagePath: this._options.imagePath,
     });
+    const animations: CreateSpriteOptionsAnimation[] = [
+      {
+        frames: [],
+        id: "empty",
+      },
+    ];
+    const modeAnimationDuration: number = 250;
+    for (const mode of getDefinables(Mode).values()) {
+      animations.push({
+        frames:
+          mode.sourceY !== null
+            ? [
+                {
+                  duration: modeAnimationDuration,
+                  height: 24,
+                  sourceHeight: 24,
+                  sourceWidth: 24,
+                  sourceX: 0,
+                  sourceY: mode.sourceY,
+                  width: 24,
+                },
+                {
+                  duration: modeAnimationDuration,
+                  height: 24,
+                  sourceHeight: 24,
+                  sourceWidth: 24,
+                  sourceX: 24,
+                  sourceY: mode.sourceY,
+                  width: 24,
+                },
+                {
+                  duration: modeAnimationDuration,
+                  height: 24,
+                  sourceHeight: 24,
+                  sourceWidth: 24,
+                  sourceX: 48,
+                  sourceY: mode.sourceY,
+                  width: 24,
+                },
+              ]
+            : [],
+        id: mode.id,
+      });
+    }
+    const modeSpriteID: string = createSprite({
+      animationID: (): string => {
+        if (state.values.modeID === null) {
+          return "empty";
+        }
+        return state.values.modeID;
+      },
+      animations,
+      imagePath: "modes",
+    });
     addEntitySprite(this._options.entityID, {
-      spriteID: this._spriteID,
+      spriteID: modeSpriteID,
+    });
+    addEntitySprite(this._options.entityID, {
+      spriteID,
     });
     const hpBackQuadrilateralID: string = createQuadrilateral({
       color: "#000000",
