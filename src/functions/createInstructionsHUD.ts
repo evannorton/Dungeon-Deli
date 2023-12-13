@@ -41,7 +41,7 @@ export const createInstructionsHUD = (): void => {
       y: y + 22,
     },
     horizontalAlignment: "left",
-    text: "Every step is an action.",
+    text: "Every step is a turn.",
   });
   createLabel({
     color: "#ffffff",
