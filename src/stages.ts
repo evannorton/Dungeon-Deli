@@ -320,10 +320,16 @@ new Stage("4", {
   nextStageID: "5",
   playerStartLevelID: "ruins_1",
   playerStartPosition: {
-    x: 240,
-    y: 144,
+    x: 28 * 24,
+    y: 30 * 24,
   },
-  weaponIDs: [],
+  weaponIDs: [
+    aoeCircleWeaponID,
+    leftWeaponID,
+    downWeaponID,
+    rightWeaponID,
+    upWeaponID,
+  ],
 });
 new Stage("5", {
   audioSourceID: "cheese-cave-base",

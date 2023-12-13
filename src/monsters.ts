@@ -4,6 +4,7 @@ export enum MonsterMovementBehavior {
   Cart = "cart",
   Chase = "chase",
   Horizontal = "horizontal",
+  Statue = "statue",
 }
 interface MonsterOptions {
   readonly movementBehavior: MonsterMovementBehavior;
@@ -58,4 +59,16 @@ new Monster("crab", {
   imagePath: "monsters/crab",
   maxHP: 50,
   movementBehavior: MonsterMovementBehavior.Horizontal,
+});
+new Monster("golem", {
+  damage: 18,
+  imagePath: "monsters/golem",
+  maxHP: 75,
+  movementBehavior: MonsterMovementBehavior.Chase,
+});
+new Monster("golem-2", {
+  damage: 28,
+  imagePath: "monsters/golem-2",
+  maxHP: 100,
+  movementBehavior: MonsterMovementBehavior.Statue,
 });
