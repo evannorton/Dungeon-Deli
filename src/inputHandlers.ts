@@ -1,5 +1,5 @@
-import { atemptPlayerPass } from "./functions/atemptPlayerPass";
 import { attemptPlayerMove } from "./functions/attemptPlayerMove";
+import { attemptPlayerPass } from "./functions/attemptPlayerPass";
 import { createInputPressHandler, takeScreenshot } from "pixel-pigeon";
 import { reverseModeID } from "./modes";
 import { state } from "./state";
@@ -101,6 +101,6 @@ createInputPressHandler({
   ],
   mouseButtons: [0],
   onInput: (): void => {
-    atemptPlayerPass();
+    attemptPlayerPass();
   },
 });

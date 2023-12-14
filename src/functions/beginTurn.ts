@@ -14,7 +14,6 @@ export const beginTurn = (): void => {
   const chest: Chest | null = getPlayerChest();
   if (chest !== null) {
     chest.open();
-    state.setValues({ instructionsOpen: false });
   } else {
     if (state.values.stageID !== null) {
       const stage: Stage = getDefinable(Stage, state.values.stageID);

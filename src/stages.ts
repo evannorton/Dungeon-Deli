@@ -70,6 +70,10 @@ export class Stage extends Definable {
     );
   }
 
+  public get playerStartLevelID(): string {
+    return this._options.playerStartLevelID;
+  }
+
   public get weapons(): Weapon[] {
     return this._options.weaponIDs.map(
       (weaponID: string): Weapon => getDefinable(Weapon, weaponID),
@@ -259,9 +263,6 @@ new Stage("1", {
   loopPoint: 12800,
   modeIDs: [normalModeID],
   nextStageID: "2",
-  onStart: (): void => {
-    state.setValues({ instructionsOpen: true });
-  },
   playerStartLevelID: "tutorial_1",
   playerStartPosition: {
     x: 11 * 24,

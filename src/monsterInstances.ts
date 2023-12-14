@@ -473,9 +473,6 @@ export class MonsterInstance extends Definable {
           state.values.playerCharacterID,
         );
         playerCharacter.takeDamage(this.monster.damage);
-        if (playerCharacter.hp === 0) {
-          state.setValues({ instructionsOpen: false });
-        }
         if (state.values.modeID === lifestealModeID) {
           this.character.restoreHealth(this.monster.damage);
         }

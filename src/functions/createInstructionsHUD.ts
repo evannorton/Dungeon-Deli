@@ -1,8 +1,11 @@
+import { Stage } from "../stages";
 import {
-  createInputPressHandler,
   createLabel,
   createQuadrilateral,
+  getActiveLevelID,
 } from "pixel-pigeon";
+import { getDefinable } from "../definables";
+import { startingStageID } from "../constants/startingStageID";
 import { state } from "../state";
 
 export const createInstructionsHUD = (): void => {
@@ -11,7 +14,13 @@ export const createInstructionsHUD = (): void => {
   const height: number = 99;
   const x: number = centerX - Math.floor(width / 2);
   const y: number = 24;
-  const condition = (): boolean => state.values.instructionsOpen;
+  const condition = (): boolean => {
+    if (state.values.stageID === startingStageID) {
+      const stage: Stage = getDefinable(Stage, state.values.stageID);
+      return getActiveLevelID() === stage.playerStartLevelID;
+    }
+    return false;
+  };
   createQuadrilateral({
     color: "#000000",
     coordinates: {
@@ -92,22 +101,5 @@ export const createInstructionsHUD = (): void => {
     },
     horizontalAlignment: "left",
     text: "- Modes: Effects on the field.",
-  });
-  createInputPressHandler({
-    condition,
-    gamepadButtons: [0],
-    keyboardButtons: [
-      {
-        value: "Space",
-      },
-      {
-        value: "Numpad5",
-        withoutNumlock: true,
-      },
-    ],
-    mouseButtons: [0],
-    onInput: (): void => {
-      state.setValues({ instructionsOpen: false });
-    },
   });
 };
