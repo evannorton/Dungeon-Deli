@@ -3,6 +3,7 @@ import {
   CollisionData,
   EntityPosition,
   getActiveLevelID,
+  getCurrentTime,
   getEntityFieldValue,
   getEntityIDs,
   getEntityPosition,
@@ -13,6 +14,7 @@ import {
   setEntityZIndex,
 } from "pixel-pigeon";
 import { MonsterInstance } from "./monsterInstances";
+import { Stage } from "./stages";
 import { TurnPart } from "./types/TurnPart";
 import { Weapon } from "./weapons";
 import { beginTurn } from "./functions/beginTurn";
@@ -20,9 +22,19 @@ import { getDefinable } from "./definables";
 import { goToNextMode } from "./functions/goToNextMode";
 import { playerIsBlocked } from "./functions/playerIsBlocked";
 import { startMonsterInstancesMovement } from "./functions/startMonsterInstancesMovement";
+import { startingStageID } from "./constants/startingStageID";
 import { state } from "./state";
 
 export const tick = (): void => {
+  if (state.values.isIntro2 && state.values.intro2StartedAt !== null) {
+    if (getCurrentTime() > state.values.intro2StartedAt + 10000) {
+      state.setValues({
+        isIntro2: false,
+        isMain: true,
+      });
+      getDefinable(Stage, startingStageID).start();
+    }
+  }
   if (state.values.playerCharacterID !== null) {
     const playerCharacter: Character = getDefinable(
       Character,

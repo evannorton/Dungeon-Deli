@@ -428,7 +428,7 @@ export class Character extends Definable {
 
   public startKnockback(endPosition: EntityPosition): void {
     const startPosition: EntityPosition = getEntityPosition(
-      this._options.entityID
+      this._options.entityID,
     );
     this._knockback = {
       endPosition,
@@ -441,7 +441,7 @@ export class Character extends Definable {
 
   public startMovement(endPosition: EntityPosition): void {
     const startPosition: EntityPosition = getEntityPosition(
-      this._options.entityID
+      this._options.entityID,
     );
     const getDirection = (): Direction => {
       if (endPosition.y > startPosition.y) {
