@@ -33,6 +33,7 @@ import {
   rightWeaponID,
   upWeaponID,
 } from "./weapons";
+import { createVictoryHUD } from "./functions/createVictoryHUD";
 import { getUniqueRandomModeID } from "./functions/getUniqueRandomModeID";
 import { musicVolumeChannelID } from "./volumeChannels";
 import { playerMaxHP } from "./constants/playerMaxHP";
@@ -80,24 +81,30 @@ export class Stage extends Definable {
       this.removeHUD();
       getDefinable(Stage, this._options.nextStageID).start();
     } else {
+      if (state.values.musicAudioSourceID !== null) {
+        stopAudioSource(state.values.musicAudioSourceID);
+      }
       state.setValues({
         isMain: false,
         isVictory: true,
       });
+      createVictoryHUD();
     }
   }
 
   public start(): void {
-    if (state.values.musicAudioSourceID !== null) {
-      stopAudioSource(state.values.musicAudioSourceID);
+    if (this._options.audioSourceID !== state.values.musicAudioSourceID) {
+      if (state.values.musicAudioSourceID !== null) {
+        stopAudioSource(state.values.musicAudioSourceID);
+      }
+      state.setValues({
+        musicAudioSourceID: this._options.audioSourceID,
+      });
+      playAudioSource(this._options.audioSourceID, {
+        loopPoint: this._options.loopPoint,
+        volumeChannelID: musicVolumeChannelID,
+      });
     }
-    state.setValues({
-      musicAudioSourceID: this._options.audioSourceID,
-    });
-    playAudioSource(this._options.audioSourceID, {
-      loopPoint: this._options.loopPoint,
-      volumeChannelID: musicVolumeChannelID,
-    });
     state.setValues({ stageID: this._id });
     goToLevel(this._options.playerStartLevelID);
     if (state.values.playerCharacterID === null) {

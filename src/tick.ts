@@ -27,7 +27,7 @@ import { state } from "./state";
 
 export const tick = (): void => {
   if (state.values.isIntro2 && state.values.intro2StartedAt !== null) {
-    if (getCurrentTime() > state.values.intro2StartedAt + 10000) {
+    if (getCurrentTime() > state.values.intro2StartedAt + 8500) {
       state.setValues({
         isIntro2: false,
         isMain: true,
