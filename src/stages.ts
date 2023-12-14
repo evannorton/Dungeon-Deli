@@ -6,6 +6,7 @@ import {
   createEntity,
   createLabel,
   createQuadrilateral,
+  getCurrentTime,
   goToLevel,
   lockCameraToEntity,
   playAudioSource,
@@ -124,7 +125,11 @@ export class Stage extends Definable {
         volumeChannelID: musicVolumeChannelID,
       });
     }
-    state.setValues({ stageID: this._id });
+    state.setValues({
+      closedInstructions: false,
+      stageID: this._id,
+      stageStartedAt: getCurrentTime(),
+    });
     goToLevel(this._options.playerStartLevelID);
     if (state.values.playerCharacterID === null) {
       const playerEntityID: string = createEntity({

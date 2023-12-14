@@ -15,9 +15,11 @@ export const createInstructionsHUD = (): void => {
   const x: number = centerX - Math.floor(width / 2);
   const y: number = 24;
   const condition = (): boolean => {
-    if (state.values.stageID === startingStageID) {
-      const stage: Stage = getDefinable(Stage, state.values.stageID);
-      return getActiveLevelID() === stage.playerStartLevelID;
+    if (!state.values.closedInstructions) {
+      if (state.values.stageID === startingStageID) {
+        const stage: Stage = getDefinable(Stage, state.values.stageID);
+        return getActiveLevelID() === stage.playerStartLevelID;
+      }
     }
     return false;
   };

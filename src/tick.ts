@@ -103,6 +103,7 @@ export const tick = (): void => {
               y: targetY,
             });
             goToLevel(targetLevelID);
+            state.setValues({ closedInstructions: false });
           }
           beginTurn();
         });
@@ -262,6 +263,7 @@ export const tick = (): void => {
                 y: targetY,
               });
               goToLevel(targetLevelID);
+              state.setValues({ closedInstructions: false });
             }
             state.setValues({
               knockbackCharacterIDs: state.values.knockbackCharacterIDs.filter(
