@@ -3,7 +3,7 @@ import { Definable, getToken } from "./definables";
 interface ModeOptions {
   readonly color: string;
   readonly name: string;
-  readonly sourceY: number | null;
+  readonly sourceY: number;
   readonly turns: number;
 }
 
@@ -22,7 +22,7 @@ export class Mode extends Definable {
     return this._options.name;
   }
 
-  public get sourceY(): number | null {
+  public get sourceY(): number {
     return this._options.sourceY;
   }
 
@@ -39,7 +39,7 @@ export const lifestealModeID: string = new Mode({
 export const normalModeID: string = new Mode({
   color: "#ffffff",
   name: "Normal",
-  sourceY: null,
+  sourceY: 96,
   turns: 6,
 }).id;
 export const slipperyModeID: string = new Mode({
@@ -49,7 +49,7 @@ export const slipperyModeID: string = new Mode({
   turns: 3,
 }).id;
 export const knockbackModeID: string = new Mode({
-  color: "#cc8f15",
+  color: "#f68f37",
   name: "Knockback",
   sourceY: 0,
   turns: 6,

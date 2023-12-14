@@ -573,6 +573,7 @@ export class MonsterInstance extends Definable {
             goToNextMode();
           } else {
             beginTurn();
+            goToNextMode();
           }
         }
       }

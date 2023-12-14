@@ -157,9 +157,9 @@ export const tick = (): void => {
               if (state.values.attackingMonsterInstancesIDs.length > 0) {
                 state.setValues({ turnPart: TurnPart.MonstersAttacking });
               } else {
+                goToNextMode();
                 if (playerIsBlocked() === false) {
                   state.setValues({ turnPart: null });
-                  goToNextMode();
                 } else {
                   beginTurn();
                 }
@@ -256,9 +256,9 @@ export const tick = (): void => {
                 (id: string): boolean => id !== characterID,
               ),
             });
+            goToNextMode();
             if (playerIsBlocked() === false) {
               state.setValues({ turnPart: null });
-              goToNextMode();
             } else {
               beginTurn();
             }

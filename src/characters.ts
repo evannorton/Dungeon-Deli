@@ -318,38 +318,35 @@ export class Character extends Definable {
     const modeAnimationDuration: number = 250;
     for (const mode of getDefinables(Mode).values()) {
       animations.push({
-        frames:
-          mode.sourceY !== null
-            ? [
-                {
-                  duration: modeAnimationDuration,
-                  height: 24,
-                  sourceHeight: 24,
-                  sourceWidth: 24,
-                  sourceX: 0,
-                  sourceY: mode.sourceY,
-                  width: 24,
-                },
-                {
-                  duration: modeAnimationDuration,
-                  height: 24,
-                  sourceHeight: 24,
-                  sourceWidth: 24,
-                  sourceX: 24,
-                  sourceY: mode.sourceY,
-                  width: 24,
-                },
-                {
-                  duration: modeAnimationDuration,
-                  height: 24,
-                  sourceHeight: 24,
-                  sourceWidth: 24,
-                  sourceX: 48,
-                  sourceY: mode.sourceY,
-                  width: 24,
-                },
-              ]
-            : [],
+        frames: [
+          {
+            duration: modeAnimationDuration,
+            height: 24,
+            sourceHeight: 24,
+            sourceWidth: 24,
+            sourceX: 0,
+            sourceY: mode.sourceY,
+            width: 24,
+          },
+          {
+            duration: modeAnimationDuration,
+            height: 24,
+            sourceHeight: 24,
+            sourceWidth: 24,
+            sourceX: 24,
+            sourceY: mode.sourceY,
+            width: 24,
+          },
+          {
+            duration: modeAnimationDuration,
+            height: 24,
+            sourceHeight: 24,
+            sourceWidth: 24,
+            sourceX: 48,
+            sourceY: mode.sourceY,
+            width: 24,
+          },
+        ],
         id: mode.id,
       });
     }
@@ -431,7 +428,7 @@ export class Character extends Definable {
 
   public startKnockback(endPosition: EntityPosition): void {
     const startPosition: EntityPosition = getEntityPosition(
-      this._options.entityID,
+      this._options.entityID
     );
     this._knockback = {
       endPosition,
@@ -444,7 +441,7 @@ export class Character extends Definable {
 
   public startMovement(endPosition: EntityPosition): void {
     const startPosition: EntityPosition = getEntityPosition(
-      this._options.entityID,
+      this._options.entityID
     );
     const getDirection = (): Direction => {
       if (endPosition.y > startPosition.y) {
