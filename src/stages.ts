@@ -27,7 +27,12 @@ import {
 import { MonsterInstance } from "./monsterInstances";
 import {
   Weapon,
-  aoeCircleWeaponID,
+  burstAreaWeaponID,
+  burstRingWeaponID,
+  diagonalBottomLeftWeaponID,
+  diagonalBottomRightWeaponID,
+  diagonalTopLeftWeaponID,
+  diagonalTopRightWeaponID,
   downWeaponID,
   leftWeaponID,
   rightWeaponID,
@@ -39,6 +44,10 @@ import { musicVolumeChannelID } from "./volumeChannels";
 import { playerMaxHP } from "./constants/playerMaxHP";
 import { state } from "./state";
 
+interface WeaponGroup {
+  name: string;
+  weaponIDs: string[];
+}
 interface StageOptions {
   readonly audioSourceID: string;
   readonly ingredientID: string;
@@ -48,7 +57,7 @@ interface StageOptions {
   readonly onStart?: () => void;
   readonly playerStartLevelID: string;
   readonly playerStartPosition: EntityPosition;
-  readonly weaponIDs: string[];
+  readonly weapons: (string | WeaponGroup)[];
 }
 
 export class Stage extends Definable {
@@ -74,9 +83,15 @@ export class Stage extends Definable {
     return this._options.playerStartLevelID;
   }
 
-  public get weapons(): Weapon[] {
-    return this._options.weaponIDs.map(
-      (weaponID: string): Weapon => getDefinable(Weapon, weaponID),
+  public get weapons(): WeaponGroup[] {
+    return this._options.weapons.map(
+      (weapon: string | WeaponGroup): WeaponGroup =>
+        typeof weapon === "string"
+          ? {
+              name: getDefinable(Weapon, weapon).name,
+              weaponIDs: [weapon],
+            }
+          : weapon,
     );
   }
 
@@ -170,7 +185,7 @@ export class Stage extends Definable {
 
   private createHUD(): void {
     const width: number = 120;
-    const height: number = 3 + this._options.weaponIDs.length * 10 + 14;
+    const height: number = 3 + this._options.weapons.length * 10 + 14;
     const y: number = 312 - 2 - height;
     const condition = (): boolean => state.values.isMain;
     this._quadrilateralIDs.push(
@@ -198,9 +213,9 @@ export class Stage extends Definable {
         text: "Power cooldowns",
       }),
     );
-    this._options.weaponIDs.forEach(
-      (weaponID: string, weaponIndex: number): void => {
-        const weapon: Weapon = getDefinable(Weapon, weaponID);
+    this.weapons.forEach(
+      (weaponGroup: WeaponGroup, weaponIndex: number): void => {
+        const weapon: Weapon = getDefinable(Weapon, weaponGroup.weaponIDs[0]);
         const untilNextColor = (): string => {
           if (
             weapon.stepsPerAttack -
@@ -221,7 +236,7 @@ export class Stage extends Definable {
               y: y + 5 + weaponIndex * 10 + 12,
             },
             horizontalAlignment: "left",
-            text: `${weapon.name}:`,
+            text: `${weaponGroup.name}:`,
           }),
         );
         this._labelIDs.push(
@@ -268,7 +283,7 @@ new Stage("1", {
     x: 11 * 24,
     y: 8 * 24,
   },
-  weaponIDs: [leftWeaponID, downWeaponID, rightWeaponID, upWeaponID],
+  weapons: [leftWeaponID, downWeaponID, rightWeaponID, upWeaponID],
 });
 new Stage("2", {
   audioSourceID: "cavern-theme-base",
@@ -287,7 +302,7 @@ new Stage("2", {
     x: 14 * 24,
     y: 15 * 24,
   },
-  weaponIDs: [leftWeaponID, downWeaponID, rightWeaponID, upWeaponID],
+  weapons: [leftWeaponID, downWeaponID, rightWeaponID, upWeaponID],
 });
 new Stage("3", {
   audioSourceID: "cheese-cave-base",
@@ -306,8 +321,8 @@ new Stage("3", {
     x: 24 * 24,
     y: 16 * 24,
   },
-  weaponIDs: [
-    aoeCircleWeaponID,
+  weapons: [
+    burstAreaWeaponID,
     leftWeaponID,
     downWeaponID,
     rightWeaponID,
@@ -331,12 +346,21 @@ new Stage("4", {
     x: 28 * 24,
     y: 30 * 24,
   },
-  weaponIDs: [
-    aoeCircleWeaponID,
+  weapons: [
+    burstAreaWeaponID,
     leftWeaponID,
     downWeaponID,
     rightWeaponID,
     upWeaponID,
+    {
+      name: "Shoot diag",
+      weaponIDs: [
+        diagonalBottomLeftWeaponID,
+        diagonalBottomRightWeaponID,
+        diagonalTopRightWeaponID,
+        diagonalTopLeftWeaponID,
+      ],
+    },
   ],
 });
 new Stage("5", {
@@ -353,8 +377,24 @@ new Stage("5", {
   nextStageID: null,
   playerStartLevelID: "frozen_1",
   playerStartPosition: {
-    x: 240,
-    y: 144,
+    x: 18 * 24,
+    y: 17 * 24,
   },
-  weaponIDs: [],
+  weapons: [
+    burstAreaWeaponID,
+    burstRingWeaponID,
+    leftWeaponID,
+    downWeaponID,
+    rightWeaponID,
+    upWeaponID,
+    {
+      name: "Shoot diag",
+      weaponIDs: [
+        diagonalBottomLeftWeaponID,
+        diagonalBottomRightWeaponID,
+        diagonalTopRightWeaponID,
+        diagonalTopLeftWeaponID,
+      ],
+    },
+  ],
 });

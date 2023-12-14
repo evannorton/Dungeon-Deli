@@ -67,8 +67,26 @@ new Monster("golem", {
   movementBehavior: MonsterMovementBehavior.Chase,
 });
 new Monster("golem-2", {
-  damage: 26,
+  damage: 24,
   imagePath: "monsters/golem-2",
   maxHP: 100,
   movementBehavior: MonsterMovementBehavior.Statue,
+});
+new Monster("hambo", {
+  damage: 26,
+  imagePath: "monsters/hambo",
+  maxHP: 100,
+  movementBehavior: MonsterMovementBehavior.Statue,
+});
+new Monster("marsh", {
+  damage: 22,
+  imagePath: "monsters/marsh",
+  maxHP: 50,
+  movementBehavior: MonsterMovementBehavior.Chase,
+});
+new Monster("rabbit", {
+  damage: 18,
+  imagePath: "monsters/rabbit",
+  maxHP: 75,
+  movementBehavior: MonsterMovementBehavior.Chase,
 });

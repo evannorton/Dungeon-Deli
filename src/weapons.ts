@@ -617,7 +617,7 @@ export const diagonalBottomLeftWeaponID: string = new Weapon({
     ],
   },
   stepsOffset: 0,
-  stepsPerAttack: 2,
+  stepsPerAttack: 7,
 }).id;
 export const diagonalBottomRightWeaponID: string = new Weapon({
   damage: 25,
@@ -631,7 +631,7 @@ export const diagonalBottomRightWeaponID: string = new Weapon({
     ],
   },
   stepsOffset: 0,
-  stepsPerAttack: 2,
+  stepsPerAttack: 7,
 }).id;
 export const diagonalTopLeftWeaponID: string = new Weapon({
   damage: 25,
@@ -645,7 +645,7 @@ export const diagonalTopLeftWeaponID: string = new Weapon({
     ],
   },
   stepsOffset: 0,
-  stepsPerAttack: 2,
+  stepsPerAttack: 7,
 }).id;
 export const diagonalTopRightWeaponID: string = new Weapon({
   damage: 25,
@@ -659,9 +659,9 @@ export const diagonalTopRightWeaponID: string = new Weapon({
     ],
   },
   stepsOffset: 0,
-  stepsPerAttack: 2,
+  stepsPerAttack: 7,
 }).id;
-export const aoeCircleWeaponID: string = new Weapon({
+export const burstAreaWeaponID: string = new Weapon({
   aoe: {
     offsets: [
       {
@@ -714,4 +714,85 @@ export const aoeCircleWeaponID: string = new Weapon({
   name: "Burst area",
   stepsOffset: 0,
   stepsPerAttack: 5,
+}).id;
+export const burstRingWeaponID: string = new Weapon({
+  aoe: {
+    offsets: [
+      // Row 1
+      {
+        x: 0,
+        y: -3,
+      },
+      // Row 2
+      {
+        x: -2,
+        y: -2,
+      },
+      {
+        x: -1,
+        y: -2,
+      },
+      {
+        x: 1,
+        y: -2,
+      },
+      {
+        x: 2,
+        y: -2,
+      },
+      // Row 3
+      {
+        x: -2,
+        y: -1,
+      },
+      {
+        x: 2,
+        y: -1,
+      },
+      // Row 4
+      {
+        x: -3,
+        y: 0,
+      },
+      {
+        x: 3,
+        y: 0,
+      },
+      // Row 5
+      {
+        x: -2,
+        y: 1,
+      },
+      {
+        x: 2,
+        y: 1,
+      },
+      // Row 6
+      {
+        x: -2,
+        y: 2,
+      },
+      {
+        x: -1,
+        y: 2,
+      },
+      {
+        x: 1,
+        y: 2,
+      },
+      {
+        x: 2,
+        y: 2,
+      },
+      // Row 7
+      {
+        x: 0,
+        y: 3,
+      },
+    ],
+  },
+  damage: 25,
+  name: "Burst ring",
+  stepsOffset: 0,
+  stepsPerAttack: 10,
 }).id;

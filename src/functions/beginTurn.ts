@@ -1,6 +1,7 @@
 import { Chest } from "../chests";
 import { Stage } from "../stages";
 import { TurnPart } from "../types/TurnPart";
+import { Weapon } from "../weapons";
 import { getDefinable } from "../definables";
 import { getPlayerChest } from "./getPlayerChest";
 import { goToNextMode } from "./goToNextMode";
@@ -17,17 +18,20 @@ export const beginTurn = (): void => {
   } else {
     if (state.values.stageID !== null) {
       const stage: Stage = getDefinable(Stage, state.values.stageID);
-      for (const weapon of stage.weapons) {
-        if (
-          (state.values.turn + weapon.stepsOffset) % weapon.stepsPerAttack ===
-          0
-        ) {
-          state.setValues({
-            attackingWeaponsIDs: [
-              ...state.values.attackingWeaponsIDs,
-              weapon.id,
-            ],
-          });
+      for (const weaponGroup of stage.weapons) {
+        for (const weaponID of weaponGroup.weaponIDs) {
+          const weapon: Weapon = getDefinable(Weapon, weaponID);
+          if (
+            (state.values.turn + weapon.stepsOffset) % weapon.stepsPerAttack ===
+            0
+          ) {
+            state.setValues({
+              attackingWeaponsIDs: [
+                ...state.values.attackingWeaponsIDs,
+                weapon.id,
+              ],
+            });
+          }
         }
       }
     }
