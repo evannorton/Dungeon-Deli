@@ -8,18 +8,22 @@ export const createIntro2HUD = (): void => {
     id: "default",
   };
   const duration: number = 250;
-  const width: number = 12480;
+  const width: number = 6240;
+  const height: number = 624;
   const frameWidth: number = 480;
-  for (let i: number = 0; i < width; i += frameWidth) {
-    animation.frames.push({
-      duration,
-      height: 312,
-      sourceHeight: 312,
-      sourceWidth: 480,
-      sourceX: i,
-      sourceY: 0,
-      width: 480,
-    });
+  const frameHeight: number = 312;
+  for (let sourceY: number = 0; sourceY < height; sourceY += frameHeight) {
+    for (let sourceX: number = 0; sourceX < width; sourceX += frameWidth) {
+      animation.frames.push({
+        duration,
+        height: frameHeight,
+        sourceHeight: frameHeight,
+        sourceWidth: frameWidth,
+        sourceX,
+        sourceY,
+        width: frameWidth,
+      });
+    }
   }
   delete animation.frames[animation.frames.length - 1].duration;
   createSprite({

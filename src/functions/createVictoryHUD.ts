@@ -11,8 +11,8 @@ export const createVictoryHUD = (): void => {
     id: "default",
   };
   const duration: number = 100;
-  const width: number = 10560;
-  const height: number = 624;
+  const width: number = 5280;
+  const height: number = 1248;
   const frameWidth: number = 480;
   const frameHeight: number = 312;
   for (let sourceY: number = 0; sourceY < height; sourceY += frameHeight) {

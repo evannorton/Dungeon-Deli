@@ -816,24 +816,7 @@
 					"seed": 8725736,
 					"overrideTilesetUid": null,
 					"gridTiles": [],
-					"entityInstances": [
-						{
-							"__identifier": "chest",
-							"__grid": [13,9],
-							"__pivot": [0,0],
-							"__tags": [],
-							"__tile": null,
-							"__smartColor": "#48FF00",
-							"__worldX": 316,
-							"__worldY": 221,
-							"iid": "d26a63f0-8990-11ee-8172-457b0997bdf3",
-							"width": 24,
-							"height": 24,
-							"defUid": 20,
-							"px": [316,221],
-							"fieldInstances": []
-						}
-					]
+					"entityInstances": []
 				},
 				{
 					"__identifier": "areas",
