@@ -61,13 +61,13 @@ new Monster("crab", {
   movementBehavior: MonsterMovementBehavior.Horizontal,
 });
 new Monster("golem", {
-  damage: 18,
+  damage: 16,
   imagePath: "monsters/golem",
   maxHP: 75,
   movementBehavior: MonsterMovementBehavior.Chase,
 });
 new Monster("golem-2", {
-  damage: 28,
+  damage: 26,
   imagePath: "monsters/golem-2",
   maxHP: 100,
   movementBehavior: MonsterMovementBehavior.Statue,
