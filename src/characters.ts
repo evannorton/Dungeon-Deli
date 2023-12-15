@@ -46,7 +46,8 @@ export class Character extends Definable {
     const walkFrameDuration: number = Math.round(walkDuration / 2);
     const spriteID: string = createSprite({
       animationID: (): string => {
-        const step: string = this._step;
+        const step: Step = this._step;
+        const altStep: Step = this._step === Step.Left ? Step.Right : Step.Left;
         const direction: string = this._direction;
         if (
           this._attackedAt !== null &&
@@ -55,33 +56,18 @@ export class Character extends Definable {
           return `attack-${direction}`;
         }
         if (this._move !== null) {
-          const { endPosition, startPosition, time } = this._move;
-          if (getCurrentTime() <= time + walkDuration) {
-            if (endPosition.x > startPosition.x) {
-              return `walk-${direction}-step-${step}`;
-            }
-            if (endPosition.x < startPosition.x) {
-              return `walk-${direction}-step-${step}`;
-            }
-            if (endPosition.y > startPosition.y) {
-              return `walk-${direction}-step-${step}`;
-            }
-            if (endPosition.y < startPosition.y) {
-              return `walk-${direction}-step-${step}`;
-            }
+          const diff: number = getCurrentTime() - this._move.time;
+          const mod: number = diff % (walkDuration * 4);
+          if (mod <= walkDuration) {
+            return `walk-${direction}-step-${step}`;
           }
-          if (endPosition.x > startPosition.x) {
+          if (mod <= walkDuration * 2) {
             return `idle-${direction}`;
           }
-          if (endPosition.x < startPosition.x) {
-            return `idle-${direction}`;
+          if (mod <= walkDuration * 3) {
+            return `walk-${direction}-step-${altStep}`;
           }
-          if (endPosition.y > startPosition.y) {
-            return `idle-${direction}`;
-          }
-          if (endPosition.y < startPosition.y) {
-            return `idle-${direction}`;
-          }
+          return `idle-${direction}`;
         }
         return `idle-${direction}`;
       },
