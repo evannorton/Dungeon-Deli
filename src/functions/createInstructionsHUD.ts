@@ -1,11 +1,4 @@
-import { Stage } from "../stages";
-import {
-  createLabel,
-  createQuadrilateral,
-  getActiveLevelID,
-} from "pixel-pigeon";
-import { getDefinable } from "../definables";
-import { startingStageID } from "../constants/startingStageID";
+import { createLabel, createQuadrilateral } from "pixel-pigeon";
 import { state } from "../state";
 
 export const createInstructionsHUD = (): void => {
@@ -14,15 +7,7 @@ export const createInstructionsHUD = (): void => {
   const height: number = 99;
   const x: number = centerX - Math.floor(width / 2);
   const y: number = 24;
-  const condition = (): boolean => {
-    if (!state.values.closedInstructions) {
-      if (state.values.stageID === startingStageID) {
-        const stage: Stage = getDefinable(Stage, state.values.stageID);
-        return getActiveLevelID() === stage.playerStartLevelID;
-      }
-    }
-    return false;
-  };
+  const condition = (): boolean => state.values.instructionsOpen;
   createQuadrilateral({
     color: "#000000",
     coordinates: {

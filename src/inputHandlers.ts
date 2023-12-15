@@ -1,10 +1,6 @@
 import { attemptPlayerMove } from "./functions/attemptPlayerMove";
 import { attemptPlayerPass } from "./functions/attemptPlayerPass";
-import {
-  createInputPressHandler,
-  getCurrentTime,
-  takeScreenshot,
-} from "pixel-pigeon";
+import { createInputPressHandler, takeScreenshot } from "pixel-pigeon";
 import { reverseModeID } from "./modes";
 import { state } from "./state";
 
@@ -105,12 +101,10 @@ createInputPressHandler({
   ],
   mouseButtons: [0],
   onInput: (): void => {
-    if (
-      state.values.stageStartedAt !== null &&
-      getCurrentTime() > state.values.stageStartedAt + 3000
-    ) {
-      state.setValues({ closedInstructions: true });
+    if (state.values.instructionsOpen) {
+      state.setValues({ instructionsOpen: false });
+    } else {
+      attemptPlayerPass();
     }
-    attemptPlayerPass();
   },
 });

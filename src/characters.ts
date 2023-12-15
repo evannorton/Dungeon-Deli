@@ -46,6 +46,9 @@ export class Character extends Definable {
     const walkFrameDuration: number = Math.round(walkDuration / 2);
     const spriteID: string = createSprite({
       animationID: (): string => {
+        if (this.hp === 0) {
+          return "dead";
+        }
         const step: Step = this._step;
         const altStep: Step = this._step === Step.Left ? Step.Right : Step.Left;
         const direction: string = this._direction;
@@ -57,14 +60,14 @@ export class Character extends Definable {
         }
         if (this._move !== null) {
           const diff: number = getCurrentTime() - this._move.time;
-          const mod: number = diff % (walkDuration * 4);
+          const mod: number = diff % (walkDuration * 3);
           if (mod <= walkDuration) {
             return `walk-${direction}-step-${step}`;
           }
-          if (mod <= walkDuration * 2) {
+          if (mod <= walkDuration * 1.5) {
             return `idle-${direction}`;
           }
-          if (mod <= walkDuration * 3) {
+          if (mod <= walkDuration * 2) {
             return `walk-${direction}-step-${altStep}`;
           }
           return `idle-${direction}`;
@@ -72,6 +75,19 @@ export class Character extends Definable {
         return `idle-${direction}`;
       },
       animations: [
+        {
+          frames: [
+            {
+              height: 24,
+              sourceHeight: 24,
+              sourceWidth: 24,
+              sourceX: 96,
+              sourceY: 0,
+              width: 24,
+            },
+          ],
+          id: "dead",
+        },
         {
           frames: [
             {

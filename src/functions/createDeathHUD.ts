@@ -1,18 +1,11 @@
 import { Character } from "../characters";
 import { Stage } from "../stages";
-import {
-  createInputPressHandler,
-  createLabel,
-  createQuadrilateral,
-} from "pixel-pigeon";
+import { createInputPressHandler, createSprite } from "pixel-pigeon";
 import { getDefinable } from "../definables";
 import { state } from "../state";
 
 export const createDeathHUD = (): void => {
   const centerX: number = Math.floor(480 / 2);
-  const width: number = 63;
-  const height: number = 19;
-  const x: number = centerX - Math.floor(width / 2);
   const y: number = 24;
   const condition = (): boolean => {
     if (state.values.playerCharacterID !== null) {
@@ -24,26 +17,29 @@ export const createDeathHUD = (): void => {
     }
     return false;
   };
-  createQuadrilateral({
-    color: "#000000",
+  createSprite({
+    animationID: "default",
+    animations: [
+      {
+        frames: [
+          {
+            height: 46,
+            sourceHeight: 46,
+            sourceWidth: 108,
+            sourceX: 0,
+            sourceY: 0,
+            width: 108,
+          },
+        ],
+        id: "default",
+      },
+    ],
     coordinates: {
       condition,
-      x,
+      x: centerX - 54,
       y,
     },
-    height,
-    opacity: 0.75,
-    width,
-  });
-  createLabel({
-    color: "#ffffff",
-    coordinates: {
-      condition,
-      x: centerX + 1,
-      y: y + 6,
-    },
-    horizontalAlignment: "center",
-    text: "You died!",
+    imagePath: "retry",
   });
   createInputPressHandler({
     condition,

@@ -4,7 +4,7 @@ import { TurnPart } from "./types/TurnPart";
 interface StateSchema {
   readonly attackingMonsterInstancesIDs: string[];
   readonly attackingWeaponsIDs: string[];
-  readonly closedInstructions: boolean;
+  readonly instructionsOpen: boolean;
   readonly knockbackCharacterIDs: string[];
   readonly intro1StartedAt: number | null;
   readonly intro2StartedAt: number | null;
@@ -28,7 +28,7 @@ interface StateSchema {
 export const state: State<StateSchema> = new State<StateSchema>({
   attackingMonsterInstancesIDs: [],
   attackingWeaponsIDs: [],
-  closedInstructions: false,
+  instructionsOpen: false,
   intro1StartedAt: null,
   intro2StartedAt: null,
   isIntro1: false,

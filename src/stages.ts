@@ -126,7 +126,7 @@ export class Stage extends Definable {
       });
     }
     state.setValues({
-      closedInstructions: false,
+      instructionsOpen: false,
       stageID: this._id,
       stageStartedAt: getCurrentTime(),
     });
@@ -283,6 +283,9 @@ new Stage("1", {
   loopPoint: 64000,
   modeIDs: [normalModeID],
   nextStageID: "2",
+  onStart: (): void => {
+    state.setValues({ instructionsOpen: true });
+  },
   playerStartLevelID: "tutorial_1",
   playerStartPosition: {
     x: 11 * 24,
