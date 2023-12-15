@@ -332,6 +332,9 @@ export class Weapon extends Definable {
         positions,
         time: getCurrentTime(),
       };
+      playAudioSource("aoe", {
+        volumeChannelID: sfxVolumeChannelID,
+      });
     }
   }
 
