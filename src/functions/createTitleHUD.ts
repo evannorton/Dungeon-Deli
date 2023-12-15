@@ -3,6 +3,7 @@ import {
   createInputPressHandler,
   createSprite,
   getCurrentTime,
+  stopAudioSource,
 } from "pixel-pigeon";
 import { createIntro1HUD } from "./createIntro1HUD";
 import { state } from "../state";
@@ -102,6 +103,7 @@ export const createTitleHUD = (): void => {
         isTitle: false,
       });
       createIntro1HUD();
+      stopAudioSource("main-theme");
     },
   });
 };

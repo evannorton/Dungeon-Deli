@@ -278,7 +278,7 @@ export class Stage extends Definable {
   }
 }
 new Stage("1", {
-  audioSourceID: "cavern-theme-base",
+  audioSourceID: "level-themes/cavern-theme-base",
   ingredientID: "bread",
   loopPoint: 12800,
   modeIDs: [normalModeID],
@@ -291,7 +291,7 @@ new Stage("1", {
   weapons: [leftWeaponID, downWeaponID, rightWeaponID, upWeaponID],
 });
 new Stage("2", {
-  audioSourceID: "cavern-theme-base",
+  audioSourceID: "level-themes/cavern-theme-base",
   ingredientID: "meat",
   loopPoint: 12800,
   modeIDs: [
@@ -310,7 +310,7 @@ new Stage("2", {
   weapons: [leftWeaponID, downWeaponID, rightWeaponID, upWeaponID],
 });
 new Stage("3", {
-  audioSourceID: "cheese-cave-base",
+  audioSourceID: "level-themes/cheese-cave-base",
   ingredientID: "cheese",
   loopPoint: 65300,
   modeIDs: [
@@ -335,7 +335,7 @@ new Stage("3", {
   ],
 });
 new Stage("4", {
-  audioSourceID: "cheese-cave-base",
+  audioSourceID: "level-themes/cheese-cave-base",
   ingredientID: "lettuce",
   loopPoint: 65300,
   modeIDs: [
@@ -369,7 +369,7 @@ new Stage("4", {
   ],
 });
 new Stage("5", {
-  audioSourceID: "cheese-cave-base",
+  audioSourceID: "level-themes/cheese-cave-base",
   ingredientID: "tomato",
   loopPoint: 65300,
   modeIDs: [
