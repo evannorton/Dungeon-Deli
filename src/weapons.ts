@@ -9,6 +9,7 @@ import {
   getCurrentTime,
   getEntityPosition,
   getRectangleCollisionData,
+  playAudioSource,
   removeEntity,
   setEntityPosition,
 } from "pixel-pigeon";
@@ -19,6 +20,7 @@ import { aoeDuration } from "./constants/aoeDuration";
 import { goToNextMode } from "./functions/goToNextMode";
 import { knockbackModeID, lifestealModeID } from "./modes";
 import { projectileDuration } from "./constants/projectileDuration";
+import { sfxVolumeChannelID } from "./volumeChannels";
 import { startMonsterInstancesMovement } from "./functions/startMonsterInstancesMovement";
 import { state } from "./state";
 
@@ -203,6 +205,9 @@ export class Weapon extends Definable {
         projectileEntityID,
         time: getCurrentTime(),
       };
+      playAudioSource("projectile-shoot", {
+        volumeChannelID: sfxVolumeChannelID,
+      });
     } else if (typeof this._options.aoe !== "undefined") {
       const areaEntityIDs: string[] = [];
       const monsterEntityIDs: string[] = [];
@@ -411,6 +416,9 @@ export class Weapon extends Definable {
         });
         removeEntity(this._projectileAttack.projectileEntityID);
         this._projectileAttack = null;
+        playAudioSource("projectile-hit", {
+          volumeChannelID: sfxVolumeChannelID,
+        });
       }
     } else if (this._aoeAttack !== null) {
       const { time } = this._aoeAttack;

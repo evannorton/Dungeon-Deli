@@ -11,6 +11,7 @@ import {
   getEntityLevelID,
   getEntityPosition,
   getRectangleCollisionData,
+  playAudioSource,
   removeEntity,
   removeEntitySprite,
 } from "pixel-pigeon";
@@ -29,6 +30,7 @@ import {
 } from "./modes";
 import { monsterAttackDuration } from "./constants/monsterAttackDuration";
 import { playerIsBlocked } from "./functions/playerIsBlocked";
+import { sfxVolumeChannelID } from "./volumeChannels";
 import { state } from "./state";
 
 export interface MonsterInstanceAttack {
@@ -180,6 +182,9 @@ export class MonsterInstance extends Definable {
       };
       addEntitySprite(playerCharacter.entityID, {
         spriteID: attackSpriteID,
+      });
+      playAudioSource("monster-attack", {
+        volumeChannelID: sfxVolumeChannelID,
       });
     }
   }
