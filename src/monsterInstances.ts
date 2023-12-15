@@ -174,7 +174,7 @@ export class MonsterInstance extends Definable {
             id: "default",
           },
         ],
-        imagePath: "monster-attack",
+        imagePath: this.monster.attackImagePath,
       });
       this._attack = {
         spriteID: attackSpriteID,

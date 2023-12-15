@@ -154,7 +154,7 @@ export const createModeHUD = (): void => {
     coordinates: {
       condition,
       x: 50,
-      y: (): number => y() + 17
+      y: (): number => y() + 17,
     },
     imagePath: "mode-icons",
   });
