@@ -299,7 +299,7 @@ new Stage("1", {
 });
 new Stage("2", {
   audioSourceID: "level-themes/cavern-theme-base",
-  ingredientID: "meat",
+  ingredientID: "lettuce",
   loopPoint: 64000,
   modeIDs: [
     normalModeID,
@@ -336,9 +336,9 @@ new Stage("3", {
   ],
 });
 new Stage("4", {
-  audioSourceID: "level-themes/cheese-cave-base",
-  ingredientID: "lettuce",
-  loopPoint: 65300,
+  audioSourceID: "level-themes/ruins-base",
+  ingredientID: "tomato",
+  loopPoint: 50080,
   modeIDs: [
     normalModeID,
     lifestealModeID,
@@ -370,8 +370,8 @@ new Stage("4", {
   ],
 });
 new Stage("5", {
-  audioSourceID: "level-themes/cheese-cave-base",
-  ingredientID: "tomato",
+  audioSourceID: "level-themes/ruins-base",
+  ingredientID: "meat",
   loopPoint: 65300,
   modeIDs: [
     normalModeID,
