@@ -19,8 +19,7 @@ export const slipperyModeAchievementID: string = createAchievement({
   name: "Slippery Stairs",
 });
 export const knockbackModeAchievementID: string = createAchievement({
-  description:
-    "Knock a minecart mouse off of its tracks during Knockback Mode.",
+  description: "Push a minecart mouse off of its tracks during Knockback Mode.",
   id: "knockback-mode",
   imagePath: "achievements/knockback-mode",
   name: "Derailed",
