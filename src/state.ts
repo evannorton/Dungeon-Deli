@@ -23,6 +23,7 @@ interface StateSchema {
   readonly turn: number;
   readonly turnPart: TurnPart | null;
   readonly untilNextMode: number | null;
+  readonly victoryStartedAt: number | null;
 }
 
 export const state: State<StateSchema> = new State<StateSchema>({
@@ -47,6 +48,7 @@ export const state: State<StateSchema> = new State<StateSchema>({
   turn: 0,
   turnPart: null,
   untilNextMode: null,
+  victoryStartedAt: null,
 });
 (
   window as unknown as {

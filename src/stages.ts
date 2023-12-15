@@ -107,6 +107,7 @@ export class Stage extends Definable {
       state.setValues({
         isMain: false,
         isVictory: true,
+        victoryStartedAt: getCurrentTime(),
       });
       createVictoryHUD();
     }

@@ -1,3 +1,4 @@
+import "./anchors";
 import "./ingredients";
 import "./inputHandlers";
 import "./modes";
