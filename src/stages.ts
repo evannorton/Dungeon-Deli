@@ -280,7 +280,7 @@ export class Stage extends Definable {
 new Stage("1", {
   audioSourceID: "level-themes/cavern-theme-base",
   ingredientID: "bread",
-  loopPoint: 12800,
+  loopPoint: 64000,
   modeIDs: [normalModeID],
   nextStageID: "2",
   playerStartLevelID: "tutorial_1",
@@ -293,7 +293,7 @@ new Stage("1", {
 new Stage("2", {
   audioSourceID: "level-themes/cavern-theme-base",
   ingredientID: "meat",
-  loopPoint: 12800,
+  loopPoint: 64000,
   modeIDs: [
     normalModeID,
     lifestealModeID,
