@@ -111,6 +111,9 @@ export class Stage extends Definable {
         isVictory: true,
         victoryStartedAt: getCurrentTime(),
       });
+      playAudioSource("main-theme", {
+        volumeChannelID: musicVolumeChannelID,
+      });
       createVictoryHUD();
       unlockAchievement(clearGameAchievementID);
     }
