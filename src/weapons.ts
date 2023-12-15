@@ -12,12 +12,18 @@ import {
   playAudioSource,
   removeEntity,
   setEntityPosition,
+  unlockAchievement,
 } from "pixel-pigeon";
-import { Definable, getDefinable, getToken } from "./definables";
+import { Definable, getDefinable, getDefinables, getToken } from "./definables";
 import { MonsterInstance } from "./monsterInstances";
+import { MonsterMovementBehavior } from "./monsters";
 import { TurnPart } from "./types/TurnPart";
 import { aoeDuration } from "./constants/aoeDuration";
 import { goToNextMode } from "./functions/goToNextMode";
+import {
+  knockbackModeAchievementID,
+  lifestealModeAchievementID,
+} from "./achievements";
 import { knockbackModeID, lifestealModeID } from "./modes";
 import { projectileDuration } from "./constants/projectileDuration";
 import { sfxVolumeChannelID } from "./volumeChannels";
@@ -389,7 +395,12 @@ export class Weapon extends Definable {
             state.values.playerCharacterID,
           );
           if (state.values.modeID === lifestealModeID) {
-            playerCharacter.restoreHealth(this._options.damage);
+            if (playerCharacter.isFullyRestored() === false) {
+              playerCharacter.restoreHealth(this._options.damage);
+              if (playerCharacter.isFullyRestored()) {
+                unlockAchievement(lifestealModeAchievementID);
+              }
+            }
           }
           if (monsterInstance.character.isAlive() === false) {
             removeEntity(this._projectileAttack.monsterEntityID);
@@ -543,6 +554,18 @@ export class Weapon extends Definable {
               collisionData.entityCollidables.length === 0 &&
               halfCollisionData.entityCollidables.length === 0
             ) {
+              for (const monsterInstance of getDefinables(
+                MonsterInstance,
+              ).values()) {
+                if (
+                  monsterInstance.character.id === character.id &&
+                  monsterInstance.monster.movementBehavior ===
+                    MonsterMovementBehavior.Cart &&
+                  endPosition.x !== entityPosition.x
+                ) {
+                  unlockAchievement(knockbackModeAchievementID);
+                }
+              }
               character.startKnockback(endPosition);
             } else {
               state.setValues({

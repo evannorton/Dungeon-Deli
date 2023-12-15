@@ -478,6 +478,10 @@ export class Character extends Definable {
     return this._hp > 0;
   }
 
+  public isFullyRestored(): boolean {
+    return this._hp === this._options.maxHP;
+  }
+
   public reset(): void {
     this._hp = this._options.maxHP;
     this._direction = Direction.Down;

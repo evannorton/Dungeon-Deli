@@ -15,6 +15,7 @@ import {
   setEntityLevel,
   setEntityPosition,
   stopAudioSource,
+  unlockAchievement,
 } from "pixel-pigeon";
 import { Ingredient } from "./ingredients";
 import {
@@ -39,6 +40,7 @@ import {
   rightWeaponID,
   upWeaponID,
 } from "./weapons";
+import { clearGameAchievementID } from "./achievements";
 import { createVictoryHUD } from "./functions/createVictoryHUD";
 import { getUniqueRandomModeID } from "./functions/getUniqueRandomModeID";
 import { musicVolumeChannelID } from "./volumeChannels";
@@ -110,6 +112,7 @@ export class Stage extends Definable {
         victoryStartedAt: getCurrentTime(),
       });
       createVictoryHUD();
+      unlockAchievement(clearGameAchievementID);
     }
   }
 
@@ -317,13 +320,7 @@ new Stage("3", {
   audioSourceID: "level-themes/cheese-cave-base",
   ingredientID: "cheese",
   loopPoint: 65300,
-  modeIDs: [
-    normalModeID,
-    lifestealModeID,
-    slipperyModeID,
-    knockbackModeID,
-    reverseModeID,
-  ],
+  modeIDs: [knockbackModeID],
   nextStageID: "4",
   playerStartLevelID: "cheese_1",
   playerStartPosition: {

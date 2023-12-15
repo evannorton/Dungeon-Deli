@@ -12,6 +12,7 @@ import {
   setEntityLevel,
   setEntityPosition,
   setEntityZIndex,
+  unlockAchievement,
 } from "pixel-pigeon";
 import { MonsterInstance } from "./monsterInstances";
 import { Stage } from "./stages";
@@ -21,6 +22,8 @@ import { beginTurn } from "./functions/beginTurn";
 import { getDefinable } from "./definables";
 import { goToNextMode } from "./functions/goToNextMode";
 import { playerIsBlocked } from "./functions/playerIsBlocked";
+import { slipperyModeAchievementID } from "./achievements";
+import { slipperyModeID } from "./modes";
 import { startMonsterInstancesMovement } from "./functions/startMonsterInstancesMovement";
 import { startingStageID } from "./constants/startingStageID";
 import { state } from "./state";
@@ -103,6 +106,9 @@ export const tick = (): void => {
               y: targetY,
             });
             goToLevel(targetLevelID);
+            if (state.values.modeID === slipperyModeID) {
+              unlockAchievement(slipperyModeAchievementID);
+            }
           }
           beginTurn();
         });

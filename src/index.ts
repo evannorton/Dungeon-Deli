@@ -1,3 +1,4 @@
+import "./achievements";
 import "./anchors";
 import "./ingredients";
 import "./inputHandlers";
