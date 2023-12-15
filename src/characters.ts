@@ -358,7 +358,7 @@ export class Character extends Definable {
         return state.values.modeID;
       },
       animations,
-      imagePath: "modes",
+      imagePath: "mode-effects",
     });
     addEntitySprite(this._options.entityID, {
       spriteID: modeSpriteID,

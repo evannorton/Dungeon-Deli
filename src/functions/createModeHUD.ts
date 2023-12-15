@@ -1,12 +1,17 @@
+import {
+  CreateSpriteOptionsAnimation,
+  createLabel,
+  createQuadrilateral,
+  createSprite,
+} from "pixel-pigeon";
 import { Mode } from "../modes";
 import { Stage } from "../stages";
-import { createLabel, createQuadrilateral } from "pixel-pigeon";
-import { getDefinable } from "../definables";
+import { getDefinable, getDefinables } from "../definables";
 import { state } from "../state";
 
 export const createModeHUD = (): void => {
   const width: number = 120;
-  const height: number = 37;
+  const height: number = 66;
   const y = (): number => {
     if (state.values.stageID === null) {
       throw new Error("Attempted to get mode hud y with no stage ID");
@@ -67,7 +72,7 @@ export const createModeHUD = (): void => {
     coordinates: {
       condition,
       x: 5,
-      y: (): number => y() + 17,
+      y: (): number => y() + 46,
     },
     horizontalAlignment: "left",
     text: "Next:",
@@ -77,7 +82,7 @@ export const createModeHUD = (): void => {
     coordinates: {
       condition,
       x: 2 + width - 2,
-      y: (): number => y() + 17,
+      y: (): number => y() + 46,
     },
     horizontalAlignment: "right",
     text: (): string => {
@@ -92,7 +97,7 @@ export const createModeHUD = (): void => {
     coordinates: {
       condition,
       x: 5,
-      y: (): number => y() + 27,
+      y: (): number => y() + 56,
     },
     horizontalAlignment: "left",
     text: "Until next:",
@@ -102,7 +107,7 @@ export const createModeHUD = (): void => {
     coordinates: {
       condition,
       x: 2 + width - 2,
-      y: (): number => y() + 27,
+      y: (): number => y() + 56,
     },
     horizontalAlignment: "right",
     text: (): string => {
@@ -116,5 +121,41 @@ export const createModeHUD = (): void => {
       }
       return "N/A";
     },
+  });
+  const animations: CreateSpriteOptionsAnimation[] = [
+    {
+      frames: [],
+      id: "empty",
+    },
+  ];
+  for (const mode of getDefinables(Mode).values()) {
+    animations.push({
+      frames: [
+        {
+          height: 24,
+          sourceHeight: 24,
+          sourceWidth: 24,
+          sourceX: 0,
+          sourceY: mode.sourceY,
+          width: 24,
+        },
+      ],
+      id: mode.id,
+    });
+  }
+  createSprite({
+    animationID: (): string => {
+      if (state.values.modeID === null) {
+        return "empty";
+      }
+      return state.values.modeID;
+    },
+    animations,
+    coordinates: {
+      condition,
+      x: 50,
+      y: (): number => y() + 17
+    },
+    imagePath: "mode-icons",
   });
 };
