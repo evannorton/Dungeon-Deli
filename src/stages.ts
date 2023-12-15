@@ -323,7 +323,13 @@ new Stage("3", {
   audioSourceID: "level-themes/cheese-cave-base",
   ingredientID: "cheese",
   loopPoint: 65300,
-  modeIDs: [knockbackModeID],
+  modeIDs: [
+    normalModeID,
+    lifestealModeID,
+    slipperyModeID,
+    knockbackModeID,
+    reverseModeID,
+  ],
   nextStageID: "4",
   playerStartLevelID: "cheese_1",
   playerStartPosition: {
