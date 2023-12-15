@@ -78,7 +78,7 @@ export class Stage extends Definable {
 
   public get modes(): Mode[] {
     return this._options.modeIDs.map(
-      (modeID: string): Mode => getDefinable(Mode, modeID)
+      (modeID: string): Mode => getDefinable(Mode, modeID),
     );
   }
 
@@ -94,7 +94,7 @@ export class Stage extends Definable {
               name: getDefinable(Weapon, weapon).name,
               weaponIDs: [weapon],
             }
-          : weapon
+          : weapon,
     );
   }
 
@@ -157,16 +157,16 @@ export class Stage extends Definable {
     } else {
       const playerCharacter: Character = getDefinable(
         Character,
-        state.values.playerCharacterID
+        state.values.playerCharacterID,
       );
       playerCharacter.reset();
       setEntityLevel(
         playerCharacter.entityID,
-        this._options.playerStartLevelID
+        this._options.playerStartLevelID,
       );
       setEntityPosition(
         playerCharacter.entityID,
-        this._options.playerStartPosition
+        this._options.playerStartPosition,
       );
     }
     for (const monsterInstance of getDefinables(MonsterInstance).values()) {
@@ -208,7 +208,7 @@ export class Stage extends Definable {
         height,
         opacity: 0.75,
         width,
-      })
+      }),
     );
     this._labelIDs.push(
       createLabel({
@@ -220,7 +220,7 @@ export class Stage extends Definable {
         },
         horizontalAlignment: "center",
         text: "Power cooldowns",
-      })
+      }),
     );
     this.weapons.forEach(
       (weaponGroup: WeaponGroup, weaponIndex: number): void => {
@@ -246,7 +246,7 @@ export class Stage extends Definable {
             },
             horizontalAlignment: "left",
             text: `${weaponGroup.name}:`,
-          })
+          }),
         );
         this._labelIDs.push(
           createLabel({
@@ -264,9 +264,9 @@ export class Stage extends Definable {
                   weapon.stepsPerAttack);
               return `${amount} ${amount === 1 ? "turn" : "turns"}`;
             },
-          })
+          }),
         );
-      }
+      },
     );
   }
 
