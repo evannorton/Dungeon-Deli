@@ -12,7 +12,7 @@ import {
 } from "pixel-pigeon";
 import { Definable, getDefinables, getToken } from "./definables";
 import { Direction } from "./types/Direction";
-import { Mode } from "./modes";
+import { Mode, normalModeID } from "./modes";
 import { Move } from "./types/Move";
 import { Step } from "./types/Step";
 import { monsterAttackDuration } from "./constants/monsterAttackDuration";
@@ -414,8 +414,8 @@ export class Character extends Definable {
     }
     const modeSpriteID: string = createSprite({
       animationID: (): string => {
-        if (state.values.modeID === null) {
-          return "empty";
+        if (state.values.modeID === null || this.isAlive() === false) {
+          return normalModeID;
         }
         return state.values.modeID;
       },
