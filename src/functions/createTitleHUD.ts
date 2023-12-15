@@ -3,9 +3,11 @@ import {
   createInputPressHandler,
   createSprite,
   getCurrentTime,
+  playAudioSource,
   stopAudioSource,
 } from "pixel-pigeon";
 import { createIntro1HUD } from "./createIntro1HUD";
+import { musicVolumeChannelID } from "../volumeChannels";
 import { state } from "../state";
 
 export const createTitleHUD = (): void => {
@@ -104,6 +106,10 @@ export const createTitleHUD = (): void => {
       });
       createIntro1HUD();
       stopAudioSource("main-theme");
+      playAudioSource("intro", {
+        loopPoint: 0,
+        volumeChannelID: musicVolumeChannelID,
+      });
     },
   });
 };

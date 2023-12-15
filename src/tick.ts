@@ -12,6 +12,7 @@ import {
   setEntityLevel,
   setEntityPosition,
   setEntityZIndex,
+  stopAudioSource,
   unlockAchievement,
 } from "pixel-pigeon";
 import { MonsterInstance } from "./monsterInstances";
@@ -36,6 +37,7 @@ export const tick = (): void => {
         isMain: true,
       });
       getDefinable(Stage, startingStageID).start();
+      stopAudioSource("intro");
     }
   }
   if (state.values.playerCharacterID !== null) {
