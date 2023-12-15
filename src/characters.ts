@@ -15,6 +15,7 @@ import { Direction } from "./types/Direction";
 import { Mode } from "./modes";
 import { Move } from "./types/Move";
 import { Step } from "./types/Step";
+import { monsterAttackDuration } from "./constants/monsterAttackDuration";
 import { state } from "./state";
 import { walkDuration } from "./constants/walkDuration";
 
@@ -31,6 +32,7 @@ interface CharacterOptions {
 
 export class Character extends Definable {
   private readonly _options: CharacterOptions;
+  private _attackedAt: number | null = null;
   private _direction: Direction = Direction.Down;
   private _hp: number;
   private _knockback: Knockback | null = null;
@@ -46,6 +48,12 @@ export class Character extends Definable {
       animationID: (): string => {
         const step: string = this._step;
         const direction: string = this._direction;
+        if (
+          this._attackedAt !== null &&
+          getCurrentTime() <= this._attackedAt + monsterAttackDuration
+        ) {
+          return `attack-${direction}`;
+        }
         if (this._move !== null) {
           const { endPosition, startPosition, time } = this._move;
           if (getCurrentTime() <= time + walkDuration) {
@@ -306,6 +314,58 @@ export class Character extends Definable {
           ],
           id: "walk-up-step-left",
         },
+        {
+          frames: [
+            {
+              height: 24,
+              sourceHeight: 24,
+              sourceWidth: 24,
+              sourceX: 96,
+              sourceY: 0,
+              width: 24,
+            },
+          ],
+          id: "attack-down",
+        },
+        {
+          frames: [
+            {
+              height: 24,
+              sourceHeight: 24,
+              sourceWidth: 24,
+              sourceX: 96,
+              sourceY: 24,
+              width: 24,
+            },
+          ],
+          id: "attack-right",
+        },
+        {
+          frames: [
+            {
+              height: 24,
+              sourceHeight: 24,
+              sourceWidth: 24,
+              sourceX: 96,
+              sourceY: 48,
+              width: 24,
+            },
+          ],
+          id: "attack-left",
+        },
+        {
+          frames: [
+            {
+              height: 24,
+              sourceHeight: 24,
+              sourceWidth: 24,
+              sourceX: 96,
+              sourceY: 72,
+              width: 24,
+            },
+          ],
+          id: "attack-up",
+        },
       ],
       imagePath: this._options.imagePath,
     });
@@ -424,6 +484,10 @@ export class Character extends Definable {
 
   public restoreHealth(health: number): void {
     this._hp = Math.min(this._hp + health, this._options.maxHP);
+  }
+
+  public startAttackAnimation(): void {
+    this._attackedAt = getCurrentTime();
   }
 
   public startKnockback(endPosition: EntityPosition): void {

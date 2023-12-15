@@ -186,6 +186,7 @@ export class MonsterInstance extends Definable {
       playAudioSource("monster-attack", {
         volumeChannelID: sfxVolumeChannelID,
       });
+      this.character.startAttackAnimation();
     }
   }
 
