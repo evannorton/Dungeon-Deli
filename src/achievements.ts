@@ -13,13 +13,13 @@ export const reverseModeAchievementID: string = createAchievement({
   name: "Confusion",
 });
 export const slipperyModeAchievementID: string = createAchievement({
-  description: "Slide into a staircase while in Slippery Mode.",
+  description: "Slide into a staircase during Slippery Mode.",
   id: "slippery-mode",
   imagePath: "achievements/slippery-mode",
   name: "Slippery Stairs",
 });
 export const knockbackModeAchievementID: string = createAchievement({
-  description: "Knock a minecart mouse off of its tracks in Knockback Mode.",
+  description: "Knock a minecart mouse off of its tracks during Knockback Mode.",
   id: "knockback-mode",
   imagePath: "achievements/knockback-mode",
   name: "Derailed",
