@@ -38,6 +38,35 @@ export const createChestHUD = (): void => {
     width,
   });
   getDefinables<Ingredient>(Ingredient);
+  createSprite({
+    animationID: "default",
+    animations: [
+      {
+        frames: [
+          {
+            height: 24,
+            sourceHeight: 24,
+            sourceWidth: 24,
+            sourceX: 0,
+            sourceY: 0,
+            width: 24,
+          },
+        ],
+        id: "default",
+      },
+    ],
+    coordinates: {
+      condition: (): boolean => {
+        if (state.values.stageID !== null && condition()) {
+          return true;
+        }
+        return false;
+      },
+      x: centerX - 12,
+      y: y + 6,
+    },
+    imagePath: "food-border",
+  });
   for (const ingredient of getDefinables(Ingredient).values()) {
     createSprite({
       animationID: "default",
