@@ -1,4 +1,3 @@
-import { Chest } from "../chests";
 import { Ingredient } from "../ingredients";
 import { Stage } from "../stages";
 import {
@@ -8,7 +7,6 @@ import {
   createSprite,
 } from "pixel-pigeon";
 import { getDefinable, getDefinables } from "../definables";
-import { getPlayerChest } from "./getPlayerChest";
 import { state } from "../state";
 
 export const createChestHUD = (): void => {
@@ -19,10 +17,7 @@ export const createChestHUD = (): void => {
   const y: number = 24;
   const condition = (): boolean => {
     if (state.values.isMain) {
-      const chest: Chest | null = getPlayerChest();
-      if (chest !== null) {
-        return chest.isOpen();
-      }
+      return state.values.openChestID !== null;
     }
     return false;
   };

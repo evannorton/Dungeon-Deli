@@ -17,6 +17,7 @@ interface StateSchema {
   readonly movingMonsterInstancesIDs: string[];
   readonly musicAudioSourceID: string | null;
   readonly nextModeID: string | null;
+  readonly openChestID: string | null;
   readonly playerCharacterID: string | null;
   readonly stageID: string | null;
   readonly stageStartedAt: number | null;
@@ -42,6 +43,7 @@ export const state: State<StateSchema> = new State<StateSchema>({
   movingMonsterInstancesIDs: [],
   musicAudioSourceID: null,
   nextModeID: null,
+  openChestID: null,
   playerCharacterID: null,
   stageID: null,
   stageStartedAt: null,

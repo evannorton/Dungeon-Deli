@@ -1,5 +1,6 @@
 import { Definable } from "./definables";
 import { addEntitySprite, createSprite, getCurrentTime } from "pixel-pigeon";
+import { state } from "./state";
 
 export interface ChestOptions {
   readonly entityID: string;
@@ -50,6 +51,7 @@ export class Chest extends Definable {
 
   public close(): void {
     this._openedAt = null;
+    state.setValues({ openChestID: null });
   }
 
   public isOpen(): boolean {
@@ -58,5 +60,6 @@ export class Chest extends Definable {
 
   public open(): void {
     this._openedAt = getCurrentTime();
+    state.setValues({ openChestID: this._options.entityID });
   }
 }
