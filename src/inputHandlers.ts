@@ -1,8 +1,6 @@
-import { Stage } from "./stages";
 import { attemptPlayerMove } from "./functions/attemptPlayerMove";
 import { attemptPlayerPass } from "./functions/attemptPlayerPass";
 import { createInputPressHandler, takeScreenshot } from "pixel-pigeon";
-import { getDefinable } from "./definables";
 import { reverseModeID } from "./modes";
 import { state } from "./state";
 
@@ -110,17 +108,17 @@ createInputPressHandler({
     }
   },
 });
-createInputPressHandler({
-  condition,
-  gamepadButtons: [],
-  keyboardButtons: [
-    {
-      value: "KeyM",
-    },
-  ],
-  onInput: (): void => {
-    if (state.values.stageID !== null) {
-      getDefinable(Stage, state.values.stageID).goToNext();
-    }
-  },
-});
+// createInputPressHandler({
+//   condition,
+//   gamepadButtons: [],
+//   keyboardButtons: [
+//     {
+//       value: "KeyM",
+//     },
+//   ],
+//   onInput: (): void => {
+//     if (state.values.stageID !== null) {
+//       getDefinable(Stage, state.values.stageID).goToNext();
+//     }
+//   },
+// });
