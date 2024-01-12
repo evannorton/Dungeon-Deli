@@ -30,3 +30,9 @@ export const clearGameAchievementID: string = createAchievement({
   imagePath: "achievements/clear-game",
   name: "Picnic Time",
 });
+export const parTimesAchievementID: string = createAchievement({
+  description: "Achieve the goal time for each level.",
+  id: "par-times",
+  imagePath: "achievements/par-times",
+  name: "Dungeoneer",
+});

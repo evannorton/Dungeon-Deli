@@ -58,6 +58,7 @@ interface StageOptions {
   readonly modeIDs: string[];
   readonly nextStageID: string | null;
   readonly onStart?: () => void;
+  readonly parSteps: number;
   readonly playerStartLevelID: string;
   readonly playerStartPosition: EntityPosition;
   readonly weapons: (string | WeaponGroup)[];
@@ -80,6 +81,10 @@ export class Stage extends Definable {
     return this._options.modeIDs.map(
       (modeID: string): Mode => getDefinable(Mode, modeID),
     );
+  }
+
+  public get parSteps(): number {
+    return this._options.parSteps;
   }
 
   public get playerStartLevelID(): string {
@@ -293,6 +298,7 @@ new Stage("1", {
   onStart: (): void => {
     state.setValues({ instructionsOpen: true });
   },
+  parSteps: 100,
   playerStartLevelID: "tutorial_1",
   playerStartPosition: {
     x: 11 * 24,
@@ -312,6 +318,7 @@ new Stage("2", {
     reverseModeID,
   ],
   nextStageID: "3",
+  parSteps: 100,
   playerStartLevelID: "crystals_1",
   playerStartPosition: {
     x: 14 * 24,
@@ -331,6 +338,7 @@ new Stage("3", {
     reverseModeID,
   ],
   nextStageID: "4",
+  parSteps: 100,
   playerStartLevelID: "cheese_1",
   playerStartPosition: {
     x: 24 * 24,
@@ -356,6 +364,7 @@ new Stage("4", {
     reverseModeID,
   ],
   nextStageID: "5",
+  parSteps: 100,
   playerStartLevelID: "ruins_1",
   playerStartPosition: {
     x: 28 * 24,
@@ -390,6 +399,7 @@ new Stage("5", {
     reverseModeID,
   ],
   nextStageID: null,
+  parSteps: 100,
   playerStartLevelID: "frozen_1",
   playerStartPosition: {
     x: 18 * 24,

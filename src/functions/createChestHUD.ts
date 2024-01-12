@@ -12,7 +12,7 @@ import { state } from "../state";
 export const createChestHUD = (): void => {
   const centerX: number = Math.floor(480 / 2);
   const width: number = 158;
-  const height: number = 53;
+  const height: number = 79;
   const x: number = centerX - Math.floor(width / 2);
   const y: number = 24;
   const condition = (): boolean => {
@@ -98,11 +98,121 @@ export const createChestHUD = (): void => {
     color: "#ffffff",
     coordinates: {
       condition,
-      x: centerX + 1,
+      x: centerX,
       y: y + 36,
     },
     horizontalAlignment: "center",
     text: "New sandwich ingredient!",
+  });
+  createSprite({
+    animationID: "default",
+    animations: [
+      {
+        frames: [
+          {
+            height: 24,
+            sourceHeight: 24,
+            sourceWidth: 24,
+            sourceX: 0,
+            sourceY: 0,
+            width: 24,
+          },
+        ],
+        id: "default",
+      },
+    ],
+    coordinates: {
+      condition: (): boolean => {
+        if (condition() && state.values.stageID !== null) {
+          return (
+            state.values.turn >
+            getDefinable(Stage, state.values.stageID).parSteps
+          );
+        }
+        return false;
+      },
+      x: 173,
+      y: 73,
+    },
+    imagePath: "stars/silver",
+  });
+  createSprite({
+    animationID: "default",
+    animations: [
+      {
+        frames: [
+          {
+            height: 24,
+            sourceHeight: 24,
+            sourceWidth: 24,
+            sourceX: 0,
+            sourceY: 0,
+            width: 24,
+          },
+        ],
+        id: "default",
+      },
+    ],
+    coordinates: {
+      condition: (): boolean => {
+        if (condition() && state.values.stageID !== null) {
+          return (
+            state.values.turn <=
+            getDefinable(Stage, state.values.stageID).parSteps
+          );
+        }
+        return false;
+      },
+      x: 173,
+      y: 73,
+    },
+    imagePath: "stars/gold",
+  });
+  createLabel({
+    color: "#ffffff",
+    coordinates: {
+      condition,
+      x: 209,
+      y: 75,
+    },
+    horizontalAlignment: "left",
+    text: "Your steps:",
+  });
+  createLabel({
+    color: "#ffffff",
+    coordinates: {
+      condition,
+      x: 209,
+      y: 88,
+    },
+    horizontalAlignment: "left",
+    text: "Goal steps:",
+  });
+  createLabel({
+    color: "#ffffff",
+    coordinates: {
+      condition,
+      x: 309,
+      y: 75,
+    },
+    horizontalAlignment: "right",
+    text: (): string =>
+      state.values.turn > 999 ? "999+" : String(state.values.turn),
+  });
+  createLabel({
+    color: "#ffffff",
+    coordinates: {
+      condition,
+      x: 309,
+      y: 88,
+    },
+    horizontalAlignment: "right",
+    text: (): string => {
+      if (state.values.stageID !== null) {
+        return String(getDefinable(Stage, state.values.stageID).parSteps);
+      }
+      return "";
+    },
   });
   createInputPressHandler({
     condition,
