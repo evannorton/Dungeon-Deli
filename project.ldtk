@@ -26834,29 +26834,6 @@
 					"entityInstances": [
 						{
 							"__identifier": "transport",
-							"__grid": [17,30],
-							"__pivot": [0,0],
-							"__tags": [],
-							"__tile": null,
-							"__smartColor": "#0099DB",
-							"__worldX": 7068,
-							"__worldY": 2715,
-							"iid": "417a3bad-8990-11ee-8172-71493df18c34",
-							"width": 24,
-							"height": 24,
-							"defUid": 6,
-							"px": [408,720],
-							"fieldInstances": [
-								{ "__identifier": "target_level_id", "__type": "String", "__value": "frozen_1", "__tile": null, "defUid": 10, "realEditorValues": [{
-									"id": "V_String",
-									"params": ["frozen_1"]
-								}] },
-								{ "__identifier": "target_x", "__type": "Int", "__value": 408, "__tile": null, "defUid": 11, "realEditorValues": [{ "id": "V_Int", "params": [408] }] },
-								{ "__identifier": "target_y", "__type": "Int", "__value": 720, "__tile": null, "defUid": 12, "realEditorValues": [{ "id": "V_Int", "params": [720] }] }
-							]
-						},
-						{
-							"__identifier": "transport",
 							"__grid": [22,20],
 							"__pivot": [0,0],
 							"__tags": [],
