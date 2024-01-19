@@ -65,6 +65,7 @@ interface StageOptions {
 }
 
 export class Stage extends Definable {
+  private _achievedParSteps: boolean = false;
   private _labelIDs: string[] = [];
   private readonly _options: StageOptions;
   private _quadrilateralIDs: string[] = [];
@@ -104,6 +105,9 @@ export class Stage extends Definable {
   }
 
   public goToNext(): void {
+    if (state.values.turn <= this.parSteps) {
+      this._achievedParSteps = true;
+    }
     if (this._options.nextStageID !== null) {
       this.removeHUD();
       getDefinable(Stage, this._options.nextStageID).start();
@@ -121,6 +125,13 @@ export class Stage extends Definable {
       });
       createVictoryHUD();
       unlockAchievement(clearGameAchievementID);
+      if (
+        Array.from(getDefinables(Stage)).every(
+          ([, stage]: [unknown, Stage]): boolean => stage._achievedParSteps,
+        )
+      ) {
+        unlockAchievement("par-times");
+      }
     }
   }
 
