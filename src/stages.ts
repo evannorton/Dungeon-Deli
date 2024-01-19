@@ -309,7 +309,7 @@ new Stage("1", {
   onStart: (): void => {
     state.setValues({ instructionsOpen: true });
   },
-  parSteps: 100,
+  parSteps: 40,
   playerStartLevelID: "tutorial_1",
   playerStartPosition: {
     x: 11 * 24,
@@ -329,7 +329,7 @@ new Stage("2", {
     reverseModeID,
   ],
   nextStageID: "3",
-  parSteps: 100,
+  parSteps: 120,
   playerStartLevelID: "crystals_1",
   playerStartPosition: {
     x: 14 * 24,
@@ -349,7 +349,7 @@ new Stage("3", {
     reverseModeID,
   ],
   nextStageID: "4",
-  parSteps: 100,
+  parSteps: 80,
   playerStartLevelID: "cheese_1",
   playerStartPosition: {
     x: 24 * 24,
@@ -375,7 +375,7 @@ new Stage("4", {
     reverseModeID,
   ],
   nextStageID: "5",
-  parSteps: 100,
+  parSteps: 180,
   playerStartLevelID: "ruins_1",
   playerStartPosition: {
     x: 28 * 24,
@@ -410,7 +410,7 @@ new Stage("5", {
     reverseModeID,
   ],
   nextStageID: null,
-  parSteps: 100,
+  parSteps: 120,
   playerStartLevelID: "frozen_1",
   playerStartPosition: {
     x: 18 * 24,
