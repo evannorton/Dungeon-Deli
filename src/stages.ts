@@ -375,7 +375,7 @@ new Stage("4", {
     reverseModeID,
   ],
   nextStageID: "5",
-  parSteps: 180,
+  parSteps: 160,
   playerStartLevelID: "ruins_1",
   playerStartPosition: {
     x: 28 * 24,
