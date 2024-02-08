@@ -370,10 +370,7 @@ export class MonsterInstance extends Definable {
             collisionData.map === false &&
             collisionData.entityCollidables.length === 0
           ) {
-            if (
-              this.monster.movementBehavior !== MonsterMovementBehavior.Cart ||
-              entityPosition.x === this._startPosition.x
-            ) {
+            if (entityPosition.x === this._startPosition.x) {
               endPosition = verticalPosition;
             }
           }

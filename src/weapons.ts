@@ -177,7 +177,7 @@ export class Weapon extends Definable {
       });
       const positions: EntityPosition[] = [playerEntityPosition];
       let entityID: string | null = null;
-      outerLoop: while (entityID === null) {
+      outerLoop: while ((entityID as string | null) === null) {
         for (const move of this._options.projectile.moves) {
           positions.push({
             x: positions[positions.length - 1].x + (move.x ?? 0) * 24,
@@ -491,93 +491,84 @@ export class Weapon extends Definable {
           const playerPosition: EntityPosition = getEntityPosition(
             playerCharacter.entityID,
           );
-          if (playerPosition !== null) {
-            const entityPosition: EntityPosition = getEntityPosition(
-              character.entityID,
+          const entityPosition: EntityPosition = getEntityPosition(
+            character.entityID,
+          );
+          const endPosition: EntityPosition = { ...entityPosition };
+          const endHalfPosition: EntityPosition = { ...entityPosition };
+          let xOffset: number = 0;
+          let yOffset: number = 0;
+          if (playerPosition.x > endPosition.x) {
+            endPosition.x -= 24;
+          } else if (playerPosition.x < endPosition.x) {
+            endPosition.x += 24;
+          }
+          if (playerPosition.y > endPosition.y) {
+            endPosition.y -= 24;
+          } else if (playerPosition.y < endPosition.y) {
+            endPosition.y += 24;
+          }
+          if (endPosition.x > entityPosition.x) {
+            xOffset = 1;
+          }
+          if (endPosition.x < entityPosition.x) {
+            xOffset = -1;
+          }
+          if (endPosition.y > entityPosition.y) {
+            yOffset = 1;
+          }
+          if (endPosition.y < entityPosition.y) {
+            yOffset = -1;
+          }
+          endHalfPosition.x += xOffset * 12;
+          endHalfPosition.y += yOffset * 12;
+          const collisionData: CollisionData = getRectangleCollisionData(
+            {
+              height: 24,
+              width: 24,
+              x: endPosition.x,
+              y: endPosition.y,
+            },
+            ["chest", "monster", "player", "transport"],
+          );
+          const halfCollisionData: CollisionData = getRectangleCollisionData(
+            {
+              height: 24,
+              width: 24,
+              x: endHalfPosition.x,
+              y: endHalfPosition.y,
+            },
+            ["chest", "monster", "player", "transport"],
+          );
+          collisionData.entityCollidables =
+            collisionData.entityCollidables.filter(
+              (entityCollidable: EntityCollidable): boolean =>
+                entityCollidable.entityID !== character.entityID,
             );
-            const endPosition: EntityPosition = { ...entityPosition };
-            const endHalfPosition: EntityPosition = { ...entityPosition };
-            let xOffset: number = 0;
-            let yOffset: number = 0;
-            if (playerPosition.x > endPosition.x) {
-              endPosition.x -= 24;
-            } else if (playerPosition.x < endPosition.x) {
-              endPosition.x += 24;
-            }
-            if (playerPosition.y > endPosition.y) {
-              endPosition.y -= 24;
-            } else if (playerPosition.y < endPosition.y) {
-              endPosition.y += 24;
-            }
-            if (endPosition.x > entityPosition.x) {
-              xOffset = 1;
-            }
-            if (endPosition.x < entityPosition.x) {
-              xOffset = -1;
-            }
-            if (endPosition.y > entityPosition.y) {
-              yOffset = 1;
-            }
-            if (endPosition.y < entityPosition.y) {
-              yOffset = -1;
-            }
-            endHalfPosition.x += xOffset * 12;
-            endHalfPosition.y += yOffset * 12;
-            const collisionData: CollisionData = getRectangleCollisionData(
-              {
-                height: 24,
-                width: 24,
-                x: endPosition.x,
-                y: endPosition.y,
-              },
-              ["chest", "monster", "player", "transport"],
+          halfCollisionData.entityCollidables =
+            halfCollisionData.entityCollidables.filter(
+              (entityCollidable: EntityCollidable): boolean =>
+                entityCollidable.entityID !== character.entityID,
             );
-            const halfCollisionData: CollisionData = getRectangleCollisionData(
-              {
-                height: 24,
-                width: 24,
-                x: endHalfPosition.x,
-                y: endHalfPosition.y,
-              },
-              ["chest", "monster", "player", "transport"],
-            );
-            collisionData.entityCollidables =
-              collisionData.entityCollidables.filter(
-                (entityCollidable: EntityCollidable): boolean =>
-                  entityCollidable.entityID !== character.entityID,
-              );
-            halfCollisionData.entityCollidables =
-              halfCollisionData.entityCollidables.filter(
-                (entityCollidable: EntityCollidable): boolean =>
-                  entityCollidable.entityID !== character.entityID,
-              );
-            if (
-              !collisionData.map &&
-              !halfCollisionData.map &&
-              collisionData.entityCollidables.length === 0 &&
-              halfCollisionData.entityCollidables.length === 0
-            ) {
-              for (const monsterInstance of getDefinables(
-                MonsterInstance,
-              ).values()) {
-                if (
-                  monsterInstance.character.id === character.id &&
-                  monsterInstance.monster.movementBehavior ===
-                    MonsterMovementBehavior.Cart &&
-                  endPosition.x !== entityPosition.x
-                ) {
-                  unlockAchievement(knockbackModeAchievementID);
-                }
+          if (
+            !collisionData.map &&
+            !halfCollisionData.map &&
+            collisionData.entityCollidables.length === 0 &&
+            halfCollisionData.entityCollidables.length === 0
+          ) {
+            for (const monsterInstance of getDefinables(
+              MonsterInstance,
+            ).values()) {
+              if (
+                monsterInstance.character.id === character.id &&
+                monsterInstance.monster.movementBehavior ===
+                  MonsterMovementBehavior.Cart &&
+                endPosition.x !== entityPosition.x
+              ) {
+                unlockAchievement(knockbackModeAchievementID);
               }
-              character.startKnockback(endPosition);
-            } else {
-              state.setValues({
-                knockbackCharacterIDs:
-                  state.values.knockbackCharacterIDs.filter(
-                    (id: string): boolean => id !== characterID,
-                  ),
-              });
             }
+            character.startKnockback(endPosition);
           } else {
             state.setValues({
               knockbackCharacterIDs: state.values.knockbackCharacterIDs.filter(
