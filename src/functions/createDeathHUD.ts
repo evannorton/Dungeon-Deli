@@ -2,6 +2,7 @@ import { Character } from "../characters";
 import { Stage } from "../stages";
 import { createInputPressHandler, createSprite } from "pixel-pigeon";
 import { getDefinable } from "../definables";
+import { passInputCollectionID } from "../inputCollections";
 import { state } from "../state";
 
 export const createDeathHUD = (): void => {
@@ -43,17 +44,7 @@ export const createDeathHUD = (): void => {
   });
   createInputPressHandler({
     condition,
-    gamepadButtons: [0],
-    keyboardButtons: [
-      {
-        value: "Space",
-      },
-      {
-        value: "Numpad5",
-        withoutNumlock: true,
-      },
-    ],
-    mouseButtons: [0],
+    inputCollectionID: passInputCollectionID,
     onInput: (): void => {
       if (
         state.values.playerCharacterID !== null &&

@@ -7,6 +7,7 @@ import {
   createSprite,
 } from "pixel-pigeon";
 import { getDefinable, getDefinables } from "../definables";
+import { passInputCollectionID } from "../inputCollections";
 import { state } from "../state";
 
 export const createChestHUD = (): void => {
@@ -216,17 +217,7 @@ export const createChestHUD = (): void => {
   });
   createInputPressHandler({
     condition,
-    gamepadButtons: [0],
-    keyboardButtons: [
-      {
-        value: "Space",
-      },
-      {
-        value: "Numpad5",
-        withoutNumlock: true,
-      },
-    ],
-    mouseButtons: [0],
+    inputCollectionID: passInputCollectionID,
     onInput: (): void => {
       if (state.values.stageID !== null) {
         const stage: Stage = getDefinable(Stage, state.values.stageID);

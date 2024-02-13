@@ -1,21 +1,21 @@
 import { attemptPlayerMove } from "./functions/attemptPlayerMove";
 import { attemptPlayerPass } from "./functions/attemptPlayerPass";
 import { createInputPressHandler, takeScreenshot } from "pixel-pigeon";
+import {
+  moveDownInputCollectionID,
+  moveLeftInputCollectionID,
+  moveRightInputCollectionID,
+  moveUpInputCollectionID,
+  passInputCollectionID,
+  screenshotInputCollectionID,
+} from "./inputCollections";
 import { reverseModeID } from "./modes";
 import { state } from "./state";
 
 const condition = (): boolean => state.values.isMain;
 createInputPressHandler({
   condition,
-  gamepadButtons: [14],
-  keyboardButtons: [
-    { value: "ArrowLeft" },
-    { value: "KeyA" },
-    {
-      value: "Numpad4",
-      withoutNumlock: true,
-    },
-  ],
+  inputCollectionID: moveLeftInputCollectionID,
   onInput: (): void => {
     if (state.values.modeID === reverseModeID) {
       attemptPlayerMove(1, 0);
@@ -26,15 +26,7 @@ createInputPressHandler({
 });
 createInputPressHandler({
   condition,
-  gamepadButtons: [15],
-  keyboardButtons: [
-    { value: "ArrowRight" },
-    { value: "KeyD" },
-    {
-      value: "Numpad6",
-      withoutNumlock: true,
-    },
-  ],
+  inputCollectionID: moveRightInputCollectionID,
   onInput: (): void => {
     if (state.values.modeID === reverseModeID) {
       attemptPlayerMove(-1, 0);
@@ -45,15 +37,7 @@ createInputPressHandler({
 });
 createInputPressHandler({
   condition,
-  gamepadButtons: [12],
-  keyboardButtons: [
-    { value: "ArrowUp" },
-    { value: "KeyW" },
-    {
-      value: "Numpad8",
-      withoutNumlock: true,
-    },
-  ],
+  inputCollectionID: moveUpInputCollectionID,
   onInput: (): void => {
     if (state.values.modeID === reverseModeID) {
       attemptPlayerMove(0, 1);
@@ -64,15 +48,7 @@ createInputPressHandler({
 });
 createInputPressHandler({
   condition,
-  gamepadButtons: [13],
-  keyboardButtons: [
-    { value: "ArrowDown" },
-    { value: "KeyS" },
-    {
-      value: "Numpad2",
-      withoutNumlock: true,
-    },
-  ],
+  inputCollectionID: moveDownInputCollectionID,
   onInput: (): void => {
     if (state.values.modeID === reverseModeID) {
       attemptPlayerMove(0, -1);
@@ -82,24 +58,14 @@ createInputPressHandler({
   },
 });
 createInputPressHandler({
-  keyboardButtons: [{ value: "KeyP" }],
+  inputCollectionID: screenshotInputCollectionID,
   onInput: (): void => {
     takeScreenshot();
   },
 });
 createInputPressHandler({
   condition,
-  gamepadButtons: [0],
-  keyboardButtons: [
-    {
-      value: "Space",
-    },
-    {
-      value: "Numpad5",
-      withoutNumlock: true,
-    },
-  ],
-  mouseButtons: [0],
+  inputCollectionID: passInputCollectionID,
   onInput: (): void => {
     if (state.values.instructionsOpen) {
       state.setValues({ instructionsOpen: false });
@@ -108,17 +74,3 @@ createInputPressHandler({
     }
   },
 });
-// createInputPressHandler({
-//   condition,
-//   gamepadButtons: [],
-//   keyboardButtons: [
-//     {
-//       value: "KeyM",
-//     },
-//   ],
-//   onInput: (): void => {
-//     if (state.values.stageID !== null) {
-//       getDefinable(Stage, state.values.stageID).goToNext();
-//     }
-//   },
-// });

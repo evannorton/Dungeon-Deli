@@ -6,6 +6,7 @@ import {
   getCurrentTime,
 } from "pixel-pigeon";
 import { createIntro2HUD } from "./createIntro2HUD";
+import { passInputCollectionID } from "../inputCollections";
 import { state } from "../state";
 
 export const createIntro1HUD = (): void => {
@@ -99,17 +100,7 @@ export const createIntro1HUD = (): void => {
   });
   createInputPressHandler({
     condition,
-    gamepadButtons: [0],
-    keyboardButtons: [
-      {
-        value: "Space",
-      },
-      {
-        value: "Numpad5",
-        withoutNumlock: true,
-      },
-    ],
-    mouseButtons: [0],
+    inputCollectionID: passInputCollectionID,
     onInput: (): void => {
       if (
         state.values.intro1StartedAt !== null &&
