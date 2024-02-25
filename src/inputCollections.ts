@@ -8,7 +8,7 @@ export const passInputCollectionID: string = createInputCollection({
     },
     {
       numLock: NumLock.Without,
-      value: "Numpad5"
+      value: "Numpad5",
     },
   ],
   mouseButtons: [0],
@@ -24,8 +24,8 @@ export const moveLeftInputCollectionID: string = createInputCollection({
     { value: "ArrowLeft" },
     { value: "KeyA" },
     {
+      numLock: NumLock.Without,
       value: "Numpad4",
-      numLock: NumLock.Without
     },
   ],
   name: "Move left",
@@ -36,8 +36,8 @@ export const moveRightInputCollectionID: string = createInputCollection({
     { value: "ArrowRight" },
     { value: "KeyD" },
     {
+      numLock: NumLock.Without,
       value: "Numpad6",
-      numLock: NumLock.Without
     },
   ],
   name: "Move right",
@@ -48,8 +48,8 @@ export const moveUpInputCollectionID: string = createInputCollection({
     { value: "ArrowUp" },
     { value: "KeyW" },
     {
+      numLock: NumLock.Without,
       value: "Numpad8",
-      numLock: NumLock.Without
     },
   ],
   name: "Move up",
@@ -60,8 +60,8 @@ export const moveDownInputCollectionID: string = createInputCollection({
     { value: "ArrowDown" },
     { value: "KeyS" },
     {
+      numLock: NumLock.Without,
       value: "Numpad2",
-      numLock: NumLock.Without
     },
   ],
   name: "Move down",
