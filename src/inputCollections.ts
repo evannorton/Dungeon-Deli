@@ -1,4 +1,4 @@
-import { createInputCollection } from "pixel-pigeon";
+import { NumLock, createInputCollection } from "pixel-pigeon";
 
 export const passInputCollectionID: string = createInputCollection({
   gamepadButtons: [0],
@@ -7,8 +7,8 @@ export const passInputCollectionID: string = createInputCollection({
       value: "Space",
     },
     {
-      value: "Numpad5",
-      withoutNumlock: true,
+      numLock: NumLock.Without,
+      value: "Numpad5"
     },
   ],
   mouseButtons: [0],
@@ -25,7 +25,7 @@ export const moveLeftInputCollectionID: string = createInputCollection({
     { value: "KeyA" },
     {
       value: "Numpad4",
-      withoutNumlock: true,
+      numLock: NumLock.Without
     },
   ],
   name: "Move left",
@@ -37,7 +37,7 @@ export const moveRightInputCollectionID: string = createInputCollection({
     { value: "KeyD" },
     {
       value: "Numpad6",
-      withoutNumlock: true,
+      numLock: NumLock.Without
     },
   ],
   name: "Move right",
@@ -49,7 +49,7 @@ export const moveUpInputCollectionID: string = createInputCollection({
     { value: "KeyW" },
     {
       value: "Numpad8",
-      withoutNumlock: true,
+      numLock: NumLock.Without
     },
   ],
   name: "Move up",
@@ -61,7 +61,7 @@ export const moveDownInputCollectionID: string = createInputCollection({
     { value: "KeyS" },
     {
       value: "Numpad2",
-      withoutNumlock: true,
+      numLock: NumLock.Without
     },
   ],
   name: "Move down",
