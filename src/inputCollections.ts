@@ -14,10 +14,6 @@ export const passInputCollectionID: string = createInputCollection({
   mouseButtons: [0],
   name: "Pass turn / advance menu",
 });
-export const screenshotInputCollectionID: string = createInputCollection({
-  keyboardButtons: [{ value: "KeyP" }],
-  name: "Take screenshot",
-});
 export const moveLeftInputCollectionID: string = createInputCollection({
   gamepadButtons: [14],
   keyboardButtons: [
@@ -65,4 +61,8 @@ export const moveDownInputCollectionID: string = createInputCollection({
     },
   ],
   name: "Move down",
+});
+export const screenshotInputCollectionID: string = createInputCollection({
+  keyboardButtons: [{ value: "KeyP" }],
+  name: "Take screenshot",
 });
