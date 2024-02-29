@@ -64,5 +64,5 @@ export const moveDownInputCollectionID: string = createInputCollection({
 });
 export const screenshotInputCollectionID: string = createInputCollection({
   keyboardButtons: [{ value: "KeyP" }],
-  name: "Take screenshot",
+  name: "Screenshot",
 });
