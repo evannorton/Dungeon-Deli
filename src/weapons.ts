@@ -14,7 +14,7 @@ import {
   setEntityPosition,
   unlockAchievement,
 } from "pixel-pigeon";
-import { Definable, getDefinable, getDefinables, getToken } from "./definables";
+import { Definable, getDefinable, getDefinables } from "./definables";
 import { MonsterInstance } from "./monsterInstances";
 import { MonsterMovementBehavior } from "./monsters";
 import { TurnPart } from "./types/TurnPart";
@@ -70,7 +70,7 @@ export class Weapon extends Definable {
   private _projectileAttack: WeaponProjectileAttack | null = null;
   private readonly _options: WeaponOptions;
   public constructor(options: WeaponOptions) {
-    super(getToken());
+    super();
     this._options = options;
   }
 

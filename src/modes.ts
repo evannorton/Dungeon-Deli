@@ -1,4 +1,4 @@
-import { Definable, getToken } from "./definables";
+import { Definable } from "./definables";
 
 interface ModeOptions {
   readonly color: string;
@@ -10,7 +10,7 @@ interface ModeOptions {
 export class Mode extends Definable {
   private readonly _options: ModeOptions;
   public constructor(options: ModeOptions) {
-    super(getToken());
+    super();
     this._options = options;
   }
 

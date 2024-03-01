@@ -45,8 +45,7 @@ const validIDCharacters: string[] = [
   "-",
   "/",
 ];
-
-export const getToken = (): string => {
+const getToken = (): string => {
   const pieces: string[] = [];
   for (let i: number = 0; i < 20; i++) {
     pieces.push(
@@ -55,11 +54,12 @@ export const getToken = (): string => {
   }
   return pieces.join("");
 };
+
 export abstract class Definable {
   protected readonly _id: string;
 
-  public constructor(id: string) {
-    this._id = id;
+  public constructor(id?: string) {
+    this._id = id ?? getToken();
     if (
       this._id
         .split("")

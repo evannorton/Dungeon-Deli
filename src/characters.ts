@@ -10,7 +10,7 @@ import {
   setEntityBlockingPosition,
   setEntityPosition,
 } from "pixel-pigeon";
-import { Definable, getDefinables, getToken } from "./definables";
+import { Definable, getDefinables } from "./definables";
 import { Direction } from "./types/Direction";
 import { Mode, normalModeID } from "./modes";
 import { Move } from "./types/Move";
@@ -40,7 +40,7 @@ export class Character extends Definable {
   private _lastPosition: EntityPosition | null = null;
   private _step: Step = Step.Left;
   public constructor(options: CharacterOptions) {
-    super(getToken());
+    super();
     this._options = options;
     this._hp = options.maxHP;
     const walkFrameDuration: number = Math.round(walkDuration / 2);
