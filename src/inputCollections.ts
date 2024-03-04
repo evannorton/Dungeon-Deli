@@ -9,6 +9,7 @@ export const startInputCollectionID: string = createInputCollection({
 export const passInputCollectionID: string = createInputCollection({
   gamepadButtons: [0],
   keyboardButtons: [
+    { value: "KeyZ" },
     {
       value: "Space",
     },
