@@ -84,7 +84,7 @@ export const createIntro1HUD = (): void => {
     color: "#8c0c79",
     coordinates: {
       condition,
-      x: x + Math.floor(width / 2) + 1,
+      x: x + Math.floor(width / 2),
       y: y + height - 18,
     },
     horizontalAlignment: "center",
