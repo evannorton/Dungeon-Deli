@@ -8,7 +8,7 @@ import {
 } from "pixel-pigeon";
 import { createIntro1HUD } from "./createIntro1HUD";
 import { musicVolumeChannelID } from "../volumeChannels";
-import { passInputCollectionID } from "../inputCollections";
+import { startInputCollectionID } from "../inputCollections";
 import { state } from "../state";
 
 export const createTitleHUD = (): void => {
@@ -88,7 +88,7 @@ export const createTitleHUD = (): void => {
   });
   createInputPressHandler({
     condition,
-    inputCollectionID: passInputCollectionID,
+    inputCollectionID: startInputCollectionID,
     onInput: (): void => {
       state.setValues({
         intro1StartedAt: getCurrentTime(),
