@@ -1,11 +1,12 @@
-import { Ingredient } from "../ingredients";
-import { Stage } from "../stages";
 import {
+  CreateLabelOptionsText,
   createInputPressHandler,
   createLabel,
   createQuadrilateral,
   createSprite,
 } from "pixel-pigeon";
+import { Ingredient } from "../ingredients";
+import { Stage } from "../stages";
 import { getDefinable, getDefinables } from "../definables";
 import { passInputCollectionID } from "../inputCollections";
 import { state } from "../state";
@@ -103,7 +104,7 @@ export const createChestHUD = (): void => {
       y: y + 36,
     },
     horizontalAlignment: "center",
-    text: "New sandwich ingredient!",
+    text: { value: "New sandwich ingredient!" },
   });
   createSprite({
     animationID: "default",
@@ -177,7 +178,7 @@ export const createChestHUD = (): void => {
       y: 75,
     },
     horizontalAlignment: "left",
-    text: "Your steps:",
+    text: { value: "Your steps:" },
   });
   createLabel({
     color: "#ffffff",
@@ -187,7 +188,7 @@ export const createChestHUD = (): void => {
       y: 88,
     },
     horizontalAlignment: "left",
-    text: "Goal steps:",
+    text: { value: "Goal steps:" },
   });
   createLabel({
     color: "#ffffff",
@@ -197,8 +198,9 @@ export const createChestHUD = (): void => {
       y: 75,
     },
     horizontalAlignment: "right",
-    text: (): string =>
-      state.values.turn > 999 ? "999+" : String(state.values.turn),
+    text: (): CreateLabelOptionsText => ({
+      value: state.values.turn > 999 ? "999+" : String(state.values.turn),
+    }),
   });
   createLabel({
     color: "#ffffff",
@@ -208,11 +210,13 @@ export const createChestHUD = (): void => {
       y: 88,
     },
     horizontalAlignment: "right",
-    text: (): string => {
+    text: (): CreateLabelOptionsText => {
       if (state.values.stageID !== null) {
-        return String(getDefinable(Stage, state.values.stageID).parSteps);
+        return {
+          value: String(getDefinable(Stage, state.values.stageID).parSteps),
+        };
       }
-      return "";
+      return { value: "" };
     },
   });
   createInputPressHandler({

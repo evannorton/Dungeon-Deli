@@ -1,4 +1,5 @@
 import {
+  CreateLabelOptionsText,
   CreateSpriteOptionsAnimation,
   createLabel,
   createQuadrilateral,
@@ -60,11 +61,13 @@ export const createModeHUD = (): void => {
       y: (): number => y() + 5,
     },
     horizontalAlignment: "center",
-    text: (): string => {
+    text: (): CreateLabelOptionsText => {
       if (state.values.modeID !== null) {
-        return `${getDefinable(Mode, state.values.modeID).name} Mode`;
+        return {
+          value: `${getDefinable(Mode, state.values.modeID).name} Mode`,
+        };
       }
-      return "";
+      return { value: "" };
     },
   });
   createLabel({
@@ -75,7 +78,7 @@ export const createModeHUD = (): void => {
       y: (): number => y() + 46,
     },
     horizontalAlignment: "left",
-    text: "Next:",
+    text: { value: "Next:" },
   });
   createLabel({
     color: nextModeColor,
@@ -85,11 +88,11 @@ export const createModeHUD = (): void => {
       y: (): number => y() + 46,
     },
     horizontalAlignment: "right",
-    text: (): string => {
+    text: (): CreateLabelOptionsText => {
       if (state.values.nextModeID !== null) {
-        return getDefinable(Mode, state.values.nextModeID).name;
+        return { value: getDefinable(Mode, state.values.nextModeID).name };
       }
-      return "N/A";
+      return { value: "N/A" };
     },
   });
   createLabel({
@@ -100,7 +103,7 @@ export const createModeHUD = (): void => {
       y: (): number => y() + 56,
     },
     horizontalAlignment: "left",
-    text: "Until next:",
+    text: { value: "Until next:" },
   });
   createLabel({
     color: untilNextColor,
@@ -110,16 +113,18 @@ export const createModeHUD = (): void => {
       y: (): number => y() + 56,
     },
     horizontalAlignment: "right",
-    text: (): string => {
+    text: (): CreateLabelOptionsText => {
       if (
         state.values.nextModeID !== null &&
         state.values.untilNextMode !== null
       ) {
-        return `${state.values.untilNextMode} ${
-          state.values.untilNextMode === 1 ? "turn" : "turns"
-        }`;
+        return {
+          value: `${state.values.untilNextMode} ${
+            state.values.untilNextMode === 1 ? "turn" : "turns"
+          }`,
+        };
       }
-      return "N/A";
+      return { value: "N/A" };
     },
   });
   const animations: CreateSpriteOptionsAnimation[] = [

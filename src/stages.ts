@@ -1,7 +1,7 @@
 import { Character } from "./characters";
 import { Chest } from "./chests";
-import { Definable, getDefinable, getDefinables } from "./definables";
 import {
+  CreateLabelOptionsText,
   EntityPosition,
   createEntity,
   createLabel,
@@ -17,6 +17,7 @@ import {
   stopAudioSource,
   unlockAchievement,
 } from "pixel-pigeon";
+import { Definable, getDefinable, getDefinables } from "./definables";
 import { Ingredient } from "./ingredients";
 import {
   Mode,
@@ -238,7 +239,7 @@ export class Stage extends Definable {
           y: y + 5,
         },
         horizontalAlignment: "center",
-        text: "Power cooldowns",
+        text: { value: "Power cooldowns" },
       }),
     );
     this.weapons.forEach(
@@ -264,7 +265,7 @@ export class Stage extends Definable {
               y: y + 5 + weaponIndex * 10 + 12,
             },
             horizontalAlignment: "left",
-            text: `${weaponGroup.name}:`,
+            text: { value: `${weaponGroup.name}:` },
           }),
         );
         this._labelIDs.push(
@@ -276,12 +277,12 @@ export class Stage extends Definable {
               y: y + 5 + weaponIndex * 10 + 12,
             },
             horizontalAlignment: "right",
-            text: (): string => {
+            text: (): CreateLabelOptionsText => {
               const amount: number =
                 weapon.stepsPerAttack -
                 ((state.values.turn + weapon.stepsOffset) %
                   weapon.stepsPerAttack);
-              return `${amount} ${amount === 1 ? "turn" : "turns"}`;
+              return { value: `${amount} ${amount === 1 ? "turn" : "turns"}` };
             },
           }),
         );

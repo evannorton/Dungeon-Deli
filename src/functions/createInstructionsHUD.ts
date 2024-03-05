@@ -27,7 +27,7 @@ export const createInstructionsHUD = (): void => {
       y: y + 6,
     },
     horizontalAlignment: "left",
-    text: "Venture into the dungeon to retrieve your sandwich!",
+    text: { value: "Venture into the dungeon to retrieve your sandwich!" },
   });
   createLabel({
     color: "#ffffff",
@@ -37,7 +37,7 @@ export const createInstructionsHUD = (): void => {
       y: y + 22,
     },
     horizontalAlignment: "left",
-    text: "Every step is a turn.",
+    text: { value: "Every step is a turn." },
   });
   createLabel({
     color: "#ffffff",
@@ -47,7 +47,7 @@ export const createInstructionsHUD = (): void => {
       y: y + 34,
     },
     horizontalAlignment: "left",
-    text: "- Arrow keys/WASD/D-Pad to move.",
+    text: { value: "- Arrow keys/WASD/D-Pad to move." },
   });
   createLabel({
     color: "#ffffff",
@@ -57,7 +57,7 @@ export const createInstructionsHUD = (): void => {
       y: y + 46,
     },
     horizontalAlignment: "left",
-    text: "- Click/space/A button to wait (or close menus).",
+    text: { value: "- Click/space/A button to wait (or close menus)." },
   });
   createLabel({
     color: "#ffffff",
@@ -67,7 +67,7 @@ export const createInstructionsHUD = (): void => {
       y: y + 62,
     },
     horizontalAlignment: "left",
-    text: "Different terrains influence...",
+    text: { value: "Different terrains influence..." },
   });
   createLabel({
     color: "#ffffff",
@@ -77,7 +77,7 @@ export const createInstructionsHUD = (): void => {
       y: y + 74,
     },
     horizontalAlignment: "left",
-    text: "- Powers: Your attacks.",
+    text: { value: "- Powers: Your attacks." },
   });
   createLabel({
     color: "#ffffff",
@@ -87,6 +87,6 @@ export const createInstructionsHUD = (): void => {
       y: y + 86,
     },
     horizontalAlignment: "left",
-    text: "- Modes: Effects on the field.",
+    text: { value: "- Modes: Effects on the field." },
   });
 };

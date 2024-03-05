@@ -1,4 +1,5 @@
 import {
+  CreateLabelOptionsText,
   CreateSpriteOptionsAnimation,
   createInputPressHandler,
   createLabel,
@@ -77,7 +78,7 @@ export const createIntro1HUD = (): void => {
         y: y + 11 + index * 11,
       },
       horizontalAlignment: "left",
-      text: line,
+      text: { value: line },
     });
   });
   createLabel({
@@ -88,14 +89,14 @@ export const createIntro1HUD = (): void => {
       y: y + height - 18,
     },
     horizontalAlignment: "center",
-    text: (): string => {
+    text: (): CreateLabelOptionsText => {
       if (
         state.values.intro1StartedAt !== null &&
         getCurrentTime() > state.values.intro1StartedAt + clickCooldown
       ) {
-        return "- Click to continue -";
+        return { value: "- Click to continue -" };
       }
-      return "";
+      return { value: "" };
     },
   });
   createInputPressHandler({
