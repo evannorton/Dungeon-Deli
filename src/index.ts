@@ -1,3 +1,4 @@
+import "./buttons";
 import "./inputHandlers";
 import { initialize, onRun, onTick, setPauseMenuCondition } from "pixel-pigeon";
 import { run } from "./run";
