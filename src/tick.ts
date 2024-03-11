@@ -61,15 +61,15 @@ export const tick = (): void => {
             updatedPlayerCharacter.entityID,
           );
           const transportCollisionData: CollisionData =
-            getRectangleCollisionData(
-              {
+            getRectangleCollisionData({
+              entityTypes: ["transport"],
+              rectangle: {
                 height: 24,
                 width: 24,
                 x: playerPosition.x,
                 y: playerPosition.y,
               },
-              ["transport"],
-            );
+            });
           const transportEntityID: string | null =
             transportCollisionData.entityCollidables.length > 0
               ? transportCollisionData.entityCollidables[0].entityID
@@ -223,15 +223,15 @@ export const tick = (): void => {
               character.entityID,
             );
             const transportCollisionData: CollisionData =
-              getRectangleCollisionData(
-                {
+              getRectangleCollisionData({
+                entityTypes: ["transport"],
+                rectangle: {
                   height: 24,
                   width: 24,
                   x: characterPosition.x,
                   y: characterPosition.y,
                 },
-                ["transport"],
-              );
+              });
             const transportEntityID: string | null =
               transportCollisionData.entityCollidables.length > 0
                 ? transportCollisionData.entityCollidables[0].entityID

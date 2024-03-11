@@ -46,28 +46,28 @@ export const attemptPlayerMove = (xOffset: number, yOffset: number): void => {
           newPosition.x += xOffset * 24;
           newPosition.y += yOffset * 24;
           const transportCollisionData: CollisionData =
-            getRectangleCollisionData(
-              {
+            getRectangleCollisionData({
+              entityTypes: ["transport"],
+              rectangle: {
                 height: 24,
                 width: 24,
                 x: newPosition.x,
                 y: newPosition.y,
               },
-              ["transport"],
-            );
+            });
           if (transportCollisionData.entityCollidables.length > 0) {
             hitCollision = true;
             endPosition = newPosition;
           }
-          const collisionData: CollisionData = getRectangleCollisionData(
-            {
+          const collisionData: CollisionData = getRectangleCollisionData({
+            entityTypes: ["chest", "monster"],
+            rectangle: {
               height: 24,
               width: 24,
               x: newPosition.x,
               y: newPosition.y,
             },
-            ["chest", "monster"],
-          );
+          });
           if (collisionData.map || collisionData.entityCollidables.length > 0) {
             hitCollision = true;
           } else {
@@ -80,15 +80,15 @@ export const attemptPlayerMove = (xOffset: number, yOffset: number): void => {
         };
         newPosition.x += xOffset * 24;
         newPosition.y += yOffset * 24;
-        const collisionData: CollisionData = getRectangleCollisionData(
-          {
+        const collisionData: CollisionData = getRectangleCollisionData({
+          entityTypes: ["chest", "monster"],
+          rectangle: {
             height: 24,
             width: 24,
             x: newPosition.x,
             y: newPosition.y,
           },
-          ["chest", "monster"],
-        );
+        });
         if (
           collisionData.map === false &&
           collisionData.entityCollidables.length === 0

@@ -79,8 +79,8 @@ export class MonsterInstance extends Definable {
       removeEntity(this._options.entityID);
     }
     const entityID: string = createEntity({
-      collidesWithMap: true,
       collidableEntityTypes: ["chest", "monster", "transport"],
+      collidesWithMap: true,
       height: 24,
       layerID: "characters",
       levelID: this._startLevelID,
@@ -245,24 +245,24 @@ export class MonsterInstance extends Definable {
               reversePosition.y += 24;
               reverseHalfPosition.y += 12;
             }
-            const collisionData: CollisionData = getRectangleCollisionData(
-              {
+            const collisionData: CollisionData = getRectangleCollisionData({
+              entityTypes: ["chest", "monster", "player", "transport"],
+              rectangle: {
                 height: 24,
                 width: 24,
                 x: reversePosition.x,
                 y: reversePosition.y,
               },
-              ["chest", "monster", "player", "transport"],
-            );
-            const halfCollisionData: CollisionData = getRectangleCollisionData(
-              {
+            });
+            const halfCollisionData: CollisionData = getRectangleCollisionData({
+              entityTypes: ["chest", "monster", "player", "transport"],
+              rectangle: {
                 height: 24,
                 width: 24,
                 x: reverseHalfPosition.x,
                 y: reverseHalfPosition.y,
               },
-              ["chest", "monster", "player", "transport"],
-            );
+            });
             halfCollisionData.entityCollidables =
               halfCollisionData.entityCollidables.filter(
                 (entityCollidable: EntityCollidable): boolean =>
@@ -311,15 +311,15 @@ export class MonsterInstance extends Definable {
           }
         }
         if (horizontalPosition !== null) {
-          const collisionData: CollisionData = getRectangleCollisionData(
-            {
+          const collisionData: CollisionData = getRectangleCollisionData({
+            entityTypes: ["chest", "monster", "player", "transport"],
+            rectangle: {
               height: 24,
               width: 24,
               x: horizontalPosition.x,
               y: horizontalPosition.y,
             },
-            ["chest", "monster", "player", "transport"],
-          );
+          });
           if (
             collisionData.map === false &&
             collisionData.entityCollidables.length === 0
@@ -358,15 +358,15 @@ export class MonsterInstance extends Definable {
           }
         }
         if (verticalPosition !== null) {
-          const collisionData: CollisionData = getRectangleCollisionData(
-            {
+          const collisionData: CollisionData = getRectangleCollisionData({
+            entityTypes: ["chest", "monster", "player", "transport"],
+            rectangle: {
               height: 24,
               width: 24,
               x: verticalPosition.x,
               y: verticalPosition.y,
             },
-            ["chest", "monster", "player", "transport"],
-          );
+          });
           if (
             collisionData.map === false &&
             collisionData.entityCollidables.length === 0
@@ -405,24 +405,24 @@ export class MonsterInstance extends Definable {
             newPosition.y += yOffset * 24;
             newHalfPosition.x += xOffset * 12;
             newHalfPosition.y += yOffset * 12;
-            const collisionData: CollisionData = getRectangleCollisionData(
-              {
+            const collisionData: CollisionData = getRectangleCollisionData({
+              entityTypes: ["chest", "monster", "player", "transport"],
+              rectangle: {
                 height: 24,
                 width: 24,
                 x: newPosition.x,
                 y: newPosition.y,
               },
-              ["chest", "monster", "player", "transport"],
-            );
-            const halfCollisionData: CollisionData = getRectangleCollisionData(
-              {
+            });
+            const halfCollisionData: CollisionData = getRectangleCollisionData({
+              entityTypes: ["chest", "monster", "player", "transport"],
+              rectangle: {
                 height: 24,
                 width: 24,
                 x: newHalfPosition.x,
                 y: newHalfPosition.y,
               },
-              ["chest", "monster", "player", "transport"],
-            );
+            });
             if (
               collisionData.map ||
               halfCollisionData.map ||
@@ -530,24 +530,24 @@ export class MonsterInstance extends Definable {
             }
             endHalfPosition.x += xOffset * 12;
             endHalfPosition.y += yOffset * 12;
-            const collisionData: CollisionData = getRectangleCollisionData(
-              {
+            const collisionData: CollisionData = getRectangleCollisionData({
+              entityTypes: ["chest", "monster"],
+              rectangle: {
                 height: 24,
                 width: 24,
                 x: endPosition.x,
                 y: endPosition.y,
               },
-              ["chest", "monster"],
-            );
-            const halfCollisionData: CollisionData = getRectangleCollisionData(
-              {
+            });
+            const halfCollisionData: CollisionData = getRectangleCollisionData({
+              entityTypes: ["chest", "monster"],
+              rectangle: {
                 height: 24,
                 width: 24,
                 x: endHalfPosition.x,
                 y: endHalfPosition.y,
               },
-              ["chest", "monster"],
-            );
+            });
             if (
               !collisionData.map &&
               !halfCollisionData.map &&

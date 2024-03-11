@@ -41,15 +41,15 @@ export const getPlayerChest = (): Chest | null => {
     },
   ];
   for (const position of possiblePositions) {
-    const collisionData: CollisionData = getRectangleCollisionData(
-      {
+    const collisionData: CollisionData = getRectangleCollisionData({
+      entityTypes: ["chest"],
+      rectangle: {
         height: 24,
         width: 24,
         x: position.x,
         y: position.y,
       },
-      ["chest"],
-    );
+    });
     if (collisionData.entityCollidables.length > 0) {
       return getDefinable(Chest, collisionData.entityCollidables[0].entityID);
     }

@@ -40,15 +40,15 @@ export const playerIsBlocked = (): boolean => {
     },
   ];
   for (const position of possiblePositions) {
-    const collisionData: CollisionData = getRectangleCollisionData(
-      {
+    const collisionData: CollisionData = getRectangleCollisionData({
+      entityTypes: ["monster"],
+      rectangle: {
         height: 24,
         width: 24,
         x: position.x,
         y: position.y,
       },
-      ["monster"],
-    );
+    });
     if (
       collisionData.map === false &&
       collisionData.entityCollidables.length === 0
