@@ -79,6 +79,8 @@ export class MonsterInstance extends Definable {
       removeEntity(this._options.entityID);
     }
     const entityID: string = createEntity({
+      collidesWithMap: true,
+      collidableEntityTypes: ["chest", "monster", "transport"],
       height: 24,
       layerID: "characters",
       levelID: this._startLevelID,
@@ -216,7 +218,6 @@ export class MonsterInstance extends Definable {
             type: "transport",
           },
         ],
-        types: ["chest", "monster", "transport"],
         x: playerEntityPosition.x,
         y: playerEntityPosition.y,
       },
