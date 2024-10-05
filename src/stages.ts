@@ -279,7 +279,7 @@ export class Stage extends Definable {
             color: untilNextColor,
             coordinates: {
               condition,
-              x: 2 + width - 1,
+              x: 2 + width - 2,
               y: y + 5 + weaponIndex * 10 + 12,
             },
             horizontalAlignment: "right",
