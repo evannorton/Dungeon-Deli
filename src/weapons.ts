@@ -193,8 +193,8 @@ export class Weapon extends Definable {
             rectangle: {
               height: 24,
               width: 24,
-              x: position.x,
-              y: position.y,
+              x: position.x + (move.x ?? 0) * 24,
+              y: position.y + (move.y ?? 0) * 24,
             },
           });
           if (collisionData.map === true) {

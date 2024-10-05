@@ -291,10 +291,12 @@ export const tick = (): void => {
     }
     const levelID: string | null = getActiveLevelID();
     if (levelID !== null) {
-      [...getEntityIDs({
-        layerIDs: ["characters"],
-        levelIDs: [levelID],
-      })]
+      [
+        ...getEntityIDs({
+          layerIDs: ["characters"],
+          levelIDs: [levelID],
+        }),
+      ]
         .sort((a: string, b: string): number => {
           const aPosition: EntityPosition = getEntityPosition(a);
           const bPosition: EntityPosition = getEntityPosition(b);
