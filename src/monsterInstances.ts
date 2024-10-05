@@ -209,7 +209,7 @@ export class MonsterInstance extends Definable {
       playerCharacter.entityID,
     );
     let endPosition: EntityPosition | null = null;
-    const path: EntityPosition[] = getEntityCalculatedPath(
+    const path: readonly EntityPosition[] = getEntityCalculatedPath(
       this._options.entityID,
       {
         exclusions: [
@@ -228,6 +228,11 @@ export class MonsterInstance extends Definable {
     if (this._alerted) {
       if (this.monster.movementBehavior === MonsterMovementBehavior.Chase) {
         if (path.length > 2) {
+          if (typeof path[1] === "undefined") {
+            throw new Error(
+              `Attempted to move MonsterInstance "${this._id}" with no path.`,
+            );
+          }
           if (state.values.modeID === reverseModeID) {
             const reversePosition: EntityPosition = { ...entityPosition };
             const reverseHalfPosition: EntityPosition = { ...reversePosition };

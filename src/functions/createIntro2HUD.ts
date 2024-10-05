@@ -25,7 +25,7 @@ export const createIntro2HUD = (): void => {
       });
     }
   }
-  delete animation.frames[animation.frames.length - 1].duration;
+  delete animation.frames[animation.frames.length - 1]?.duration;
   createSprite({
     animationID: "default",
     animations: [animation],

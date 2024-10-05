@@ -31,7 +31,6 @@ const validIDCharacters: string[] = [
   "x",
   "y",
   "z",
-  "Z",
   "1",
   "2",
   "3",
@@ -45,16 +44,18 @@ const validIDCharacters: string[] = [
   "-",
   "/",
 ];
-const getToken = (): string => {
+
+export const getToken = (): string => {
   const pieces: string[] = [];
   for (let i: number = 0; i < 20; i++) {
     pieces.push(
-      validIDCharacters[Math.floor(Math.random() * validIDCharacters.length)],
+      validIDCharacters[
+        Math.floor(Math.random() * validIDCharacters.length)
+      ] as string,
     );
   }
   return pieces.join("");
 };
-
 export abstract class Definable {
   protected readonly _id: string;
 
@@ -132,4 +133,12 @@ export const getDefinable = <T extends Definable>(
     throw new Error(`${prototype.name} "${id}" does not exist.`);
   }
   return definable;
+};
+export const definableExists = <T extends Definable>(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any -- The args are not relevant to this function.
+  prototype: new (...args: any[]) => T,
+  id: string,
+): boolean => {
+  const definable: T | undefined = getDefinables(prototype).get(id);
+  return typeof definable !== "undefined";
 };

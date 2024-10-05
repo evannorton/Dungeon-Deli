@@ -179,25 +179,33 @@ export class Weapon extends Definable {
       let entityID: string | null = null;
       outerLoop: while ((entityID as string | null) === null) {
         for (const move of this._options.projectile.moves) {
+          const position: EntityPosition | undefined =
+            positions[positions.length - 1];
+          if (!position) {
+            throw new Error("No position");
+          }
           positions.push({
-            x: positions[positions.length - 1].x + (move.x ?? 0) * 24,
-            y: positions[positions.length - 1].y + (move.y ?? 0) * 24,
+            x: position.x + (move.x ?? 0) * 24,
+            y: position.y + (move.y ?? 0) * 24,
           });
           const collisionData: CollisionData = getRectangleCollisionData({
             entityTypes: ["chest", "monster", "transport"],
             rectangle: {
               height: 24,
               width: 24,
-              x: positions[positions.length - 1].x,
-              y: positions[positions.length - 1].y,
+              x: position.x,
+              y: position.y,
             },
           });
           if (collisionData.map === true) {
             break outerLoop;
           }
           if (collisionData.entityCollidables.length > 0) {
-            const entityCollidable: EntityCollidable =
+            const entityCollidable: EntityCollidable | undefined =
               collisionData.entityCollidables[0];
+            if (typeof entityCollidable === "undefined") {
+              throw new Error("No entityCollidable");
+            }
             if (entityCollidable.type === "monster") {
               entityID = entityCollidable.entityID;
             }
@@ -320,9 +328,12 @@ export class Weapon extends Definable {
           );
           positions.push(position);
           if (monsterCollisionData.entityCollidables.length > 0) {
-            monsterEntityIDs.push(
-              monsterCollisionData.entityCollidables[0].entityID,
-            );
+            const entityCollidable: EntityCollidable | undefined =
+              monsterCollisionData.entityCollidables[0];
+            if (typeof entityCollidable === "undefined") {
+              throw new Error("No entityCollidable");
+            }
+            monsterEntityIDs.push(entityCollidable.entityID);
           }
         }
       }
@@ -357,9 +368,9 @@ export class Weapon extends Definable {
       );
       const percentage: number =
         ((currentTime - time) / projectileDuration) % 1;
-      const position: EntityPosition =
+      const position: EntityPosition | undefined =
         this._projectileAttack.positions[positionsIndex];
-      const nextPosition: EntityPosition =
+      const nextPosition: EntityPosition | undefined =
         this._projectileAttack.positions[positionsIndex + 1];
       if (
         typeof position !== "undefined" &&

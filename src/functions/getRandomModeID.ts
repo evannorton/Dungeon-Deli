@@ -1,3 +1,4 @@
+import { Mode } from "../modes";
 import { Stage } from "../stages";
 import { getDefinable } from "../definables";
 import { state } from "../state";
@@ -8,5 +9,9 @@ export const getRandomModeID = (): string => {
   }
   const stage: Stage = getDefinable(Stage, state.values.stageID);
   const index: number = Math.floor(Math.random() * stage.modes.length);
-  return stage.modes[index].id;
+  const mode: Mode | undefined = stage.modes[index];
+  if (typeof mode === "undefined") {
+    throw new Error("No mode found.");
+  }
+  return mode.id;
 };

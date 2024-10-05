@@ -50,7 +50,7 @@ export const getPlayerChest = (): Chest | null => {
         y: position.y,
       },
     });
-    if (collisionData.entityCollidables.length > 0) {
+    if (collisionData.entityCollidables[0]) {
       return getDefinable(Chest, collisionData.entityCollidables[0].entityID);
     }
   }

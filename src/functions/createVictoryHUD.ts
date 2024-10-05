@@ -1,5 +1,6 @@
 import {
   CreateSpriteOptionsAnimation,
+  CreateSpriteOptionsAnimationFrame,
   createQuadrilateral,
   createSprite,
   getCurrentTime,
@@ -33,17 +34,37 @@ export const createVictoryHUD = (): void => {
     frames: [],
     id: "2",
   };
-  animation2.frames.push(animation1.frames[animation1.frames.length - 2]);
+  animation2.frames.push(
+    animation1.frames[
+      animation1.frames.length - 2
+    ] as CreateSpriteOptionsAnimationFrame,
+  );
   const animation3: CreateSpriteOptionsAnimation = {
     frames: [],
     id: "3",
   };
-  animation3.frames.push(animation1.frames[animation1.frames.length - 1]);
+  animation3.frames.push(
+    animation1.frames[
+      animation1.frames.length - 1
+    ] as CreateSpriteOptionsAnimationFrame,
+  );
   animation1.frames.pop();
   animation1.frames.pop();
-  delete animation1.frames[animation1.frames.length - 1].duration;
-  delete animation2.frames[animation2.frames.length - 1].duration;
-  delete animation3.frames[animation3.frames.length - 1].duration;
+  delete (
+    animation1.frames[
+      animation1.frames.length - 1
+    ] as CreateSpriteOptionsAnimationFrame
+  ).duration;
+  delete (
+    animation2.frames[
+      animation2.frames.length - 1
+    ] as CreateSpriteOptionsAnimationFrame
+  ).duration;
+  delete (
+    animation3.frames[
+      animation3.frames.length - 1
+    ] as CreateSpriteOptionsAnimationFrame
+  ).duration;
   createQuadrilateral({
     color: "#582f41",
     coordinates: {

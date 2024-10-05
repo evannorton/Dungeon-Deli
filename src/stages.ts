@@ -195,7 +195,10 @@ export class Stage extends Definable {
     for (const chest of getDefinables(Chest).values()) {
       chest.close();
     }
-    const modeID: string = this._options.modeIDs[0];
+    const modeID: string | undefined = this._options.modeIDs[0];
+    if (typeof modeID === "undefined") {
+      throw new Error("No mode found.");
+    }
     const mode: Mode = getDefinable(Mode, modeID);
     state.setValues({
       attackingMonsterInstancesIDs: [],
@@ -244,6 +247,9 @@ export class Stage extends Definable {
     );
     this.weapons.forEach(
       (weaponGroup: WeaponGroup, weaponIndex: number): void => {
+        if (typeof weaponGroup.weaponIDs[0] === "undefined") {
+          throw new Error("No weapon");
+        }
         const weapon: Weapon = getDefinable(Weapon, weaponGroup.weaponIDs[0]);
         const untilNextColor = (): string => {
           if (

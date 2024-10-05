@@ -71,9 +71,7 @@ export const tick = (): void => {
               },
             });
           const transportEntityID: string | null =
-            transportCollisionData.entityCollidables.length > 0
-              ? transportCollisionData.entityCollidables[0].entityID
-              : null;
+            transportCollisionData.entityCollidables[0]?.entityID ?? null;
           if (transportEntityID !== null) {
             const targetLevelID: unknown = getEntityFieldValue(
               transportEntityID,
@@ -125,10 +123,12 @@ export const tick = (): void => {
             },
           )
         ) {
-          const firstWeapon: Weapon = getDefinable(
-            Weapon,
-            state.values.attackingWeaponsIDs[0],
-          );
+          const attackingWeaponID: string | undefined =
+            state.values.attackingWeaponsIDs[0];
+          if (typeof attackingWeaponID === "undefined") {
+            throw new Error("No attacking weapon ID found.");
+          }
+          const firstWeapon: Weapon = getDefinable(Weapon, attackingWeaponID);
           firstWeapon.attack();
         }
         for (const weaponID of state.values.attackingWeaponsIDs) {
@@ -200,9 +200,14 @@ export const tick = (): void => {
             },
           )
         ) {
+          const attackingMonsterInstanceID: string | undefined =
+            state.values.attackingMonsterInstancesIDs[0];
+          if (typeof attackingMonsterInstanceID === "undefined") {
+            throw new Error("No attacking monster instance ID found.");
+          }
           const firstMonsterInstance: MonsterInstance = getDefinable(
             MonsterInstance,
-            state.values.attackingMonsterInstancesIDs[0],
+            attackingMonsterInstanceID,
           );
           firstMonsterInstance.startAttack();
         }
@@ -233,9 +238,7 @@ export const tick = (): void => {
                 },
               });
             const transportEntityID: string | null =
-              transportCollisionData.entityCollidables.length > 0
-                ? transportCollisionData.entityCollidables[0].entityID
-                : null;
+              transportCollisionData.entityCollidables[0]?.entityID ?? null;
             if (transportEntityID !== null) {
               const targetLevelID: unknown = getEntityFieldValue(
                 transportEntityID,
@@ -288,10 +291,10 @@ export const tick = (): void => {
     }
     const levelID: string | null = getActiveLevelID();
     if (levelID !== null) {
-      getEntityIDs({
+      [...getEntityIDs({
         layerIDs: ["characters"],
         levelIDs: [levelID],
-      })
+      })]
         .sort((a: string, b: string): number => {
           const aPosition: EntityPosition = getEntityPosition(a);
           const bPosition: EntityPosition = getEntityPosition(b);
