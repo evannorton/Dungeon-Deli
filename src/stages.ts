@@ -17,7 +17,7 @@ import {
   stopAudioSource,
   unlockAchievement,
 } from "pixel-pigeon";
-import { Definable, getDefinable, getDefinables } from "./definables";
+import { Definable, getDefinable, getDefinables } from "definables";
 import { Ingredient } from "./ingredients";
 import {
   Mode,

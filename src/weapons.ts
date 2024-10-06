@@ -14,7 +14,7 @@ import {
   setEntityPosition,
   unlockAchievement,
 } from "pixel-pigeon";
-import { Definable, getDefinable, getDefinables } from "./definables";
+import { Definable, getDefinable, getDefinables } from "definables";
 import { MonsterInstance } from "./monsterInstances";
 import { MonsterMovementBehavior } from "./monsters";
 import { TurnPart } from "./types/TurnPart";

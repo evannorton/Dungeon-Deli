@@ -9,7 +9,7 @@ import {
 } from "pixel-pigeon";
 import { Direction } from "../types/Direction";
 import { TurnPart } from "../types/TurnPart";
-import { getDefinable } from "../definables";
+import { getDefinable } from "definables";
 import { reverseModeAchievementID } from "../achievements";
 import { reverseModeID, slipperyModeID } from "../modes";
 import { state } from "../state";

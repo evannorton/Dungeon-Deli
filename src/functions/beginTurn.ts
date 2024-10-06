@@ -2,7 +2,7 @@ import { Chest } from "../chests";
 import { Stage } from "../stages";
 import { TurnPart } from "../types/TurnPart";
 import { Weapon } from "../weapons";
-import { getDefinable } from "../definables";
+import { getDefinable } from "definables";
 import { getPlayerChest } from "./getPlayerChest";
 import { goToNextMode } from "./goToNextMode";
 import { startMonsterInstancesMovement } from "./startMonsterInstancesMovement";

@@ -7,7 +7,7 @@ import {
 } from "pixel-pigeon";
 import { Ingredient } from "../ingredients";
 import { Stage } from "../stages";
-import { getDefinable, getDefinables } from "../definables";
+import { getDefinable, getDefinables } from "definables";
 import { passInputCollectionID } from "../inputCollections";
 import { state } from "../state";
 

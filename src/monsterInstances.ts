@@ -15,7 +15,7 @@ import {
   removeEntity,
   removeEntitySprite,
 } from "pixel-pigeon";
-import { Definable, getDefinable } from "./definables";
+import { Definable, getDefinable } from "definables";
 import { Direction } from "./types/Direction";
 import { Monster, MonsterMovementBehavior } from "./monsters";
 import { TurnPart } from "./types/TurnPart";

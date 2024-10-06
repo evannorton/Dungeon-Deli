@@ -1,5 +1,5 @@
 import { Mode } from "../modes";
-import { getDefinable } from "../definables";
+import { getDefinable } from "definables";
 import { getUniqueRandomModeID } from "./getUniqueRandomModeID";
 import { state } from "../state";
 

@@ -1,6 +1,6 @@
 import { Mode } from "../modes";
 import { Stage } from "../stages";
-import { getDefinable } from "../definables";
+import { getDefinable } from "definables";
 import { state } from "../state";
 
 export const getRandomModeID = (): string => {

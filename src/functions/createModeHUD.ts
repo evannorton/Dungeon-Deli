@@ -7,7 +7,7 @@ import {
 } from "pixel-pigeon";
 import { Mode } from "../modes";
 import { Stage } from "../stages";
-import { getDefinable, getDefinables } from "../definables";
+import { getDefinable, getDefinables } from "definables";
 import { state } from "../state";
 
 export const createModeHUD = (): void => {

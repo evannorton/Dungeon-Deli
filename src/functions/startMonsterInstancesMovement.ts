@@ -1,6 +1,6 @@
 import { MonsterInstance } from "../monsterInstances";
 import { getActiveLevelID, getEntityIDs } from "pixel-pigeon";
-import { getDefinable } from "../definables";
+import { getDefinable } from "definables";
 
 export const startMonsterInstancesMovement = (): void => {
   const levelID: string | null = getActiveLevelID();

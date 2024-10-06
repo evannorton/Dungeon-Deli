@@ -6,7 +6,7 @@ import {
   getEntityPosition,
   getRectangleCollisionData,
 } from "pixel-pigeon";
-import { getDefinable } from "../definables";
+import { getDefinable } from "definables";
 import { state } from "../state";
 
 export const getPlayerChest = (): Chest | null => {

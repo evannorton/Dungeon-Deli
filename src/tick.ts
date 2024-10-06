@@ -20,7 +20,7 @@ import { Stage } from "./stages";
 import { TurnPart } from "./types/TurnPart";
 import { Weapon } from "./weapons";
 import { beginTurn } from "./functions/beginTurn";
-import { getDefinable } from "./definables";
+import { getDefinable } from "definables";
 import { goToNextMode } from "./functions/goToNextMode";
 import { playerIsBlocked } from "./functions/playerIsBlocked";
 import { slipperyModeAchievementID } from "./achievements";

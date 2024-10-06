@@ -1,7 +1,7 @@
 import { Character } from "../characters";
 import { Stage } from "../stages";
 import { createInputPressHandler, createSprite } from "pixel-pigeon";
-import { getDefinable } from "../definables";
+import { getDefinable } from "definables";
 import { passInputCollectionID } from "../inputCollections";
 import { state } from "../state";
 

@@ -1,5 +1,5 @@
 import { Stage } from "../stages";
-import { getDefinable } from "../definables";
+import { getDefinable } from "definables";
 import { getRandomModeID } from "./getRandomModeID";
 import { state } from "../state";
 

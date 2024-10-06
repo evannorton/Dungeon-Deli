@@ -1,4 +1,4 @@
-import { Definable } from "./definables";
+import { Definable } from "definables";
 
 export enum MonsterMovementBehavior {
   Cart = "cart",

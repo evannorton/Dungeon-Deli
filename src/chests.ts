@@ -1,4 +1,4 @@
-import { Definable } from "./definables";
+import { Definable } from "definables";
 import { addEntitySprite, createSprite, getCurrentTime } from "pixel-pigeon";
 import { state } from "./state";
 

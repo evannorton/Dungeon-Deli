@@ -1,6 +1,6 @@
 import { Character } from "../characters";
 import { beginTurn } from "./beginTurn";
-import { getDefinable } from "../definables";
+import { getDefinable } from "definables";
 import { state } from "../state";
 
 export const attemptPlayerPass = (): void => {

@@ -10,7 +10,7 @@ import {
   setEntityBlockingPosition,
   setEntityPosition,
 } from "pixel-pigeon";
-import { Definable, getDefinables } from "./definables";
+import { Definable, getDefinables } from "definables";
 import { Direction } from "./types/Direction";
 import { Mode, normalModeID } from "./modes";
 import { Move } from "./types/Move";
