@@ -10,7 +10,6 @@
         "zip": "pigeon zip"
     },
     "dependencies": {
-        "definables": "evannorton/Definables",
         "pixel-pigeon": "evannorton/Pixel-Pigeon"
     },
     "engines": {
